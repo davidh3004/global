@@ -1,0 +1,43 @@
+{
+  "name": "proyecto-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^10.1.1",
+    "@astrojs/react": "^5.0.5",
+    "@vercel/blob": "^2.4.0",
+    "astro": "^6.3.7",
+    "astro-i18next": "1.0.0-beta.21",
+    "daisyui": "^5.5.20",
+    "dotenv": "^17.4.2",
+    "firebase": "^12.13.0",
+    "firebase-admin": "^13.10.0",
+    "i18next": "^26.2.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "resend": "^4.0.1",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/vercel": "^10.0.7",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "lightningcss": "^1.32.0",
+    "typescript": "^6.0.3"
+  },
+  "volta": {
+    "node": "22.22.3"
+  }
+}

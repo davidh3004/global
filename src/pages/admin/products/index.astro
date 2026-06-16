@@ -1,0 +1,162 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Products">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Products</h1>
+      <p class="text-gray-600 mt-1">Manage products displayed on the main site</p>
+    </div>
+    <a href="/admin/products/new" class="btn btn-primary">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      New Product
+    </a>
+  </div>
+
+  <div id="products-container" class="bg-white rounded-lg shadow">
+    <div class="p-8 text-center text-gray-500">
+      Loading products...
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  import { collection, query, orderBy, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+  import { db } from '../../../firebase/client';
+
+  async function loadProducts() {
+    const container = document.getElementById('products-container');
+    if (!container) return;
+
+    try {
+      const q = query(collection(db, 'products'), orderBy('order', 'asc'));
+      const querySnapshot = await getDocs(q);
+      const products = [];
+      
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() });
+      });
+
+      if (products.length === 0) {
+        container.innerHTML = `
+          <div class="p-12 text-center">
+            <div class="text-6xl mb-4">📦</div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">No products yet</h3>
+            <p class="text-gray-600 mb-6">Start by adding your first product</p>
+            <a href="/admin/products/new" class="btn btn-primary inline-flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              Create Product
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="overflow-x-auto">
+          <table class="table table-zebra w-full">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Badge</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${products.map(product => `
+                <tr>
+                  <td class="font-mono text-sm">${product.order}</td>
+                  <td>
+                    <div class="avatar">
+                      <div class="w-12 h-12 rounded">
+                        <img src="${product.imageUrl}" alt="${product.name}" />
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="font-semibold">${product.name}</div>
+                    <div class="text-sm text-gray-500 line-clamp-1">${product.description}</div>
+                  </td>
+                  <td>
+                    ${product.price 
+                      ? `<span class="font-semibold">$${product.price}</span><span class="text-sm text-gray-500">${product.priceUnit || '/ ton'}</span>`
+                      : '<span class="badge badge-ghost">Call for Pricing</span>'
+                    }
+                  </td>
+                  <td>
+                    <button 
+                      onclick="toggleStatus('${product.id}', ${product.isActive})"
+                      class="badge ${product.isActive ? 'badge-success' : 'badge-error'} cursor-pointer"
+                    >
+                      ${product.isActive ? 'Active' : 'Inactive'}
+                    </button>
+                  </td>
+                  <td>
+                    ${product.badge ? `<span class="badge badge-primary">${product.badge}</span>` : '-'}
+                  </td>
+                  <td class="text-right">
+                    <div class="flex gap-2 justify-end">
+                      <a href="/admin/products/edit/${product.id}" class="btn btn-sm btn-ghost">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                      </a>
+                      <button onclick="deleteProduct('${product.id}', '${product.name}')" class="btn btn-sm btn-ghost text-error">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } catch (error) {
+      console.error('Error loading products:', error);
+      container.innerHTML = `
+        <div class="p-8 text-center text-error">
+          <p class="font-semibold mb-2">Error loading products</p>
+          <p class="text-sm">${error instanceof Error ? error.message : 'Unknown error'}</p>
+        </div>
+      `;
+    }
+  }
+
+  (window as any).toggleStatus = async (id: string, currentStatus: boolean) => {
+    try {
+      await updateDoc(doc(db, 'products', id), {
+        isActive: !currentStatus
+      });
+      await loadProducts();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      alert('Error updating product status');
+    }
+  };
+
+  (window as any).deleteProduct = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
+    
+    try {
+      await deleteDoc(doc(db, 'products', id));
+      await loadProducts();
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      alert('Error deleting product');
+    }
+  };
+
+  loadProducts();
+</script>

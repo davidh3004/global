@@ -1,0 +1,14 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import GalleryManager from '../../components/admin/GalleryManager';
+---
+
+<AdminLayout title="Photo Gallery">
+  <div class="admin-page">
+    <div class="admin-header">
+      <h1>Photo Gallery</h1>
+      <p>Upload and manage gallery photos</p>
+    </div>
+    <GalleryManager client:load />
+  </div>
+</AdminLayout>

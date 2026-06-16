@@ -1,0 +1,14 @@
+---
+/**
+ * Public User Login Page
+ * Multilingual support via i18next (no reload)
+ */
+import AuthLayout from '../../layouts/AuthLayout.astro';
+import LoginForm from '../../components/auth/LoginForm';
+
+const locale = Astro.currentLocale || 'en';
+---
+
+<AuthLayout title="Login - Global Recycling" lang={locale}>
+  <LoginForm client:only="react" />
+</AuthLayout>

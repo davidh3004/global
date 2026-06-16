@@ -1,0 +1,333 @@
+---
+/**
+ * Admin Users List Page
+ * Uses firebase-admin API endpoints for user management
+ */
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Users">
+  <div class="mb-6">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-display font-bold">Users</h1>
+        <p class="text-base-content/60 mt-1">Manage user accounts (Firebase Auth)</p>
+      </div>
+      <button id="createUserBtn" class="btn btn-primary">
+        + Create User
+      </button>
+    </div>
+  </div>
+
+  <!-- Create/Edit User Modal -->
+  <dialog id="userModal" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg" id="modalTitle">Create User</h3>
+      <form id="userForm" class="space-y-4 mt-4">
+        <input type="hidden" id="editUid" />
+        <div class="form-control">
+          <label class="label"><span class="label-text">Email</span></label>
+          <input type="email" id="userEmail" class="input input-bordered w-full" required />
+        </div>
+        <div class="form-control">
+          <label class="label"><span class="label-text">Display Name</span></label>
+          <input type="text" id="userDisplayName" class="input input-bordered w-full" required />
+        </div>
+        <div class="form-control" id="passwordField">
+          <label class="label"><span class="label-text">Password</span></label>
+          <input type="password" id="userPassword" class="input input-bordered w-full" minlength="6" />
+          <label class="label"><span class="label-text-alt">Min 6 characters. Leave empty to keep current (edit mode).</span></label>
+        </div>
+        <div class="form-control">
+          <label class="label"><span class="label-text">Role</span></label>
+          <select id="userRole" class="select select-bordered w-full">
+            <option value="customer">Customer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div id="modalError" class="alert alert-error hidden">
+          <span id="modalErrorText"></span>
+        </div>
+        <div class="modal-action">
+          <button type="button" class="btn" id="cancelModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveUserBtn">Save</button>
+        </div>
+      </form>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
+
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex justify-between items-center mb-4">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="Search users..." 
+          class="input input-bordered w-full max-w-xs"
+        />
+      </div>
+
+      <div id="loadingState" class="text-center py-8">
+        <span class="loading loading-spinner loading-lg"></span>
+        <p class="mt-2">Loading users...</p>
+      </div>
+
+      <div id="errorState" class="alert alert-error hidden">
+        <span id="errorText"></span>
+      </div>
+
+      <div id="usersTable" class="overflow-x-auto hidden">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+          </tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="text-center py-8 hidden">
+        <p class="text-base-content/60">No users found</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allUsers: any[] = [];
+
+    const modal = document.getElementById('userModal') as HTMLDialogElement;
+    const userForm = document.getElementById('userForm') as HTMLFormElement;
+    const modalTitle = document.getElementById('modalTitle')!;
+    const editUid = document.getElementById('editUid') as HTMLInputElement;
+    const userEmail = document.getElementById('userEmail') as HTMLInputElement;
+    const userDisplayName = document.getElementById('userDisplayName') as HTMLInputElement;
+    const userPassword = document.getElementById('userPassword') as HTMLInputElement;
+    const userRole = document.getElementById('userRole') as HTMLSelectElement;
+    const passwordField = document.getElementById('passwordField')!;
+    const modalError = document.getElementById('modalError')!;
+    const modalErrorText = document.getElementById('modalErrorText')!;
+
+    // Open create modal
+    document.getElementById('createUserBtn')?.addEventListener('click', () => {
+      modalTitle.textContent = 'Create User';
+      editUid.value = '';
+      userEmail.value = '';
+      userDisplayName.value = '';
+      userPassword.value = '';
+      userRole.value = 'customer';
+      userEmail.disabled = false;
+      userPassword.required = true;
+      modalError.classList.add('hidden');
+      modal.showModal();
+    });
+
+    // Cancel modal
+    document.getElementById('cancelModalBtn')?.addEventListener('click', () => {
+      modal.close();
+    });
+
+    // Submit form (create or update)
+    userForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      modalError.classList.add('hidden');
+      
+      const saveBtn = document.getElementById('saveUserBtn') as HTMLButtonElement;
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        const uid = editUid.value;
+        
+        if (uid) {
+          // Update user
+          const body: any = { 
+            uid, 
+            displayName: userDisplayName.value, 
+            role: userRole.value 
+          };
+          if (userPassword.value) body.password = userPassword.value;
+          
+          const res = await fetch('/api/auth/users', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error);
+        } else {
+          // Create user
+          const res = await fetch('/api/auth/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: userEmail.value,
+              password: userPassword.value,
+              displayName: userDisplayName.value,
+              role: userRole.value,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error);
+        }
+
+        modal.close();
+        await loadUsers();
+      } catch (error: any) {
+        modalErrorText.textContent = error.message;
+        modalError.classList.remove('hidden');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save';
+      }
+    });
+
+    async function loadUsers() {
+      const loadingState = document.getElementById('loadingState')!;
+      const errorState = document.getElementById('errorState')!;
+      const usersTable = document.getElementById('usersTable')!;
+      const emptyState = document.getElementById('emptyState')!;
+
+      loadingState.classList.remove('hidden');
+      usersTable.classList.add('hidden');
+      emptyState.classList.add('hidden');
+      errorState.classList.add('hidden');
+
+      try {
+        const res = await fetch('/api/auth/users');
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error);
+        
+        allUsers = data.users;
+        loadingState.classList.add('hidden');
+        
+        if (allUsers.length === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          usersTable.classList.remove('hidden');
+          renderUsers(allUsers);
+        }
+      } catch (error: any) {
+        loadingState.classList.add('hidden');
+        errorState.classList.remove('hidden');
+        document.getElementById('errorText')!.textContent = error.message || 'Error loading users';
+      }
+    }
+
+    function renderUsers(users: any[]) {
+      const tbody = document.getElementById('usersTableBody')!;
+      tbody.innerHTML = '';
+
+      users.forEach(user => {
+        const row = document.createElement('tr');
+        const createdDate = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A';
+        row.innerHTML = `
+          <td>
+            <div class="font-semibold">${user.displayName || 'N/A'}</div>
+          </td>
+          <td>${user.email}</td>
+          <td>
+            <span class="badge ${user.role === 'admin' ? 'badge-primary' : 'badge-ghost'}">
+              ${user.role}
+            </span>
+          </td>
+          <td>
+            <span class="badge ${!user.disabled ? 'badge-success' : 'badge-error'}">
+              ${!user.disabled ? 'Active' : 'Disabled'}
+            </span>
+          </td>
+          <td>${createdDate}</td>
+          <td>
+            <div class="flex gap-1">
+              <button class="btn btn-sm btn-ghost" data-edit="${user.uid}">Edit</button>
+              <button class="btn btn-sm btn-ghost" data-toggle="${user.uid}" data-disabled="${user.disabled}">
+                ${user.disabled ? 'Enable' : 'Disable'}
+              </button>
+              <button class="btn btn-sm btn-error btn-ghost" data-delete="${user.uid}">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // Attach event listeners
+      document.querySelectorAll('[data-edit]').forEach(btn => {
+        btn.addEventListener('click', () => openEditModal(btn.getAttribute('data-edit')!));
+      });
+      document.querySelectorAll('[data-toggle]').forEach(btn => {
+        btn.addEventListener('click', () => toggleUser(btn.getAttribute('data-toggle')!, btn.getAttribute('data-disabled') === 'true'));
+      });
+      document.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', () => deleteUser(btn.getAttribute('data-delete')!));
+      });
+    }
+
+    function openEditModal(uid: string) {
+      const user = allUsers.find(u => u.uid === uid);
+      if (!user) return;
+
+      modalTitle.textContent = 'Edit User';
+      editUid.value = uid;
+      userEmail.value = user.email;
+      userEmail.disabled = true;
+      userDisplayName.value = user.displayName || '';
+      userPassword.value = '';
+      userPassword.required = false;
+      userRole.value = user.role || 'customer';
+      modalError.classList.add('hidden');
+      modal.showModal();
+    }
+
+    async function toggleUser(uid: string, isDisabled: boolean) {
+      const action = isDisabled ? 'enable' : 'disable';
+      if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+
+      try {
+        const res = await fetch('/api/auth/users', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid, disabled: !isDisabled }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        await loadUsers();
+      } catch (error: any) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    async function deleteUser(uid: string) {
+      if (!confirm('Are you sure you want to permanently delete this user? This cannot be undone.')) return;
+
+      try {
+        const res = await fetch(`/api/auth/users?uid=${uid}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        await loadUsers();
+      } catch (error: any) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    // Search functionality
+    document.getElementById('searchInput')?.addEventListener('input', (e) => {
+      const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+      const filtered = allUsers.filter(user => 
+        user.displayName?.toLowerCase().includes(searchTerm) ||
+        user.email?.toLowerCase().includes(searchTerm)
+      );
+      renderUsers(filtered);
+    });
+
+    // Load users on page load
+    loadUsers();
+  </script>
+</AdminLayout>

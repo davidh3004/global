@@ -1,0 +1,277 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+
+const locale = Astro.currentLocale || 'en';
+
+const U = 'https://images.unsplash.com/photo-';
+const Q = '?w=900&q=70&auto=format&fit=crop';
+const img = {
+  plan: `${U}1503387762-592deb58ef4e${Q}`,
+  measure: `${U}1541888946425-d81bb19240f5${Q}`,
+  truck: `${U}1517089152318-42ec560349c0${Q}`,
+};
+---
+
+<PublicLayout
+  title="Calculating Your Project — Global Recycling of Tampa Bay"
+  description="How to calculate how much crushed stone or recycled crushed concrete you need for your project, plus a quick cubic-yard calculator."
+  lang={locale}
+>
+  <div class="gr-page">
+    <!-- Banner -->
+    <section class="gr-hero">
+      <div class="gr-hero-inner">
+        <span class="gr-eyebrow">Plan Your Order</span>
+        <h1>Calculating Your Project</h1>
+        <p>How much crushed stone or recycled crushed concrete do you need? Here's how to figure it out — and a quick calculator to do the math for you.</p>
+        <div class="gr-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Calculating Your Project</div>
+      </div>
+    </section>
+
+    <div class="gr-wrap gr-wrap-wide">
+      <!-- Quick calculator -->
+      <div class="gr-panel">
+        <div class="gr-panel-head">
+          <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/></svg>
+          Material Calculator
+        </div>
+        <figure class="gr-panel-media">
+          <img src={img.plan} alt="Planning a project on paper with a ruler" loading="lazy" />
+          <figcaption>Measure twice, order once.</figcaption>
+        </figure>
+        <div class="gr-panel-body">
+          <p class="calc-intro">Enter the dimensions of your area and the depth you want. We'll estimate the cubic yards needed (with a 10% allowance for spillage and depth inconsistencies).</p>
+
+          <div class="calc-grid">
+            <div class="calc-inputs">
+              <div class="calc-shape-toggle">
+                <button type="button" class="gr-tab active" data-shape="rect">Square / Rectangle</button>
+                <button type="button" class="gr-tab" data-shape="circle">Circle</button>
+              </div>
+
+              <div class="calc-fields">
+                <div class="calc-field" data-for="rect">
+                  <label>Length (ft)</label>
+                  <input type="number" id="calcLength" min="0" step="any" inputmode="decimal" placeholder="40" />
+                </div>
+                <div class="calc-field" data-for="rect">
+                  <label>Width (ft)</label>
+                  <input type="number" id="calcWidth" min="0" step="any" inputmode="decimal" placeholder="2" />
+                </div>
+                <div class="calc-field" data-for="circle" hidden>
+                  <label>Diameter (ft)</label>
+                  <input type="number" id="calcDiameter" min="0" step="any" inputmode="decimal" placeholder="10" />
+                </div>
+                <div class="calc-field">
+                  <label>Depth (inches)</label>
+                  <input type="number" id="calcDepth" min="0" step="any" inputmode="decimal" placeholder="4" />
+                </div>
+              </div>
+            </div>
+
+            <div class="calc-output">
+              <div class="calc-result" id="calcResult" aria-live="polite">
+                <div class="calc-result-row"><span>Area</span><strong id="resArea">—</strong></div>
+                <div class="calc-result-row"><span>Volume</span><strong id="resVol">—</strong></div>
+                <div class="calc-result-row big"><span>Estimated to order (+10%)</span><strong id="resYards">—</strong></div>
+              </div>
+              <p class="calc-note">Estimate only. For exact tonnage and pricing, <a href="/#contact">contact us</a> or call <a href="tel:8133736467">(813)&nbsp;373-6467</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Methodology (image + steps) -->
+      <div class="gr-row media-right">
+        <figure class="gr-media">
+          <img src={img.measure} alt="Crew measuring out a large site" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0l-4.6-4.6a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg></span>
+          <figcaption class="gr-media-cap">Measure your area in feet</figcaption>
+        </figure>
+        <div class="gr-panel">
+          <div class="gr-panel-head">
+            <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            Do The Math By Hand
+          </div>
+          <div class="gr-panel-body gr-prose">
+            <p>Crushed stone is a good choice for meandering pathways, sitting areas, or separating areas on your lawn — and <strong>recycled crushed concrete is an excellent alternative</strong> while helping reduce trash and overflowing landfills. Calculating the amount you need takes a few simple steps.</p>
+
+            <div class="gr-steps">
+              <div class="gr-step">
+                <div class="gr-step-num">1</div>
+                <div class="gr-step-body">
+                  <h3>Outline the area</h3>
+                  <p>Spray lawn-marking paint to outline the garden path or sitting area where you'll install your crushed stone.</p>
+                </div>
+              </div>
+              <div class="gr-step">
+                <div class="gr-step-num">2</div>
+                <div class="gr-step-body">
+                  <h3>Measure the surface area (in feet)</h3>
+                  <p>For squares and rectangles, multiply length × width. For a circle, square the diameter, divide by 4, then multiply by 3.14 to get the area in square feet.</p>
+                </div>
+              </div>
+              <div class="gr-step">
+                <div class="gr-step-num">3</div>
+                <div class="gr-step-body">
+                  <h3>Multiply by your depth (in feet)</h3>
+                  <p>Convert inches to feet by dividing by 12. Example: a walkway 40&nbsp;ft × 2&nbsp;ft = 80&nbsp;sq&nbsp;ft. At 4&nbsp;in deep (4 ÷ 12 = 0.33&nbsp;ft): 80 × 0.33 = <strong>26.4 cubic feet</strong>.</p>
+                </div>
+              </div>
+              <div class="gr-step">
+                <div class="gr-step-num">4</div>
+                <div class="gr-step-body">
+                  <h3>Convert to cubic yards</h3>
+                  <p>Divide cubic feet by 27. Example: 26.4 ÷ 27 = <strong>0.98 cubic yards</strong>. Add an additional 10% to cover spillage and depth inconsistencies.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools & tips -->
+      <div class="gr-panel">
+        <div class="gr-panel-head">
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          What You'll Need &amp; Pro Tips
+        </div>
+        <div class="gr-panel-body gr-prose">
+          <div class="gr-two-col">
+            <div>
+              <h3>Things you will need</h3>
+              <ul>
+                <li>Lawn-marking paint</li>
+                <li>Measuring tape</li>
+                <li>Calculator</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Tips</h3>
+              <ul>
+                <li>Use a square spade to dig straight down and make a clean trench. Mark your shovel with duct tape at the depth you want so you can see it without re-measuring.</li>
+                <li>Wet the crushed stone or recycled concrete with a hose after placing it, then tamp firmly to seat the material into the soil.</li>
+                <li>Place tarps next to the area when digging so the excavated soil is easy to remove.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- By the truckload -->
+      <div class="gr-row">
+        <figure class="gr-media">
+          <img src={img.truck} alt="Haul trucks loading aggregate" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+          <figcaption class="gr-media-cap">Best value: a full load</figcaption>
+        </figure>
+        <div class="gr-panel">
+          <div class="gr-panel-head">
+            <svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Ordering By The Truckload
+          </div>
+          <div class="gr-panel-body gr-prose">
+            <p>You'll get the most value from a full load. LTL (less-than-truckload) deliveries are available, but pricing largely depends on delivery location and material availability.</p>
+            <div class="load-table">
+              <div class="load-row"><span>Recycled Concrete</span><strong>≈ 22 tons / load</strong></div>
+              <div class="load-row"><span>Recycled Asphalt</span><strong>≈ 22 tons / load</strong></div>
+              <div class="load-row"><span>Crushed Concrete Fines</span><strong>20 tons / load</strong></div>
+              <div class="load-row"><span>Fill Dirt</span><strong>≈ 18 cu yd / load</strong></div>
+            </div>
+            <div class="gr-callout">All recycled material is guaranteed clean and uncontaminated, though small traces of wood or metal may come in with the concrete. Due to various factors, we can't control the exact color or makeup of products sold as clean fill or recycled concrete.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="gr-cta-band">
+        <h3>Not sure how much you need?</h3>
+        <p>Our team has been sizing Tampa Bay projects since 1990. Give us a call.</p>
+        <a class="gr-cta-phone" href="tel:8133736467">(813) 373-6467</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .calc-intro{margin-top:0;color:var(--gray-600)}
+    .calc-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:start;margin-top:18px}
+    @media(max-width:760px){.calc-grid{grid-template-columns:1fr}}
+    .calc-shape-toggle{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+    .calc-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .calc-field label{display:block;font-family:var(--cond);text-transform:uppercase;letter-spacing:1px;font-size:12px;color:var(--gray-600);margin-bottom:6px}
+    .calc-field input{width:100%;padding:11px 13px;border:2px solid var(--paper-line);border-radius:5px;font-size:16px;font-family:var(--font);color:var(--ink);outline:none;transition:border-color .15s}
+    .calc-field input:focus{border-color:var(--green)}
+    .calc-output{position:sticky;top:120px}
+    .calc-result{border:2px solid var(--green-dark);border-radius:6px;overflow:hidden}
+    .calc-result-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px dashed var(--paper-line);font-size:15px;gap:10px}
+    .calc-result-row span{font-family:var(--cond);text-transform:uppercase;letter-spacing:1px;color:var(--gray-600)}
+    .calc-result-row strong{font-family:var(--slab);font-size:18px;color:var(--ink);text-align:right}
+    .calc-result-row.big{background:var(--green-pale);border-bottom:none}
+    .calc-result-row.big strong{color:var(--green-dark);font-size:24px}
+    .calc-note{font-size:13px;color:var(--gray-600);margin:14px 0 0}
+
+    .load-table{border:2px solid var(--green-dark);border-radius:6px;overflow:hidden;margin:6px 0 20px}
+    .load-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px dashed var(--paper-line)}
+    .load-row:last-child{border-bottom:none}
+    .load-row span{font-family:var(--cond);text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);font-size:14px}
+    .load-row strong{font-family:var(--slab);color:var(--green-dark);font-size:17px;white-space:nowrap}
+  </style>
+
+  <script is:inline>
+    (function () {
+      var shape = 'rect';
+      var byId = function (id) { return document.getElementById(id); };
+      var toggles = document.querySelectorAll('.calc-shape-toggle .gr-tab');
+      var fmt = function (n, d) {
+        if (!isFinite(n)) return '—';
+        return n.toLocaleString(undefined, { maximumFractionDigits: d == null ? 2 : d });
+      };
+
+      function showFields() {
+        document.querySelectorAll('.calc-field[data-for]').forEach(function (el) {
+          el.hidden = el.getAttribute('data-for') !== shape;
+        });
+      }
+
+      function compute() {
+        var depthIn = parseFloat(byId('calcDepth').value);
+        var area = NaN;
+        if (shape === 'rect') {
+          var l = parseFloat(byId('calcLength').value);
+          var w = parseFloat(byId('calcWidth').value);
+          if (l > 0 && w > 0) area = l * w;
+        } else {
+          var dia = parseFloat(byId('calcDiameter').value);
+          if (dia > 0) area = (dia * dia / 4) * 3.14;
+        }
+        if (!(area > 0) || !(depthIn > 0)) {
+          byId('resArea').textContent = '—';
+          byId('resVol').textContent = '—';
+          byId('resYards').textContent = '—';
+          return;
+        }
+        var depthFt = depthIn / 12;
+        var cubicFt = area * depthFt;
+        var cubicYd = cubicFt / 27;
+        var withBuffer = cubicYd * 1.1;
+        byId('resArea').textContent = fmt(area) + ' sq ft';
+        byId('resVol').textContent = fmt(cubicFt) + ' cu ft  (' + fmt(cubicYd) + ' cu yd)';
+        byId('resYards').textContent = fmt(withBuffer) + ' cubic yards';
+      }
+
+      toggles.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          toggles.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          shape = btn.getAttribute('data-shape');
+          showFields();
+          compute();
+        });
+      });
+      document.querySelectorAll('.calc-field input').forEach(function (input) {
+        input.addEventListener('input', compute);
+      });
+      showFields();
+    })();
+  </script>
+</PublicLayout>

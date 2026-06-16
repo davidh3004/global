@@ -1,0 +1,227 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Dashboard">
+  <div class="mb-6">
+    <h1 class="text-3xl font-display font-bold">Dashboard</h1>
+    <p class="text-base-content/60 mt-1">Welcome to the admin panel</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div class="stats shadow">
+      <div class="stat">
+        <div class="stat-figure text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+        </div>
+        <div class="stat-title">Products</div>
+        <div class="stat-value text-primary" id="stat-products">—</div>
+        <div class="stat-desc">In catalog</div>
+      </div>
+    </div>
+
+    <div class="stats shadow">
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+        </div>
+        <div class="stat-title">Orders</div>
+        <div class="stat-value text-secondary" id="stat-orders">—</div>
+        <div class="stat-desc">Total orders</div>
+      </div>
+    </div>
+
+    <div class="stats shadow">
+      <div class="stat">
+        <div class="stat-figure text-accent">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <div class="stat-title">Leads</div>
+        <div class="stat-value text-accent" id="stat-leads">—</div>
+        <div class="stat-desc">Quote requests</div>
+      </div>
+    </div>
+
+    <div class="stats shadow">
+      <div class="stat">
+        <div class="stat-figure text-warning">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+          </svg>
+        </div>
+        <div class="stat-title">Reviews</div>
+        <div class="stat-value text-warning" id="stat-reviews">—</div>
+        <div class="stat-desc">Customer reviews</div>
+      </div>
+    </div>
+
+    <div class="stats shadow">
+      <div class="stat">
+        <div class="stat-figure text-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+        <div class="stat-title">Learning</div>
+        <div class="stat-value text-info" id="stat-learning">—</div>
+        <div class="stat-desc">Articles published</div>
+      </div>
+    </div>
+
+    <div class="stats shadow">
+      <div class="stat">
+        <div class="stat-figure text-success">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <div class="stat-title">Users</div>
+        <div class="stat-value text-success" id="stat-users">—</div>
+        <div class="stat-desc">Registered users</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Quick Actions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <a href="/admin/products" class="btn btn-outline btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          Manage Products
+        </a>
+        <a href="/admin/orders" class="btn btn-outline btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+          Manage Orders
+        </a>
+        <a href="/admin/leads" class="btn btn-outline btn-accent">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          View Leads
+        </a>
+        <a href="/admin/users" class="btn btn-outline btn-info">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          Manage Users
+        </a>
+        <a href="/admin/reviews" class="btn btn-outline btn-warning">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+          </svg>
+          Manage Reviews
+        </a>
+        <a href="/admin/config" class="btn btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          Site Config
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Leads -->
+  <div class="card bg-base-100 shadow-xl mt-6">
+    <div class="card-body">
+      <div class="flex justify-between items-center">
+        <h2 class="card-title">Recent Leads</h2>
+        <a href="/admin/leads" class="btn btn-sm btn-ghost">View All →</a>
+      </div>
+      <div class="overflow-x-auto" id="recent-leads">
+        <p class="text-center text-base-content/60 py-8">Loading...</p>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
+  import { db } from '../../firebase/client';
+
+  async function getCollectionCount(collectionName: string): Promise<number> {
+    const snapshot = await getDocs(collection(db, collectionName));
+    return snapshot.size;
+  }
+
+  async function loadStats() {
+    try {
+      const [products, orders, leads, reviews, learning] = await Promise.all([
+        getCollectionCount('products'),
+        getCollectionCount('orders'),
+        getCollectionCount('leads'),
+        getCollectionCount('reviews'),
+        getCollectionCount('learning'),
+      ]);
+
+      document.getElementById('stat-products')!.textContent = products.toString();
+      document.getElementById('stat-orders')!.textContent = orders.toString();
+      document.getElementById('stat-leads')!.textContent = leads.toString();
+      document.getElementById('stat-reviews')!.textContent = reviews.toString();
+      document.getElementById('stat-learning')!.textContent = learning.toString();
+
+      // Users count from API
+      try {
+        const res = await fetch('/api/auth/users');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('stat-users')!.textContent = (data.users?.length || 0).toString();
+        }
+      } catch { 
+        document.getElementById('stat-users')!.textContent = '—';
+      }
+    } catch (err) {
+      console.error('Error loading stats:', err);
+    }
+  }
+
+  async function loadRecentLeads() {
+    const container = document.getElementById('recent-leads');
+    if (!container) return;
+
+    try {
+      const q = query(collection(db, 'leads'), orderBy('createdAt', 'desc'), limit(5));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        container.innerHTML = '<p class="text-center text-base-content/60 py-8">No leads yet</p>';
+        return;
+      }
+
+      let html = `<table class="table table-zebra"><thead><tr><th>Name</th><th>Material</th><th>Contact</th><th>Status</th><th>Date</th></tr></thead><tbody>`;
+      snapshot.forEach(doc => {
+        const lead = doc.data();
+        const date = lead.createdAt?.toDate ? lead.createdAt.toDate().toLocaleDateString('en-US') : '—';
+        const statusBadge = lead.status === 'new' ? 'badge-info' : lead.status === 'read' ? 'badge-warning' : 'badge-success';
+        html += `<tr>
+          <td class="font-semibold">${lead.name}</td>
+          <td>${lead.material}</td>
+          <td>${lead.contact}</td>
+          <td><span class="badge ${statusBadge} badge-sm">${lead.status}</span></td>
+          <td class="text-sm">${date}</td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    } catch (err) {
+      container.innerHTML = '<p class="text-center text-error py-4">Error loading leads</p>';
+    }
+  }
+
+  loadStats();
+  loadRecentLeads();
+</script>

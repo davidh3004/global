@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Firestore Learning</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9fafb;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    h1 { color: #111827; margin-top: 0; }
+    h2 { color: #374151; font-size: 1.25rem; }
+    .status { padding: 12px; border-radius: 6px; margin: 10px 0; }
+    .loading { background: #dbeafe; color: #1e40af; }
+    .success { background: #d1fae5; color: #065f46; }
+    .error { background: #fee2e2; color: #991b1b; }
+    .article {
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+    }
+    .article-title { font-weight: 600; color: #111827; }
+    .article-meta { font-size: 0.875rem; color: #6b7280; margin-top: 4px; }
+    button {
+      background: #2d8c4e;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { background: #236b3b; }
+    pre {
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🧪 Test Firestore Learning Articles</h1>
+    <p>Esta página prueba la conexión a Firestore y muestra los artículos de la colección <code>learningArticles</code>.</p>
+    
+    <button onclick="testFirestore()">🔄 Probar Conexión</button>
+    
+    <div id="status"></div>
+    <div id="results"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    // IMPORTANTE: Reemplaza estos valores con tu configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    let app, db;
+
+    try {
+      app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      console.log('✅ Firebase initialized');
+    } catch (error) {
+      console.error('❌ Error initializing Firebase:', error);
+      document.getElementById('status').innerHTML = `
+        <div class="status error">
+          <strong>Error de configuración:</strong><br>
+          ${error.message}<br><br>
+          <strong>Acción requerida:</strong> Abre este archivo HTML y reemplaza la configuración de Firebase con tus credenciales.
+        </div>
+      `;
+    }
+
+    window.testFirestore = async function() {
+      const statusEl = document.getElementById('status');
+      const resultsEl = document.getElementById('results');
+      
+      statusEl.innerHTML = '<div class="status loading">⏳ Consultando Firestore...</div>';
+      resultsEl.innerHTML = '';
+      
+      try {
+        // Query all articles
+        const allQuery = query(collection(db, 'learningArticles'));
+        const allSnapshot = await getDocs(allQuery);
+        
+        // Query published articles
+        const publishedQuery = query(
+          collection(db, 'learningArticles'),
+          where('isPublished', '==', true)
+        );
+        const publishedSnapshot = await getDocs(publishedQuery);
+        
+        const allArticles = [];
+        const publishedArticles = [];
+        
+        allSnapshot.forEach(doc => {
+          allArticles.push({ id: doc.id, ...doc.data() });
+        });
+        
+        publishedSnapshot.forEach(doc => {
+          publishedArticles.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Show results
+        statusEl.innerHTML = `
+          <div class="status success">
+            ✅ Conexión exitosa<br>
+            📚 Total de artículos: ${allArticles.length}<br>
+            ✓ Artículos publicados: ${publishedArticles.length}
+          </div>
+        `;
+        
+        let html = '<div class="card"><h2>Todos los Artículos</h2>';
+        
+        if (allArticles.length === 0) {
+          html += '<p style="color: #6b7280;">No hay artículos en la colección. Crea uno desde /admin/learning</p>';
+        } else {
+          allArticles.forEach(article => {
+            const isPublished = article.isPublished === true;
+            const publishedBadge = isPublished 
+              ? '<span style="background: #d1fae5; color: #065f46; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">✓ Publicado</span>'
+              : '<span style="background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">✗ No publicado</span>';
+            
+            html += `
+              <div class="article">
+                <div class="article-title">${article.title || 'Sin título'} ${publishedBadge}</div>
+                <div class="article-meta">
+                  Slug: ${article.slug || 'N/A'} | 
+                  Categoría: ${article.category || 'N/A'} | 
+                  Orden: ${article.order || 0}
+                </div>
+                <details style="margin-top: 8px;">
+                  <summary style="cursor: pointer; color: #2d8c4e;">Ver datos completos</summary>
+                  <pre>${JSON.stringify(article, null, 2)}</pre>
+                </details>
+              </div>
+            `;
+          });
+        }
+        
+        html += '</div>';
+        
+        if (publishedArticles.length > 0) {
+          html += '<div class="card"><h2>Artículos que se mostrarán en la web</h2>';
+          publishedArticles.forEach(article => {
+            html += `
+              <div class="article">
+                <div class="article-title">${article.title}</div>
+                <div class="article-meta">
+                  URL: /aprendizaje/${article.slug}
+                </div>
+              </div>
+            `;
+          });
+          html += '</div>';
+        }
+        
+        resultsEl.innerHTML = html;
+        
+      } catch (error) {
+        console.error('Error:', error);
+        statusEl.innerHTML = `
+          <div class="status error">
+            <strong>❌ Error:</strong><br>
+            ${error.message}<br><br>
+            <strong>Código:</strong> ${error.code || 'N/A'}<br><br>
+            ${error.code === 'permission-denied' ? 
+              '<strong>Solución:</strong> Verifica las reglas de Firestore. La colección learningArticles debe permitir lectura pública.' : 
+              '<strong>Solución:</strong> Verifica la consola del navegador para más detalles.'}
+          </div>
+        `;
+      }
+    };
+  </script>
+</body>
+</html>

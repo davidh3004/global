@@ -1,0 +1,176 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+
+const { id } = Astro.params;
+---
+
+<AdminLayout title="Editar Artículo">
+  <div class="mb-6">
+    <a href="/admin/learning" class="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2 mb-4">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Volver a artículos
+    </a>
+    <h1 class="text-3xl font-bold text-gray-900">Editar Artículo</h1>
+  </div>
+
+  <div id="form-container" class="bg-white rounded-lg shadow p-6 max-w-4xl">
+    <div class="text-center py-8">
+      <span class="loading loading-spinner loading-lg"></span>
+      <p class="text-gray-600 mt-4">Cargando artículo...</p>
+    </div>
+  </div>
+</AdminLayout>
+
+<script define:vars={{ articleId: id }}>
+  import { doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore';
+  import { db } from '../../../../firebase/client';
+
+  async function loadArticle() {
+    const container = document.getElementById('form-container');
+    if (!container) return;
+
+    try {
+      const docRef = doc(db, 'learningArticles', articleId);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        container.innerHTML = `
+          <div class="text-center py-8">
+            <p class="text-error font-semibold">Artículo no encontrado</p>
+            <a href="/admin/learning" class="btn btn-primary mt-4">Volver a artículos</a>
+          </div>
+        `;
+        return;
+      }
+
+      const article = docSnap.data();
+
+      container.innerHTML = `
+        <form id="article-form" class="space-y-6">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Título del Artículo *</span>
+            </label>
+            <input type="text" name="title" required class="input input-bordered w-full" value="${article.title}" />
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Slug (URL) *</span>
+            </label>
+            <input type="text" name="slug" required class="input input-bordered w-full" value="${article.slug}" />
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Categoría *</span>
+            </label>
+            <select name="category" required class="select select-bordered w-full">
+              <option value="Concrete" ${article.category === 'Concrete' ? 'selected' : ''}>Concrete</option>
+              <option value="Asphalt" ${article.category === 'Asphalt' ? 'selected' : ''}>Asphalt</option>
+              <option value="Road Base" ${article.category === 'Road Base' ? 'selected' : ''}>Road Base</option>
+              <option value="Paver Base" ${article.category === 'Paver Base' ? 'selected' : ''}>Paver Base</option>
+              <option value="General" ${article.category === 'General' ? 'selected' : ''}>General</option>
+            </select>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Extracto (Resumen corto) *</span>
+            </label>
+            <textarea name="excerpt" required class="textarea textarea-bordered w-full h-20">${article.excerpt}</textarea>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Contenido Completo *</span>
+            </label>
+            <textarea name="content" required class="textarea textarea-bordered w-full h-64">${article.content}</textarea>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">URL de Imagen *</span>
+            </label>
+            <input type="url" name="imageUrl" required class="input input-bordered w-full" value="${article.imageUrl}" />
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Orden *</span>
+            </label>
+            <input type="number" name="order" required class="input input-bordered w-full" value="${article.order}" min="0" />
+          </div>
+
+          <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-3">
+              <input type="checkbox" name="isPublished" ${article.isPublished ? 'checked' : ''} class="checkbox checkbox-primary" />
+              <span class="label-text font-semibold">Publicar artículo (visible en la página)</span>
+            </label>
+          </div>
+
+          <div class="flex gap-3 pt-4">
+            <button type="submit" class="btn btn-primary">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              Guardar Cambios
+            </button>
+            <a href="/admin/learning" class="btn btn-ghost">Cancelar</a>
+          </div>
+        </form>
+      `;
+
+      const form = document.getElementById('article-form');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="loading loading-spinner"></span> Guardando...';
+        }
+        
+        try {
+          await updateDoc(doc(db, 'learningArticles', articleId), {
+            title: formData.get('title'),
+            slug: formData.get('slug'),
+            category: formData.get('category'),
+            excerpt: formData.get('excerpt'),
+            content: formData.get('content'),
+            imageUrl: formData.get('imageUrl'),
+            order: parseInt(formData.get('order') as string),
+            isPublished: formData.get('isPublished') === 'on',
+            updatedAt: Timestamp.now()
+          });
+          
+          alert('Artículo actualizado exitosamente');
+          window.location.href = '/admin/learning';
+        } catch (error) {
+          console.error('Error updating article:', error);
+          alert('Error al actualizar el artículo');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Guardar Cambios';
+          }
+        }
+      });
+
+    } catch (error) {
+      console.error('Error loading article:', error);
+      container.innerHTML = `
+        <div class="text-center py-8">
+          <p class="text-error font-semibold">Error al cargar el artículo</p>
+          <p class="text-sm text-gray-600 mt-2">${error instanceof Error ? error.message : 'Error desconocido'}</p>
+          <a href="/admin/learning" class="btn btn-primary mt-4">Volver a artículos</a>
+        </div>
+      `;
+    }
+  }
+
+  loadArticle();
+</script>

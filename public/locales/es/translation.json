@@ -1,0 +1,228 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Nosotros",
+    "materials": "Materiales",
+    "learning": "Aprendizaje",
+    "information": "Información",
+    "calculating": "Calcula Tu Proyecto",
+    "weighTruck": "Pesa Tu Camión",
+    "creditCard": "Autorización de Tarjeta",
+    "rollOff": "Servicio Roll-Off",
+    "rollOffAgreement": "Acuerdo de Servicio",
+    "rollOffRequest": "Formulario de Solicitud",
+    "services": "Servicios",
+    "resources": "Recursos",
+    "forms": "Formularios",
+    "contact": "Contacto",
+    "getQuote": "Solicitar Cotización"
+  },
+  "hero": {
+    "label": "Líder en Reciclaje de Tampa Bay Desde 1990",
+    "title": "El Mundo",
+    "titleHighlight": "Es Tuyo.",
+    "titleEnd": "Recíclalo.",
+    "subtitle": "Concreto reciclado, asfalto y materiales agregados para carreteras, entradas y proyectos de construcción. Sirviendo a Tampa Bay por más de 34 años.",
+    "btnMaterials": "Ver Materiales",
+    "btnQuote": "Solicitar Cotización",
+    "statsExperience": "Años de Experiencia",
+    "statsRating": "Calificación Google",
+    "statsHours": "LUN–SÁB",
+    "familyOwned": "Empresa Familiar"
+  },
+  "quote": {
+    "title": "Cotización Rápida",
+    "subtitle": "Respondemos el mismo día",
+    "name": "Tu Nombre",
+    "namePlaceholder": "Juan Pérez",
+    "material": "Material",
+    "quantity": "Cantidad",
+    "quantityPlaceholder": "10 toneladas",
+    "contact": "Teléfono o Email",
+    "contactPlaceholder": "(813) 000-0000",
+    "submit": "Enviar Solicitud",
+    "divider": "o llama directamente",
+    "materials": {
+      "concrete": "Concreto Triturado",
+      "asphalt": "Asfalto Reciclado",
+      "roadBase": "Base para Carretera",
+      "paverBase": "Base para Pavimento"
+    }
+  },
+  "ticker": {
+    "concrete": "Concreto Reciclado",
+    "asphalt": "Asfalto Triturado",
+    "roadBase": "Base para Carretera",
+    "fill": "Relleno Agregado",
+    "paverBase": "Base para Pavimento",
+    "address": "5011 N Clark Ave, Tampa FL",
+    "hours": "Lun–Sáb 7am–5pm",
+    "phone": "(813) 373-6467"
+  },
+  "stats": {
+    "years": "Años Operando",
+    "yards": "Yardas Cúbicas Excavadas",
+    "recycled": "Reciclado — Cero Vertedero",
+    "rating": "Calificación Google"
+  },
+  "about": {
+    "tag": "Quiénes Somos",
+    "title": "Construido sobre Décadas de",
+    "titleHighlight": "Experiencia",
+    "text1": "Global Recycling of Tampa Bay es propiedad de Max y Denise Sánchez. Max Sánchez ha sido dueño de Star Quality Inc., la empresa matriz, durante más de 34 años: una corporación privada con experiencia en proyectos comerciales junto a Skanska, Kimmins Contracting, Beck Group y más.",
+    "text2": "Desempeñamos un papel clave en el D&M Business Park en Drew Park, excavando 14,400 yardas cúbicas de suelo contaminado y reemplazándolo con materiales cribados y 12\" de base de concreto triturado debajo de cada plataforma de construcción.",
+    "list1": "Concreto reciclado, asfalto y agregados",
+    "list2": "Propiedad y operación local — Tampa Bay",
+    "list3": "Sirviendo a contratistas comerciales y propietarios",
+    "list4": "Solicitud de crédito disponible para cuentas comerciales",
+    "btnStory": "Nuestra Historia Completa",
+    "badgeYears": "Años"
+  },
+  "learning": {
+    "tag": "Centro de Aprendizaje",
+    "title": "Conoce Tus",
+    "titleHighlight": "Materiales",
+    "lead": "Guías educativas sobre agregados reciclados de las personas que trabajan con ellos todos los días.",
+    "readMore": "Leer Más",
+    "articles": {
+      "concrete": {
+        "tag": "Concreto",
+        "title": "¿Por Qué Usar Concreto Reciclado en Tu Proyecto?",
+        "desc": "Ahorro de costos, impacto ambiental y rendimiento LBR comparable a materiales vírgenes."
+      },
+      "asphalt": {
+        "tag": "Asfalto",
+        "title": "Beneficios del Asfalto Reciclado para Entradas",
+        "desc": "Uno de los materiales base más rentables: cómo funciona y cuándo usarlo."
+      },
+      "roadBase": {
+        "tag": "Base para Carretera",
+        "title": "Cómo Calcular Cuánta Piedra Triturada Necesitas",
+        "desc": "Toneladas vs yardas cúbicas explicadas. Una fórmula práctica para contratistas y propietarios."
+      }
+    }
+  },
+  "contact": {
+    "tag": "Encuéntranos",
+    "title": "Visita Nuestras",
+    "titleHighlight": "Instalaciones",
+    "location": "Ubicación",
+    "phone": "Teléfono",
+    "hours": "Horario",
+    "hoursValue": "Lun–Sáb<br/>7:00am – 5:00pm",
+    "follow": "Síguenos"
+  },
+  "cta": {
+    "title": "¿Listo para Ordenar<br/>Tus Materiales?",
+    "text": "Recogida o entrega disponible. Contratistas y propietarios de Tampa Bay bienvenidos.",
+    "btnMaterials": "Ver Materiales",
+    "btnQuote": "Solicitar Cotización"
+  },
+  "footer": {
+    "description": "\"El Mundo Es Tuyo\" — Proveedor confiable de concreto reciclado, asfalto y agregados de Tampa Bay desde 1990. Propiedad de Max y Denise Sánchez.",
+    "navigation": "Navegación",
+    "materials": "Materiales",
+    "contact": "Contacto",
+    "copyright": "© 2026 Global Recycling of Tampa Bay, Inc. All rights reserved.",
+    "builtBy": "Built by JBWebsites · Tampa, FL"
+  },
+  "cart": {
+    "title": "Tu Carrito",
+    "empty": "Tu carrito está vacío",
+    "emptyDesc": "Explora nuestros materiales para agregar artículos",
+    "total": "Total estimado",
+    "checkout": "Proceder al Pago",
+    "quoteInstead": "Solicitar Cotización"
+  },
+  "auth": {
+    "metaDescription": "Accede a tu cuenta o regístrate",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "displayName": "Nombre Completo",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phone": "Teléfono",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Crear Cuenta",
+    "signOut": "Cerrar Sesión",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetPassword": "Restablecer Contraseña",
+    "sendResetLink": "Enviar Enlace",
+    "backToLogin": "Volver al inicio de sesión",
+    "backToSite": "Volver al sitio",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "createAccount": "Crear una cuenta",
+    "errors": {
+      "emailRequired": "El correo es requerido",
+      "passwordRequired": "La contraseña es requerida",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "invalidEmail": "Correo electrónico inválido",
+      "weakPassword": "La contraseña debe tener al menos 6 caracteres",
+      "emailInUse": "Este correo ya está registrado",
+      "userNotFound": "Usuario no encontrado",
+      "wrongPassword": "Contraseña incorrecta",
+      "generic": "Ocurrió un error. Intenta de nuevo."
+    },
+    "success": {
+      "registered": "Cuenta creada exitosamente. Revisa tu correo para verificar.",
+      "resetSent": "Enlace de restablecimiento enviado a tu correo",
+      "profileUpdated": "Perfil actualizado exitosamente"
+    }
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "editProfile": "Editar Perfil",
+    "saveChanges": "Guardar Cambios",
+    "cancel": "Cancelar",
+    "accountInfo": "Información de Cuenta",
+    "personalInfo": "Información Personal",
+    "changePassword": "Cambiar Contraseña"
+  },
+  "dashboard": {
+    "title": "Mi Cuenta",
+    "welcome": "Bienvenido",
+    "myOrders": "Mis Pedidos",
+    "myWishlist": "Mi Lista de Deseos",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión",
+    "noOrders": "No tienes pedidos aún",
+    "noWishlist": "Tu lista de deseos está vacía",
+    "orderNumber": "Pedido #",
+    "orderDate": "Fecha",
+    "orderStatus": "Estado",
+    "orderTotal": "Total",
+    "viewOrder": "Ver Detalles",
+    "reorder": "Volver a Ordenar",
+    "statuses": {
+      "pending": "Pendiente",
+      "processing": "Procesando",
+      "completed": "Completado",
+      "cancelled": "Cancelado"
+    }
+  },
+  "whatWeBuy": {
+    "tag": "Materiales",
+    "title": "Qué Vendemos",
+    "lead": "Aceptamos materiales de construcción limpios y reciclables. Contáctenos para precios y opciones de entrega.",
+    "concrete": {
+      "title": "Concreto",
+      "desc": "Losas rotas, cimientos, bordillos y escombros de concreto limpio. Sin Basura."
+    },
+    "asphalt": {
+      "title": "Asfalto",
+      "desc": "Estacionamientos, entradas, carreteras. Fresado de asfalto limpio y pavimento."
+    },
+    "brick": {
+      "title": "Ladrillo y Bloque",
+      "desc": "Ladrillo y bloque de concreto limpios."
+    },
+    "rock": {
+      "title": "Roca y Piedra",
+      "desc": "Agregados naturales, piedra caliza y material de relleno limpio."
+    }
+  }
+}

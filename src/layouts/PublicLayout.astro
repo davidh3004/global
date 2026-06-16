@@ -1,0 +1,61 @@
+---
+import '../styles/tailwind.css';
+import BaseLayout from './BaseLayout.astro';
+import SEO from '../components/common/SEO.astro';
+import FooterDynamic from '../components/common/FooterDynamic';
+import Header from '../components/common/Header.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+  image?: string;
+  type?: string;
+}
+
+const { title, description, lang = 'en', image, type } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <SEO 
+    title={title} 
+    description={description} 
+    image={image}
+    type={type}
+  />
+  <Header lang={lang} />
+  <main>
+    <slot />
+  </main>
+  <FooterDynamic client:load lang={lang} />
+  
+  <!-- Scripts para animaciones y efectos del diseño original -->
+  <script>
+    // Efecto scroll en navegación
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nav');
+      if (nav) {
+        nav.classList.toggle('scrolled', window.scrollY > 10);
+      }
+    });
+
+    // Intersection Observer para animaciones fade
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.fade').forEach((el) => obs.observe(el));
+  </script>
+
+  <!-- Sistema de traducción dinámica -->
+  <script>
+    import '../scripts/i18n-updater';
+  </script>
+</BaseLayout>

@@ -1,0 +1,228 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "materials": "Materials",
+    "learning": "Learning",
+    "information": "Information",
+    "calculating": "Calculating Your Project",
+    "weighTruck": "Weigh Your Truck",
+    "creditCard": "Credit Card Authorization",
+    "rollOff": "Roll-Off Service",
+    "rollOffAgreement": "Service Agreement",
+    "rollOffRequest": "Roll-Off Request Form",
+    "services": "Services",
+    "resources": "Resources",
+    "forms": "Forms",
+    "contact": "Contact",
+    "getQuote": "Get a Quote"
+  },
+  "hero": {
+    "label": "Tampa Bay's Recycling Leader Since 1990",
+    "title": "The World",
+    "titleHighlight": "Is Yours.",
+    "titleEnd": "Recycle It.",
+    "subtitle": "Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 34+ years.",
+    "btnMaterials": "Shop Materials",
+    "btnQuote": "Request a Quote",
+    "statsExperience": "Years Experience",
+    "statsRating": "Google Rating",
+    "statsHours": "MON–SAT",
+    "familyOwned": "Family-Owned"
+  },
+  "quote": {
+    "title": "Quick Quote",
+    "subtitle": "We respond same day",
+    "name": "Your Name",
+    "namePlaceholder": "John Smith",
+    "material": "Material",
+    "quantity": "Quantity",
+    "quantityPlaceholder": "10 tons",
+    "contact": "Phone or Email",
+    "contactPlaceholder": "(813) 000-0000",
+    "submit": "Send Request",
+    "divider": "or call directly",
+    "materials": {
+      "concrete": "Crushed Concrete",
+      "asphalt": "Recycled Asphalt",
+      "roadBase": "Road Base",
+      "paverBase": "Paver Base"
+    }
+  },
+  "ticker": {
+    "concrete": "Recycled Concrete",
+    "asphalt": "Crushed Asphalt",
+    "roadBase": "Road Base",
+    "fill": "Aggregate Fill",
+    "paverBase": "Paver Base",
+    "address": "5011 N Clark Ave, Tampa FL",
+    "hours": "Mon–Sat 7am–5pm",
+    "phone": "(813) 373-6467"
+  },
+  "stats": {
+    "years": "Years Operating",
+    "yards": "Cubic Yards Excavated",
+    "recycled": "Recycled — Zero Landfill",
+    "rating": "Google Rating"
+  },
+  "about": {
+    "tag": "Who We Are",
+    "title": "Built on Decades of",
+    "titleHighlight": "Experience",
+    "text1": "Global Recycling of Tampa Bay is owned by Max & Denise Sanchez. Max Sanchez has owned Star Quality Inc., the parent company, for over 34 years — a privately owned corporation with experience on Commercial projects alongside Skanska, Kimmins Contracting, Beck Group, and more.",
+    "text2": "We played a key role in the D&M Business Park in Drew Park, excavating 14,400 cubic yards of contaminated soil and replacing it with screened materials and 12\" of crushed concrete base below each building pad.",
+    "list1": "Recycled concrete, asphalt, and aggregate",
+    "list2": "Locally owned & operated — Tampa Bay",
+    "list3": "Serving commercial contractors & homeowners",
+    "list4": "Credit application available for business accounts",
+    "btnStory": "Our Full Story",
+    "badgeYears": "Years"
+  },
+  "learning": {
+    "tag": "Learning Center",
+    "title": "Know Your",
+    "titleHighlight": "Materials",
+    "lead": "Educational guides on recycled aggregates from the people who work with them every day.",
+    "readMore": "Read More",
+    "articles": {
+      "concrete": {
+        "tag": "Concrete",
+        "title": "Why Use Recycled Concrete in Your Project?",
+        "desc": "Cost savings, environmental impact, and LBR performance comparable to virgin materials."
+      },
+      "asphalt": {
+        "tag": "Asphalt",
+        "title": "Benefits of Recycled Asphalt for Driveways",
+        "desc": "One of the most cost-effective base materials — how it works and when to use it."
+      },
+      "roadBase": {
+        "tag": "Road Base",
+        "title": "How to Calculate How Much Crushed Stone You Need",
+        "desc": "Tons vs cubic yards explained. A practical formula for contractors and homeowners."
+      }
+    }
+  },
+  "contact": {
+    "tag": "Find Us",
+    "title": "Visit Our",
+    "titleHighlight": "Facility",
+    "location": "Location",
+    "phone": "Phone",
+    "hours": "Hours",
+    "hoursValue": "Mon–Sat<br/>7:00am – 5:00pm",
+    "follow": "Follow Us"
+  },
+  "cta": {
+    "title": "Ready to Order<br/>Your Materials?",
+    "text": "Pickup or delivery available. Tampa Bay contractors and homeowners welcome.",
+    "btnMaterials": "Shop Materials",
+    "btnQuote": "Request Quote"
+  },
+  "footer": {
+    "description": "\"The World Is Yours\" — Tampa Bay's trusted recycled concrete, asphalt, and aggregate supplier since 1990. Owned by Max & Denise Sanchez.",
+    "navigation": "Navigation",
+    "materials": "Materials",
+    "contact": "Contact",
+    "copyright": "© 2026 Global Recycling of Tampa Bay, Inc. All rights reserved.",
+    "builtBy": "Built by JBWebsites · Tampa, FL"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Browse our materials to add items",
+    "total": "Estimated total",
+    "checkout": "Proceed to Checkout",
+    "quoteInstead": "Request Quote Instead"
+  },
+  "auth": {
+    "metaDescription": "Sign in to your account or register",
+    "login": "Sign In",
+    "register": "Register",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "displayName": "Full Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "signIn": "Sign In",
+    "signUp": "Create Account",
+    "signOut": "Sign Out",
+    "forgotPassword": "Forgot your password?",
+    "resetPassword": "Reset Password",
+    "sendResetLink": "Send Reset Link",
+    "backToLogin": "Back to sign in",
+    "backToSite": "Back to site",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createAccount": "Create an account",
+    "errors": {
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "passwordMismatch": "Passwords do not match",
+      "invalidEmail": "Invalid email address",
+      "weakPassword": "Password must be at least 6 characters",
+      "emailInUse": "This email is already registered",
+      "userNotFound": "User not found",
+      "wrongPassword": "Incorrect password",
+      "generic": "An error occurred. Please try again."
+    },
+    "success": {
+      "registered": "Account created successfully. Check your email to verify.",
+      "resetSent": "Reset link sent to your email",
+      "profileUpdated": "Profile updated successfully"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "editProfile": "Edit Profile",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "accountInfo": "Account Information",
+    "personalInfo": "Personal Information",
+    "changePassword": "Change Password"
+  },
+  "dashboard": {
+    "title": "My Account",
+    "welcome": "Welcome",
+    "myOrders": "My Orders",
+    "myWishlist": "My Wishlist",
+    "profile": "Profile",
+    "logout": "Sign Out",
+    "noOrders": "You have no orders yet",
+    "noWishlist": "Your wishlist is empty",
+    "orderNumber": "Order #",
+    "orderDate": "Date",
+    "orderStatus": "Status",
+    "orderTotal": "Total",
+    "viewOrder": "View Details",
+    "reorder": "Reorder",
+    "statuses": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "whatWeBuy": {
+    "tag": "Materials",
+    "title": "What We Sell",
+    "lead": "We accept clean, recyclable construction materials. Contact us for pricing and delivery options.",
+    "concrete": {
+      "title": "Concrete",
+      "desc": "Broken slabs, foundations, curbs, and clean concrete debris. No Trash."
+    },
+    "asphalt": {
+      "title": "Asphalt",
+      "desc": "Parking lots, driveways, roads. Clean asphalt millings and pavement."
+    },
+    "brick": {
+      "title": "Brick & Block",
+      "desc": "Clean brick and concrete block."
+    },
+    "rock": {
+      "title": "Rock & Stone",
+      "desc": "Natural aggregates, limestone, and clean fill material."
+    }
+  }
+}

@@ -1,0 +1,117 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+
+const locale = Astro.currentLocale || 'en';
+---
+
+<PublicLayout
+  title="Weigh Your Truck — Global Recycling of Tampa Bay"
+  description="Weigh your vehicle on our scale at Global Recycling of Tampa Bay. Accurate certified weights for incoming and outgoing loads."
+  lang={locale}
+>
+  <div class="gr-page">
+    <section class="gr-hero">
+      <div class="gr-hero-inner">
+        <span class="gr-eyebrow">On-Site Scale</span>
+        <h1>Weigh Your Truck</h1>
+        <p>Accurate weights for incoming and outgoing loads, right here at our Tampa facility.</p>
+        <div class="gr-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Weigh Your Truck</div>
+      </div>
+    </section>
+
+    <div class="gr-wrap gr-wrap-wide">
+      <!-- Photo + facts ticket -->
+      <div class="weigh-top">
+        <figure class="gr-figure">
+          <img src="/weigh-your-truck.jpg" alt="Truck on the scale at Global Recycling of Tampa Bay" loading="lazy" width="1600" height="1066" />
+          <figcaption>Our certified scale at Global Recycling of Tampa Bay — used to weigh vehicles and loads of material.</figcaption>
+        </figure>
+
+        <aside class="weigh-card">
+          <div class="weigh-card-head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3"/><path d="M5 6h14l-3 7H8z"/><path d="M3 21h18"/><path d="M8 13l-2 8"/><path d="M16 13l2 8"/></svg>
+            Scale Facts
+          </div>
+          <ul class="weigh-facts">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div><span>Location</span><strong>5011 N. Clark Ave,<br/>Tampa, FL 33614</strong></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+              <div><span>Hours</span><strong>Mon–Sat · 7:00 AM – 5:00 PM</strong></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3"/><path d="M5 6h14l-3 7H8z"/><path d="M3 21h18"/></svg>
+              <div><span>Weights</span><strong>Certified in &amp; out</strong></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <div><span>Call ahead</span><strong>(813) 373-6467</strong></div>
+            </li>
+          </ul>
+          <a class="weigh-cta" href="tel:8133736467">Call The Yard</a>
+        </aside>
+      </div>
+
+      <!-- Process steps -->
+      <div class="gr-panel">
+        <div class="gr-panel-head">
+          <svg viewBox="0 0 24 24"><path d="M12 3v3"/><path d="M5 6h14l-3 7H8z"/><path d="M3 21h18"/><path d="M8 13l-2 8"/><path d="M16 13l2 8"/></svg>
+          How Weighing Works
+        </div>
+        <div class="gr-panel-body">
+          <div class="gr-steps weigh-steps">
+            <div class="gr-step">
+              <div class="gr-step-num">1</div>
+              <div class="gr-step-body"><h3>Pull onto the scale</h3><p>Drive on slowly and come to a complete stop on the scale platform.</p></div>
+            </div>
+            <div class="gr-step">
+              <div class="gr-step-num">2</div>
+              <div class="gr-step-body"><h3>Get your weight</h3><p>Our team records an accurate, certified weight for your vehicle and load.</p></div>
+            </div>
+            <div class="gr-step">
+              <div class="gr-step-num">3</div>
+              <div class="gr-step-body"><h3>Have your ticket ready</h3><p>Bring your ticket or order details so we can match the weight to your job.</p></div>
+            </div>
+            <div class="gr-step">
+              <div class="gr-step-num">4</div>
+              <div class="gr-step-body"><h3>We handle the rest</h3><p>Outgoing recycled concrete and asphalt are sold by the ton — your weight confirms the tonnage.</p></div>
+            </div>
+          </div>
+          <div class="gr-callout"><strong>Heads up:</strong> Weights are used to confirm tonnage on outgoing material. Call ahead during busy periods and we'll have everything ready when you arrive.</div>
+        </div>
+      </div>
+
+      <div class="gr-cta-band">
+        <h3>Questions about weights or loads?</h3>
+        <p>Call ahead and we'll have everything ready when you arrive.</p>
+        <a class="gr-cta-phone" href="tel:8133736467">(813) 373-6467</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .weigh-top{display:grid;grid-template-columns:1.4fr 0.9fr;gap:28px;align-items:start;margin-bottom:34px}
+    @media(max-width:860px){.weigh-top{grid-template-columns:1fr}}
+    .weigh-top .gr-figure{margin:0}
+
+    .weigh-card{background:#fff;border:2px solid var(--green-dark);border-radius:6px;
+      box-shadow:6px 6px 0 rgba(31,107,58,.12);overflow:hidden;position:sticky;top:120px}
+    .weigh-card-head{background:var(--green);color:#fff;font-family:var(--slab);font-weight:700;font-size:18px;
+      padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:3px solid var(--green-dark)}
+    .weigh-card-head svg{width:22px;height:22px}
+    .weigh-facts{list-style:none;margin:0;padding:8px 20px}
+    .weigh-facts li{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--paper-line)}
+    .weigh-facts li:last-child{border-bottom:none}
+    .weigh-facts svg{width:24px;height:24px;flex-shrink:0;color:var(--green);margin-top:2px}
+    .weigh-facts span{display:block;font-family:var(--cond);text-transform:uppercase;letter-spacing:1.5px;font-size:11px;color:var(--gray-600);margin-bottom:3px}
+    .weigh-facts strong{font-family:var(--slab);font-size:16px;color:var(--ink);line-height:1.35}
+    .weigh-cta{display:block;margin:6px 20px 20px;padding:13px;text-align:center;background:var(--green-dark);color:#fff;
+      font-family:var(--cond);text-transform:uppercase;letter-spacing:2px;font-weight:600;font-size:15px;
+      border-radius:5px;text-decoration:none;border:2px solid var(--green-dark);transition:background .15s}
+    .weigh-cta:hover{background:var(--green)}
+    .weigh-steps{grid-template-columns:1fr 1fr}
+    @media(max-width:680px){.weigh-steps{grid-template-columns:1fr}}
+  </style>
+</PublicLayout>

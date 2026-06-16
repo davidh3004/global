@@ -1,0 +1,22 @@
+# Environment Variables Template
+
+## Firebase Configuration
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+FIREBASE_APP_ID=your_app_id
+
+## Google reCAPTCHA v3
+PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+
+## Resend (Email Service)
+RESEND_API_KEY=your_resend_api_key
+CONTACT_EMAIL_TO=info@globalrecyclingtampabay.com
+CONTACT_EMAIL_FROM=noreply@globalrecyclingtampabay.com
+
+## Stripe (Payment Processing)
+PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+STRIPE_SECRET_KEY=your_stripe_secret_key

@@ -1,0 +1,107 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+
+const locale = Astro.currentLocale || 'en';
+
+const companies = [
+  {
+    id: 'global',
+    name: 'Global Recycling of Tampa Bay',
+    file: '/forms/global-credit-application.pdf',
+  },
+  {
+    id: 'tricounty',
+    name: 'Tri-County Hauling & Demolition',
+    file: '/forms/tricounty-credit-application.pdf',
+  },
+];
+---
+
+<PublicLayout
+  title="Credit Card Authorization Form — Global Recycling of Tampa Bay"
+  description="Download or print the credit card authorization / credit application for Global Recycling of Tampa Bay and Tri-County Hauling & Demolition."
+  lang={locale}
+>
+  <div class="gr-page">
+    <section class="gr-hero">
+      <div class="gr-hero-inner">
+        <span class="gr-eyebrow">Forms</span>
+        <h1>Credit Card Authorization Form</h1>
+        <p>Choose your company below to view, print, or download the credit application. Complete it and return it to set up your account.</p>
+        <div class="gr-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Credit Card Authorization Form</div>
+      </div>
+    </section>
+
+    <div class="gr-wrap gr-wrap-wide">
+      <label class="gr-select-label" for="ccCompany">Select company</label>
+      <div class="gr-tabs" role="tablist" aria-label="Select company">
+        {companies.map((c, i) => (
+          <button
+            class={`gr-tab ${i === 0 ? 'active' : ''}`}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            data-target={c.id}
+          >{c.name}</button>
+        ))}
+      </div>
+
+      <!-- Native select fallback for small screens / accessibility -->
+      <select id="ccCompany" class="gr-mobile-select">
+        {companies.map((c, i) => (
+          <option value={c.id} selected={i === 0}>{c.name}</option>
+        ))}
+      </select>
+
+      {companies.map((c, i) => (
+        <div class="gr-tabpanel" data-panel={c.id} hidden={i !== 0}>
+          <div class="gr-pdf">
+            <div class="gr-pdf-actions">
+              <span class="pdf-title">{c.name} — Credit Application</span>
+              <span class="pdf-btns">
+                <a class="gr-btn gr-btn-outline" href={c.file} target="_blank" rel="noopener">Open / Print</a>
+                <a class="gr-btn gr-btn-light" href={c.file} download>Download PDF</a>
+              </span>
+            </div>
+            <iframe src={`${c.file}#view=FitH`} title={`${c.name} credit application`} loading="lazy"></iframe>
+          </div>
+        </div>
+      ))}
+
+      <div class="gr-callout" style="margin-top:26px">
+        Trouble viewing the form? Use <strong>Download PDF</strong> to save it, or call us at <a href="tel:8133736467">(813)&nbsp;373-6467</a> and we'll email it to you.
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .gr-select-label{display:block;font-family:var(--cond);text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--gray-600);margin-bottom:8px}
+    .gr-mobile-select{display:none;width:100%;padding:12px 14px;border:2px solid var(--green-dark);border-radius:5px;font-size:16px;font-family:var(--font);color:var(--ink);background:#fff;margin-bottom:18px}
+    @media(max-width:560px){
+      .gr-tabs{display:none}
+      .gr-mobile-select{display:block}
+    }
+  </style>
+
+  <script is:inline>
+    (function () {
+      var tabs = document.querySelectorAll('.gr-tabs .gr-tab');
+      var panels = document.querySelectorAll('.gr-tabpanel');
+      var select = document.getElementById('ccCompany');
+
+      function activate(id) {
+        panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== id; });
+        tabs.forEach(function (t) {
+          var on = t.getAttribute('data-target') === id;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        if (select && select.value !== id) select.value = id;
+      }
+
+      tabs.forEach(function (t) {
+        t.addEventListener('click', function () { activate(t.getAttribute('data-target')); });
+      });
+      if (select) select.addEventListener('change', function () { activate(select.value); });
+    })();
+  </script>
+</PublicLayout>

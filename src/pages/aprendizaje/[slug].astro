@@ -1,0 +1,213 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import Header from '../../components/common/Header.astro';
+import Footer from '../../components/common/Footer.astro';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+---
+
+<PublicLayout 
+  title="Artículo - Global Recycling"
+  description="Centro de aprendizaje sobre materiales reciclados"
+  lang="es"
+>
+  <Header lang="es" />
+  
+  <div id="article-container" style="min-height: 100vh;">
+    <!-- Loading state -->
+    <div id="loading" style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+      <div style="width: 40px; height: 40px; border: 4px solid #e5e7eb; border-top-color: var(--green); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    </div>
+    
+    <!-- Article content will be injected here -->
+    <div id="article-content" style="display: none;"></div>
+    
+    <!-- Error state -->
+    <div id="error" style="display: none; text-align: center; padding: 60px 20px;">
+      <h2 style="font-size: 2rem; color: var(--gray-900); margin-bottom: 1rem;">Artículo no encontrado</h2>
+      <p style="color: var(--gray-600); margin-bottom: 2rem;">El artículo que buscas no existe o ha sido eliminado.</p>
+      <a href="/" class="btn-primary">Volver al inicio</a>
+    </div>
+  </div>
+  
+  <Footer lang="es" />
+</PublicLayout>
+
+<style>
+  .article-hero {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    max-height: 600px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .article-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .article-hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    padding: 60px 20px 40px;
+  }
+  
+  .article-category {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .article-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  .article-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+  
+  .article-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--gray-700);
+  }
+  
+  .article-content p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .article-content h2 {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 2.5rem 0 1rem;
+  }
+  
+  .article-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin: 2rem 0 1rem;
+  }
+  
+  .article-content ul, .article-content ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+  }
+  
+  .article-content li {
+    margin-bottom: 0.75rem;
+  }
+  
+  .article-content strong {
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+  
+  @media (max-width: 768px) {
+    .article-hero {
+      height: 50vh;
+      min-height: 300px;
+    }
+    
+    .article-title {
+      font-size: 1.75rem;
+    }
+    
+    .article-body {
+      padding: 40px 20px;
+    }
+    
+    .article-content {
+      font-size: 1rem;
+    }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script type="module" define:vars={{ slug }}>
+  import { collection, query, where, getDocs } from 'firebase/firestore';
+  import { db } from '../../firebase/client';
+  
+  async function loadArticle() {
+    const loading = document.getElementById('loading');
+    const content = document.getElementById('article-content');
+    const error = document.getElementById('error');
+    
+    try {
+      // Query article by slug
+      const q = query(
+        collection(db, 'learningArticles'),
+        where('slug', '==', slug),
+        where('isPublished', '==', true)
+      );
+      
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        return;
+      }
+      
+      const article = querySnapshot.docs[0].data();
+      
+      // Render article
+      content.innerHTML = `
+        <div class="article-hero">
+          <img src="${article.imageUrl}" alt="${article.title}" />
+          <div class="article-hero-overlay">
+            <div class="container" style="max-width: 1200px; margin: 0 auto;">
+              <span class="article-category">${article.category}</span>
+              <h1 class="article-title">${article.title}</h1>
+            </div>
+          </div>
+        </div>
+        
+        <div class="article-body">
+          <div class="article-content">
+            ${article.content.replace(/\n/g, '<br>')}
+          </div>
+        </div>
+      `;
+      
+      loading.style.display = 'none';
+      content.style.display = 'block';
+      
+      // Update page title
+      document.title = `${article.title} - Global Recycling`;
+      
+    } catch (err) {
+      console.error('Error loading article:', err);
+      loading.style.display = 'none';
+      error.style.display = 'block';
+    }
+  }
+  
+  loadArticle();
+</script>

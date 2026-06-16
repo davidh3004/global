@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import CheckoutWrapper from '../components/cart/CheckoutWrapper';
+import RecaptchaProvider from '../components/security/RecaptchaProvider';
+
+const locale = Astro.currentLocale || 'en';
+const isEnglish = locale === 'en';
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+---
+
+<BaseLayout 
+  title={isEnglish ? "Checkout - Global Recycling" : "Finalizar Compra - Global Recycling"}
+  description={isEnglish ? "Complete your purchase" : "Completa tu compra"}
+  lang={locale}
+>
+  <Header lang={locale} />
+  
+  <div style="min-height: 100vh; background: var(--gray-50); padding: 120px 0 60px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb-nav">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/" class="breadcrumb-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              <span>{isEnglish ? 'Home' : 'Inicio'}</span>
+            </a>
+          </li>
+          <li class="breadcrumb-separator">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </li>
+          <li class="breadcrumb-item breadcrumb-current">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+            </svg>
+            <span>{isEnglish ? 'Checkout' : 'Finalizar Compra'}</span>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Checkout Form wrapped in CartProvider and RecaptchaProvider -->
+      <div id="checkout-container">
+        <RecaptchaProvider client:load siteKey={recaptchaSiteKey}>
+          <CheckoutWrapper client:only="react" lang={locale} />
+        </RecaptchaProvider>
+      </div>
+
+    </div>
+  </div>
+  
+  <Footer lang={locale} />
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav {
+    margin-bottom: 32px;
+    background: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .breadcrumb-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--green);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .breadcrumb-link:hover {
+    background: rgba(45, 140, 78, 0.1);
+    transform: translateX(-2px);
+  }
+
+  .breadcrumb-link svg {
+    flex-shrink: 0;
+  }
+
+  .breadcrumb-separator {
+    display: flex;
+    align-items: center;
+    color: var(--gray-400);
+  }
+
+  .breadcrumb-current {
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--gray-100);
+    border-radius: 8px;
+  }
+
+  .breadcrumb-current svg {
+    flex-shrink: 0;
+    color: var(--green);
+  }
+
+  @media (max-width: 640px) {
+    .breadcrumb-nav {
+      padding: 12px 16px;
+    }
+
+    .breadcrumb-item span {
+      display: none;
+    }
+
+    .breadcrumb-link {
+      padding: 6px;
+    }
+
+    .breadcrumb-current {
+      padding: 6px;
+    }
+  }
+</style>

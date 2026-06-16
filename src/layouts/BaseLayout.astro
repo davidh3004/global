@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+}
+
+const { title, description, lang = 'en' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/x-icon" href="/favicon.jpeg" />
+    
+    <!-- Fuentes exactas del diseño original -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=Roboto+Slab:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- Estilos globales -->
+    <link rel="stylesheet" href="/original.css" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

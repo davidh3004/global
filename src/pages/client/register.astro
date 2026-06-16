@@ -1,0 +1,312 @@
+---
+/**
+ * Public User Registration Page
+ * Multilingual support via i18n
+ * DRY: Reuses AuthLayout and user.service
+ */
+import AuthLayout from '../../layouts/AuthLayout.astro';
+import { t } from '../../utils/i18n';
+
+const locale = Astro.currentLocale || 'en';
+---
+
+<AuthLayout title={t('auth.register', locale)} lang={locale}>
+  <style>
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: white;
+      box-sizing: border-box;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    
+    .form-input::placeholder {
+      color: #9ca3af;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.875rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-submit:hover:not(:disabled) {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-submit:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .btn-submit:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .message-box {
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      display: none;
+    }
+    
+    .message-box.show {
+      display: block;
+    }
+    
+    .error-box {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .success-box {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .link {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    .link:hover {
+      color: #059669;
+      text-decoration: underline;
+    }
+  </style>
+  <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">
+    {locale === 'es' ? 'Registrarse' : 'Register'}
+  </h2>
+  <p style="text-align: center; color: #6b7280; font-size: 0.875rem; margin-bottom: 2rem;">
+    {locale === 'es' ? 'Crear una cuenta' : 'Create an account'}
+  </p>
+
+  <div id="errorMessage" class="message-box error-box"></div>
+  <div id="successMessage" class="message-box success-box"></div>
+
+  <form id="registerForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="firstName" class="form-label">
+          {locale === 'es' ? 'Nombre' : 'First Name'}
+        </label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          class="form-input"
+          placeholder={locale === 'es' ? 'Juan' : 'John'}
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="lastName" class="form-label">
+          {locale === 'es' ? 'Apellido' : 'Last Name'}
+        </label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          class="form-input"
+          placeholder={locale === 'es' ? 'Pérez' : 'Doe'}
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="form-label">
+        {locale === 'es' ? 'Correo Electrónico' : 'Email'}
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="form-input"
+        placeholder="tu@email.com"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">
+        {locale === 'es' ? 'Contraseña' : 'Password'}
+      </label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        class="form-input"
+        placeholder="••••••••"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword" class="form-label">
+        {locale === 'es' ? 'Confirmar Contraseña' : 'Confirm Password'}
+      </label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        required
+        class="form-input"
+        placeholder="••••••••"
+      />
+    </div>
+
+    <button type="submit" class="btn-submit" id="submitBtn">
+      {locale === 'es' ? 'Crear Cuenta' : 'Create Account'}
+    </button>
+  </form>
+
+  <p style="text-align: center; margin-top: 1.5rem; color: #6b7280; font-size: 0.875rem;">
+    {locale === 'es' ? '¿Ya tienes cuenta?' : 'Already have an account?'}
+    <a href="/client/login" class="link">
+      {locale === 'es' ? 'Iniciar Sesión' : 'Sign In'}
+    </a>
+  </p>
+  
+  <p style="text-align: center; margin-top: 1rem; color: #6b7280; font-size: 0.875rem;">
+    <a href="/" class="link">
+      ← {locale === 'es' ? 'Volver al sitio' : 'Back to site'}
+    </a>
+  </p>
+
+  <script>
+    import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+    import { auth } from '../../firebase/client';
+
+    const locale = window.location.pathname.includes('/en') ? 'en' : 'es';
+    const form = document.getElementById('registerForm') as HTMLFormElement;
+    const errorMessage = document.getElementById('errorMessage') as HTMLDivElement;
+    const successMessage = document.getElementById('successMessage') as HTMLDivElement;
+    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const firstName = formData.get('firstName') as string;
+      const lastName = formData.get('lastName') as string;
+      const displayName = `${firstName} ${lastName}`.trim() || 'User';
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      const confirmPassword = formData.get('confirmPassword') as string;
+
+      // Clear previous messages
+      errorMessage.classList.remove('show');
+      successMessage.classList.remove('show');
+      errorMessage.textContent = '';
+      successMessage.textContent = '';
+
+      // Validate passwords match
+      if (password !== confirmPassword) {
+        errorMessage.textContent = locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match';
+        errorMessage.classList.add('show');
+        return;
+      }
+
+      // Validate password length
+      if (password.length < 6) {
+        errorMessage.textContent = locale === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters';
+        errorMessage.classList.add('show');
+        return;
+      }
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = locale === 'es' ? 'Creando cuenta...' : 'Creating account...';
+
+      try {
+        // Create user with Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Update display name
+        await updateProfile(user, { displayName });
+
+        // Set custom claim 'customer' via server API
+        await fetch('/api/auth/claims', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid: user.uid, role: 'customer' }),
+        });
+
+        // Force token refresh to get new claims
+        await user.getIdToken(true);
+
+        // Show success message
+        successMessage.textContent = locale === 'es' 
+          ? '¡Cuenta creada exitosamente! Redirigiendo...' 
+          : 'Account created successfully! Redirecting...';
+        successMessage.classList.add('show');
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = '/client/dashboard';
+        }, 1500);
+
+      } catch (error: any) {
+        // Show error
+        let errorMsg = locale === 'es' ? 'Ocurrió un error. Inténtalo de nuevo.' : 'An error occurred. Please try again.';
+        
+        if (error.code === 'auth/email-already-in-use') {
+          errorMsg = locale === 'es' ? 'Este correo ya está registrado' : 'This email is already registered';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMsg = locale === 'es' ? 'Correo electrónico inválido' : 'Invalid email address';
+        } else if (error.code === 'auth/weak-password') {
+          errorMsg = locale === 'es' ? 'La contraseña es muy débil' : 'Password is too weak';
+        }
+        
+        errorMessage.textContent = errorMsg;
+        errorMessage.classList.add('show');
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.textContent = locale === 'es' ? 'Crear Cuenta' : 'Create Account';
+      }
+    });
+  </script>
+</AuthLayout>

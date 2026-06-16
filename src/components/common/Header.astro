@@ -1,0 +1,862 @@
+---
+import { t } from '../../utils/i18n';
+import CartWrapper from '../cart/CartWrapper';
+import LanguageSelector from './LanguageSelector';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isEnglish = lang === 'en';
+---
+
+<nav class="header-nav" id="nav">
+  <!-- Heritage utility top-bar -->
+  <div class="header-topbar">
+    <div class="header-topbar-inner">
+      <span class="tb-tag">"The World Is Yours" — Family-Owned in Tampa Since 1990</span>
+      <div class="tb-info">
+        <a class="tb-item" href="https://maps.google.com/?q=5011+N+Clark+Ave+Tampa+FL+33614" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          5011 N. Clark Ave, Tampa, FL
+        </a>
+        <span class="tb-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+          Mon–Sat 7AM–5PM
+        </span>
+        <a class="tb-item tb-phone" href="tel:8133736467">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (813) 373-6467
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-container">
+    <!-- Logo -->
+    <a href="/#hero" class="header-logo">
+      <img src="/logo.png" alt="Global Recycling of Tampa Bay"/>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div class="header-links">
+      <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
+
+      <div class="header-dropdown">
+        <button type="button" class="header-dropdown-toggle" data-i18n="nav.services">{t('nav.services', lang)}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="header-submenu">
+          <a href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
+          <a href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
+        </div>
+      </div>
+
+      <div class="header-dropdown">
+        <button type="button" class="header-dropdown-toggle" data-i18n="nav.resources">{t('nav.resources', lang)}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="header-submenu">
+          <a href="/information" data-i18n="nav.information">{t('nav.information', lang)}</a>
+          <a href="/calculating-your-project" data-i18n="nav.calculating">{t('nav.calculating', lang)}</a>
+        </div>
+      </div>
+
+      <div class="header-dropdown">
+        <button type="button" class="header-dropdown-toggle" data-i18n="nav.forms">{t('nav.forms', lang)}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="header-submenu">
+          <a href="/credit-card-authorization" data-i18n="nav.creditCard">{t('nav.creditCard', lang)}</a>
+          <a href="/roll-off-service" data-i18n="nav.rollOffAgreement">{t('nav.rollOffAgreement', lang)}</a>
+          <a href="/roll-off-service" data-i18n="nav.rollOffRequest">{t('nav.rollOffRequest', lang)}</a>
+        </div>
+      </div>
+
+      <a href="/#about" data-scroll-to="about" data-i18n="nav.about">{t('nav.about', lang)}</a>
+      <a href="/#contact" data-scroll-to="contact" data-i18n="nav.contact">{t('nav.contact', lang)}</a>
+    </div>
+
+    <!-- Desktop Actions -->
+    <div class="header-actions">
+      <!-- Shopping Cart -->
+      <button class="header-icon-btn" id="cartIcon" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge" id="cartBadgePlaceholder"></span>
+      </button>
+
+      <!-- User Menu -->
+      <div class="header-user-menu" id="userMenu">
+        <button class="header-icon-btn" id="userMenuBtn" aria-label="User Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+        <div class="user-dropdown" id="userMenuDropdown">
+          <!-- Content loaded by JS -->
+        </div>
+      </div>
+
+      <!-- Language Selector -->
+      <LanguageSelector client:load />
+
+      <!-- Get Quote Button -->
+      <a href="#hero" class="header-btn-quote">
+        <span data-i18n="nav.getQuote">{t('nav.getQuote', lang)}</span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="header-mobile-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="header-mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-content">
+      <!-- Mobile Navigation Links -->
+      <div class="mobile-nav-links">
+        <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
+
+        <span class="mobile-nav-group" data-i18n="nav.services">{t('nav.services', lang)}</span>
+        <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
+        <a class="mobile-nav-sub" href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
+
+        <span class="mobile-nav-group" data-i18n="nav.resources">{t('nav.resources', lang)}</span>
+        <a class="mobile-nav-sub" href="/information" data-i18n="nav.information">{t('nav.information', lang)}</a>
+        <a class="mobile-nav-sub" href="/calculating-your-project" data-i18n="nav.calculating">{t('nav.calculating', lang)}</a>
+
+        <span class="mobile-nav-group" data-i18n="nav.forms">{t('nav.forms', lang)}</span>
+        <a class="mobile-nav-sub" href="/credit-card-authorization" data-i18n="nav.creditCard">{t('nav.creditCard', lang)}</a>
+        <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOffAgreement">{t('nav.rollOffAgreement', lang)}</a>
+
+        <a href="/#about" data-scroll-to="about" data-i18n="nav.about">{t('nav.about', lang)}</a>
+        <a href="/#contact" data-scroll-to="contact" data-i18n="nav.contact">{t('nav.contact', lang)}</a>
+      </div>
+
+      <!-- Mobile Actions -->
+      <div class="mobile-actions">
+        <a href="#hero" class="mobile-btn-quote">
+          <span data-i18n="nav.getQuote">{t('nav.getQuote', lang)}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Cart System -->
+<CartWrapper client:load lang={lang} />
+
+<style>
+  /* ========================================
+     HEADER BASE STYLES
+     ======================================== */
+  .header-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .header-nav.scrolled {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* ========================================
+     HERITAGE UTILITY TOP-BAR
+     ======================================== */
+  .header-topbar {
+    background: var(--green-dark);
+    border-bottom: 2px solid var(--green-light);
+    color: #fff;
+  }
+
+  .header-topbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .tb-tag {
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #BCE6C8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tb-info {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-shrink: 0;
+  }
+
+  .tb-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-size: 12.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tb-item svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--green-light);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .tb-phone {
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .tb-item.tb-phone:hover {
+    color: #BCE6C8;
+  }
+
+  @media (max-width: 1100px) {
+    .header-topbar { display: none; }
+  }
+
+  .header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  /* ========================================
+     LOGO
+     ======================================== */
+  .header-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .header-logo img {
+    height: 50px;
+    width: auto;
+  }
+
+  /* ========================================
+     DESKTOP NAVIGATION
+     ======================================== */
+  .header-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .header-links a,
+  .header-links .header-dropdown-toggle {
+    color: var(--gray-800);
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .header-links a:hover,
+  .header-links .header-dropdown-toggle:hover {
+    color: var(--green);
+  }
+
+  /* Dropdown menus */
+  .header-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .header-dropdown-toggle .caret {
+    width: 13px;
+    height: 13px;
+    transition: transform 0.2s ease;
+  }
+
+  .header-dropdown:hover .caret {
+    transform: rotate(180deg);
+  }
+
+  .header-submenu {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 250px;
+    background: #fff;
+    border: 2px solid var(--green-dark);
+    border-top: 4px solid var(--green-light);
+    border-radius: 4px;
+    box-shadow: 6px 6px 0 rgba(31, 107, 58, 0.16);
+    padding: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.18s ease;
+    z-index: 200;
+  }
+
+  .header-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 16px;
+  }
+
+  .header-dropdown:hover .header-submenu,
+  .header-dropdown:focus-within .header-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .header-submenu a {
+    display: block;
+    padding: 11px 16px;
+    border-radius: 3px;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-size: 13.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gray-800);
+    white-space: nowrap;
+  }
+
+  .header-submenu a:hover {
+    background: var(--green-pale);
+    color: var(--green-dark);
+  }
+
+  /* ========================================
+     DESKTOP ACTIONS
+     ======================================== */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-icon-btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .header-icon-btn:hover {
+    background: var(--gray-100);
+  }
+
+  .header-icon-btn svg {
+    width: 20px;
+    height: 20px;
+    color: var(--gray-700);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 18px;
+    height: 18px;
+    background: var(--green);
+    color: white;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 600;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+  }
+
+  .cart-badge.show {
+    display: flex;
+  }
+
+  .header-btn-quote {
+    padding: 10px 20px;
+    background: var(--green);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .header-btn-quote:hover {
+    background: var(--green-dark);
+    transform: translateY(-1px);
+  }
+
+  /* ========================================
+     USER MENU DROPDOWN
+     ======================================== */
+  .header-user-menu {
+    position: relative;
+  }
+
+  .user-dropdown {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 100;
+  }
+
+  .user-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .user-dropdown a,
+  .user-dropdown button {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--gray-700);
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .user-dropdown a:first-child,
+  .user-dropdown button:first-child {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .user-dropdown a:last-child,
+  .user-dropdown button:last-child {
+    border-radius: 0 0 12px 12px;
+  }
+
+  .user-dropdown a:hover,
+  .user-dropdown button:hover {
+    background: var(--gray-50);
+  }
+
+  .user-dropdown button#logoutBtn {
+    color: #dc2626;
+  }
+
+  .user-dropdown button#logoutBtn:hover {
+    background: #fef2f2;
+  }
+
+  /* ========================================
+     MOBILE MENU BUTTON
+     ======================================== */
+  .header-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .header-mobile-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--gray-700);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .header-mobile-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .header-mobile-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .header-mobile-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  /* ========================================
+     MOBILE MENU
+     ======================================== */
+  .header-mobile-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-mobile-menu.active {
+    max-height: calc(100vh - 70px);
+  }
+
+  .mobile-menu-content {
+    padding: 20px 24px;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .mobile-nav-links a {
+    padding: 14px 16px;
+    color: var(--gray-700);
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-nav-links a {
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .mobile-nav-links a:hover {
+    background: var(--gray-50);
+  }
+
+  .mobile-nav-group {
+    margin-top: 12px;
+    padding: 6px 16px 2px;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .mobile-nav-links a.mobile-nav-sub {
+    padding-left: 28px;
+    font-size: 15px;
+    color: var(--gray-600);
+  }
+
+  .mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .mobile-btn-quote {
+    padding: 14px 20px;
+    background: var(--green);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-btn-quote:hover {
+    background: var(--green-dark);
+  }
+
+  /* ========================================
+     RESPONSIVE BREAKPOINTS
+     ======================================== */
+  @media (max-width: 1024px) {
+    .header-container {
+      gap: 16px;
+    }
+
+    .header-links {
+      gap: 20px;
+    }
+
+    .header-links a {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    /* Hide desktop navigation */
+    .header-links {
+      display: none;
+    }
+
+    .header-actions {
+      gap: 8px;
+    }
+
+    .header-btn-quote {
+      display: none;
+    }
+
+    /* Show mobile menu button */
+    .header-mobile-toggle {
+      display: flex;
+    }
+
+    .header-logo img {
+      height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-container {
+      padding: 0 16px;
+      height: 60px;
+    }
+
+    .header-mobile-menu {
+      top: 60px;
+    }
+
+    .header-logo img {
+      height: 35px;
+    }
+
+    .header-icon-btn {
+      width: 36px;
+      height: 36px;
+    }
+
+    .header-icon-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+</style>
+
+<script>
+  import { auth } from '../../firebase/client';
+  import { onAuthStateChanged } from 'firebase/auth';
+  import { logout } from '../../services/auth.service';
+  import i18n from '../../i18n/config';
+
+  // ========================================
+  // SCROLL EFFECT
+  // ========================================
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('nav');
+    if (nav) {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }
+  });
+
+  // ========================================
+  // MOBILE MENU TOGGLE
+  // ========================================
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenuBtn.classList.toggle('active');
+    mobileMenu?.classList.toggle('active');
+  });
+
+  // Close mobile menu when clicking on a link
+  const mobileLinks = document.querySelectorAll('.mobile-nav-links a, .mobile-btn-quote');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenuBtn?.classList.remove('active');
+      mobileMenu?.classList.remove('active');
+    });
+  });
+
+  // ========================================
+  // CART ICON - TOGGLE CART DRAWER
+  // ========================================
+  const cartIcon = document.getElementById('cartIcon');
+  
+  cartIcon?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('toggleCart'));
+  });
+
+  // Update cart badge when items change
+  window.addEventListener('cartUpdated', ((e: CustomEvent) => {
+    const badge = document.getElementById('cartBadgePlaceholder');
+    if (badge) {
+      const itemCount = e.detail?.itemCount || 0;
+      if (itemCount > 0) {
+        badge.textContent = itemCount.toString();
+        badge.classList.add('show');
+      } else {
+        badge.textContent = '';
+        badge.classList.remove('show');
+      }
+    }
+  }) as EventListener);
+
+  // ========================================
+  // USER MENU DROPDOWN
+  // ========================================
+  const userMenuBtn = document.getElementById('userMenuBtn');
+  const userMenuDropdown = document.getElementById('userMenuDropdown');
+
+  userMenuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userMenuDropdown?.classList.toggle('show');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!userMenuBtn?.contains(e.target as Node) && !userMenuDropdown?.contains(e.target as Node)) {
+      userMenuDropdown?.classList.remove('show');
+    }
+  });
+
+  // ========================================
+  // UPDATE USER MENU BASED ON AUTH STATE
+  // ========================================
+  async function updateUserMenu(user: any) {
+    if (!userMenuDropdown) return;
+
+    const currentLang = i18n.language || 'en';
+    const isEnglish = currentLang === 'en';
+
+    if (user) {
+      // Get user role from custom claims
+      const tokenResult = await user.getIdTokenResult();
+      const role = tokenResult.claims.role as string | undefined;
+      const isAdmin = role === 'admin';
+
+      let menuHTML = '';
+
+      // Show admin backoffice link if user is admin
+      if (isAdmin) {
+        menuHTML += `
+          <a href="/admin" target="_blank">
+            ${isEnglish ? 'Admin Panel' : 'Panel Admin'}
+          </a>
+        `;
+      }
+
+      menuHTML += `
+        <a href="/client/dashboard">
+          ${isEnglish ? 'My Account' : 'Mi Cuenta'}
+        </a>
+        <button class="btn-submit" id="logoutBtn">
+          ${isEnglish ? 'Logout' : 'Cerrar Sesión'}
+        </button>
+      `;
+
+      userMenuDropdown.innerHTML = menuHTML;
+
+      // Add logout handler
+      const logoutBtn = document.getElementById('logoutBtn');
+      logoutBtn?.addEventListener('click', async () => {
+        try {
+          await logout();
+          window.location.href = '/client/login';
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      });
+    } else {
+      // Not logged in
+      userMenuDropdown.innerHTML = `
+        <a href="/client/login">
+          ${isEnglish ? 'Login' : 'Iniciar Sesión'}
+        </a>
+        <a href="/client/register">
+          ${isEnglish ? 'Register' : 'Registrarse'}
+        </a>
+      `;
+    }
+  }
+
+  // Listen for auth state changes
+  onAuthStateChanged(auth, updateUserMenu);
+
+  // Update menu when language changes
+  window.addEventListener('languageChanged', () => {
+    const currentUser = auth.currentUser;
+    updateUserMenu(currentUser);
+  });
+
+  i18n.on('languageChanged', () => {
+    const currentUser = auth.currentUser;
+    updateUserMenu(currentUser);
+  });
+</script>

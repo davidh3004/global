@@ -1,0 +1,137 @@
+---
+import '../../styles/admin.css';
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Global Recycling of Tampa Bay</title>
+    <meta name="description" content="Panel de administración" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+  <div class="min-h-screen flex items-center justify-center bg-base-200 px-4">
+    <div class="card w-full max-w-md bg-base-100 shadow-xl">
+      <div class="card-body">
+        <div class="text-center mb-6">
+          <h1 class="text-3xl font-display font-bold text-primary">Admin Login</h1>
+          <p class="text-base-content/60 mt-2">Global Recycling of Tampa Bay</p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input 
+              type="email" 
+              id="email"
+              placeholder="admin@example.com" 
+              class="input input-bordered w-full" 
+              required
+            />
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input 
+              type="password" 
+              id="password"
+              placeholder="••••••••" 
+              class="input input-bordered w-full" 
+              required
+            />
+          </div>
+
+          <div id="errorMessage" class="alert alert-error hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span id="errorText"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full" id="loginBtn">
+            <span id="loginBtnText">Sign In</span>
+            <span id="loginBtnLoading" class="loading loading-spinner loading-sm hidden"></span>
+          </button>
+        </form>
+
+        <div class="divider">OR</div>
+
+        <div class="text-center">
+          <a href="/" class="link link-primary text-sm">Back to main site</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { signInWithEmailAndPassword } from 'firebase/auth';
+    import { auth } from '../../firebase/client';
+
+    const form = document.getElementById('loginForm') as HTMLFormElement;
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const errorMessage = document.getElementById('errorMessage') as HTMLDivElement;
+    const errorText = document.getElementById('errorText') as HTMLSpanElement;
+    const loginBtn = document.getElementById('loginBtn') as HTMLButtonElement;
+    const loginBtnText = document.getElementById('loginBtnText') as HTMLSpanElement;
+    const loginBtnLoading = document.getElementById('loginBtnLoading') as HTMLSpanElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Ocultar error previo
+      errorMessage.classList.add('hidden');
+      
+      // Mostrar loading
+      loginBtn.disabled = true;
+      loginBtnText.classList.add('hidden');
+      loginBtnLoading.classList.remove('hidden');
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+        const user = userCredential.user;
+        
+        // Verify admin role via custom claims
+        const tokenResult = await user.getIdTokenResult(true);
+        const role = tokenResult.claims.role as string | undefined;
+        
+        if (role !== 'admin') {
+          // Not an admin - sign out and show error
+          await auth.signOut();
+          errorText.textContent = 'Access denied. Admin privileges required.';
+          errorMessage.classList.remove('hidden');
+          loginBtn.disabled = false;
+          loginBtnText.classList.remove('hidden');
+          loginBtnLoading.classList.add('hidden');
+          return;
+        }
+        
+        // Redirigir al dashboard admin
+        window.location.href = '/admin/dashboard';
+      } catch (error: any) {
+        // Mostrar error
+        errorText.textContent = error.message || 'Error signing in';
+        errorMessage.classList.remove('hidden');
+        
+        // Restaurar botón
+        loginBtn.disabled = false;
+        loginBtnText.classList.remove('hidden');
+        loginBtnLoading.classList.add('hidden');
+      }
+    });
+  </script>
+  </body>
+</html>

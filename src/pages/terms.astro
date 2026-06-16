@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import CheckoutWrapper from '../components/cart/CheckoutWrapper';
+
+const locale = Astro.currentLocale || 'en';
+const isEnglish = locale === 'en';
+---
+
+<BaseLayout 
+  title={isEnglish ? "Checkout - Global Recycling" : "Finalizar Compra - Global Recycling"}
+  description={isEnglish ? "Complete your purchase" : "Completa tu compra"}
+  lang={locale}
+>
+  <Header lang={locale} />
+  
+  <div style="min-height: 100vh; background: var(--gray-50); padding: 120px 0 60px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      TERMS OF SERVICE / END-USER LICENSE AGREEMENT
+Global Recycling of Tampa Bay
+Effective Date: June 9, 2026
+1. Acceptance of Terms
+By accessing or using the services provided by Global Recycling of Tampa Bay ("Company," "we," "us," or "our"), you agree to be bound by these Terms of Service. If you do not agree, do not use our services.
+2. Services
+Global Recycling of Tampa Bay provides recycling collection, processing, and payment services to residential and commercial customers in the Tampa Bay area. Our platform integrates with QuickBooks to process invoices and payments.
+3. Payment Processing
+Payments are processed securely through QuickBooks Payments. By submitting payment information, you authorize Global Recycling of Tampa Bay to charge the applicable fees for services rendered. All transactions are subject to QuickBooks' terms and conditions.
+4. User Responsibilities
+You agree to:
+
+Provide accurate and complete information when using our services
+Keep your account credentials confidential
+Notify us immediately of any unauthorized use of your account
+Use our services only for lawful purposes
+
+5. Intellectual Property
+All content, branding, and software associated with Global Recycling of Tampa Bay's platform are the property of the Company and may not be reproduced without written permission.
+6. Limitation of Liability
+To the fullest extent permitted by law, Global Recycling of Tampa Bay shall not be liable for any indirect, incidental, or consequential damages arising from use of our services or platform.
+7. Termination
+We reserve the right to suspend or terminate access to our services at our discretion, with or without notice, for conduct that violates these Terms.
+8. Governing Law
+These Terms shall be governed by the laws of the State of Florida, without regard to its conflict of law provisions.
+9. Changes to Terms
+We reserve the right to update these Terms at any time. Continued use of our services after changes constitutes acceptance of the revised Terms.
+10. Contact
+For questions regarding these Terms, contact us at:
+Global Recycling of Tampa Bay
+Tampa Bay, Florida
+info@globalrecyclingtb.com
+
+PRIVACY POLICY
+Global Recycling of Tampa Bay
+Effective Date: June 9, 2026
+1. Introduction
+Global Recycling of Tampa Bay ("we," "us," or "our") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our services or platform.
+2. Information We Collect
+We may collect the following types of information:
+
+Personal Information: Name, email address, phone number, billing address
+Payment Information: Credit card or ACH details processed securely through QuickBooks Payments
+Usage Data: Pages visited, actions taken on our platform, device and browser information
+Business Information: Company name, tax ID, and service history for commercial accounts
+
+3. How We Use Your Information
+We use collected information to:
+
+Process payments and generate invoices via QuickBooks
+Communicate service updates, confirmations, and receipts
+Improve our platform and services
+Comply with legal and regulatory obligations
+
+4. Third-Party Services
+We integrate with Intuit QuickBooks to process payments and manage accounting data. Your payment information is transmitted directly to QuickBooks and is subject to Intuit's Privacy Policy at https://www.intuit.com/privacy/statement. We do not store full payment card numbers on our servers.
+5. Data Sharing
+We do not sell or rent your personal information. We may share data with:
+
+Service providers necessary to operate our platform
+Legal authorities if required by law
+Business successors in the event of a merger or acquisition
+
+6. Data Security
+We implement industry-standard security measures to protect your information. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
+7. Your Rights
+You have the right to:
+
+Access, correct, or delete your personal information
+Opt out of marketing communications
+Request a copy of data we hold about you
+
+To exercise these rights, contact us at the information below.
+8. Cookies
+Our platform may use cookies to enhance user experience. You may disable cookies through your browser settings, though some features may not function properly.
+9. Children's Privacy
+Our services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children.
+10. Changes to This Policy
+We may update this Privacy Policy periodically. We will notify users of significant changes via email or platform notice.
+11. Contact
+For privacy-related inquiries, contact us at:
+Global Recycling of Tampa Bay
+Tampa Bay, Florida
+max@starqualityinc.com
+
+    </div>
+  </div>
+  
+  <Footer lang={locale} />
+</BaseLayout>

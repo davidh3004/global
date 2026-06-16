@@ -1,0 +1,146 @@
+/* Variables CSS exactas del diseño original */
+:root {
+  --green: #2D8C4E;
+  --green-dark: #1F6B3A;
+  --green-light: #3BAE62;
+  --green-pale: #EAF6EE;
+  --teal: #3AAFA9;
+  --red: #C0392B;
+  --white: #FFFFFF;
+  --gray-50: #F9FAF9;
+  --gray-100: #F0F4F1;
+  --gray-200: #DDE5DF;
+  --gray-300: #C2CFC4;
+  --gray-400: #8EA191;
+  --gray-600: #4A5E50;
+  --gray-800: #1E2B22;
+  --gray-900: #0F1A12;
+  --font: 'Inter', sans-serif;
+  --font-display: 'Manrope', sans-serif;
+}
+
+/* Reset y estilos base exactos del original */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--gray-800);
+  overflow-x: hidden;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Animaciones del diseño original */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes tick {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Clases de animación fade del original */
+.fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade.in {
+  opacity: 1;
+  transform: none;
+}
+
+.fade-d1 { transition-delay: 0.1s; }
+.fade-d2 { transition-delay: 0.2s; }
+.fade-d3 { transition-delay: 0.3s; }
+.fade-d4 { transition-delay: 0.4s; }
+.fade-d5 { transition-delay: 0.5s; }
+
+/* Estilos personalizados que no tienen equivalente exacto en Tailwind */
+@layer components {
+  /* Navegación */
+  .nav-scrolled {
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Hero label dot animation */
+  .hero-label-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #6FD98B;
+    animation: blink 2s infinite;
+  }
+
+  /* Ticker animation */
+  .ticker-track {
+    animation: tick 30s linear infinite;
+  }
+
+  /* Checkmark icon */
+  .chk {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chk svg {
+    width: 10px;
+    height: 10px;
+    stroke: var(--green);
+    stroke-width: 3;
+    fill: none;
+  }
+
+  /* Star rating */
+  .star {
+    width: 14px;
+    height: 14px;
+    fill: #FBBF24;
+    stroke: none;
+  }
+
+  /* Product card hover effects */
+  .prod-card:hover .prod-img img {
+    transform: scale(1.05);
+  }
+
+  .art-card:hover .art-img img {
+    transform: scale(1.04);
+  }
+
+  .art-card:hover .art-link {
+    gap: 8px;
+  }
+
+  /* CTA band background decoration */
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}

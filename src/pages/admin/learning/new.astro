@@ -1,0 +1,147 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Nuevo Artículo">
+  <div class="mb-6">
+    <a href="/admin/learning" class="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2 mb-4">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Volver a artículos
+    </a>
+    <h1 class="text-3xl font-bold text-gray-900">Nuevo Artículo</h1>
+  </div>
+
+  <div class="bg-white rounded-lg shadow p-6 max-w-4xl">
+    <form id="article-form" class="space-y-6">
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Título del Artículo *</span>
+        </label>
+        <input type="text" name="title" required class="input input-bordered w-full" placeholder="Why Use Recycled Concrete in Your Project?" />
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Slug (URL) *</span>
+          <span class="label-text-alt text-gray-500">Se genera automáticamente del título</span>
+        </label>
+        <input type="text" name="slug" required class="input input-bordered w-full" placeholder="why-use-recycled-concrete" />
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Categoría *</span>
+        </label>
+        <select name="category" required class="select select-bordered w-full">
+          <option value="">Seleccionar categoría</option>
+          <option value="Concrete">Concrete</option>
+          <option value="Asphalt">Asphalt</option>
+          <option value="Road Base">Road Base</option>
+          <option value="Paver Base">Paver Base</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Extracto (Resumen corto) *</span>
+        </label>
+        <textarea name="excerpt" required class="textarea textarea-bordered w-full h-20" placeholder="Breve descripción del artículo (máximo 150 caracteres)"></textarea>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Contenido Completo *</span>
+        </label>
+        <textarea name="content" required class="textarea textarea-bordered w-full h-64" placeholder="Contenido completo del artículo en formato Markdown o texto plano..."></textarea>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">URL de Imagen *</span>
+        </label>
+        <input type="url" name="imageUrl" required class="input input-bordered w-full" placeholder="https://images.unsplash.com/..." />
+        <label class="label">
+          <span class="label-text-alt text-gray-500">URL de la imagen destacada del artículo</span>
+        </label>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Orden *</span>
+        </label>
+        <input type="number" name="order" required class="input input-bordered w-full" value="1" min="0" />
+      </div>
+
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <input type="checkbox" name="isPublished" checked class="checkbox checkbox-primary" />
+          <span class="label-text font-semibold">Publicar artículo (visible en la página)</span>
+        </label>
+      </div>
+
+      <div class="flex gap-3 pt-4">
+        <button type="submit" class="btn btn-primary">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          Crear Artículo
+        </button>
+        <a href="/admin/learning" class="btn btn-ghost">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</AdminLayout>
+
+<script>
+  import { collection, addDoc, Timestamp } from 'firebase/firestore';
+  import { db } from '../../../firebase/client';
+
+  const form = document.getElementById('article-form') as HTMLFormElement;
+  const titleInput = form?.querySelector('[name="title"]') as HTMLInputElement;
+  const slugInput = form?.querySelector('[name="slug"]') as HTMLInputElement;
+
+  // Auto-generate slug from title
+  titleInput?.addEventListener('input', () => {
+    const slug = titleInput.value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    if (slugInput) slugInput.value = slug;
+  });
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="loading loading-spinner"></span> Guardando...';
+    
+    try {
+      await addDoc(collection(db, 'learningArticles'), {
+        title: formData.get('title'),
+        slug: formData.get('slug'),
+        category: formData.get('category'),
+        excerpt: formData.get('excerpt'),
+        content: formData.get('content'),
+        imageUrl: formData.get('imageUrl'),
+        order: parseInt(formData.get('order') as string),
+        isPublished: formData.get('isPublished') === 'on',
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      });
+      
+      alert('Artículo creado exitosamente');
+      window.location.href = '/admin/learning';
+    } catch (error) {
+      console.error('Error creating article:', error);
+      alert('Error al crear el artículo: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Crear Artículo';
+    }
+  });
+</script>

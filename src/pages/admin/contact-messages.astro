@@ -1,0 +1,33 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import ContactMessagesTable from '../../components/admin/ContactMessagesTable';
+
+const title = 'Contact Messages';
+---
+
+<AdminLayout title={title}>
+  <div class="admin-header">
+    <h1>Contact Messages</h1>
+    <p class="subtitle">View and manage customer inquiries from the contact form</p>
+  </div>
+
+  <ContactMessagesTable client:load />
+</AdminLayout>
+
+<style>
+  .admin-header {
+    margin-bottom: 32px;
+  }
+
+  .admin-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: var(--gray-600);
+    font-size: 16px;
+  }
+</style>

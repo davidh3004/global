@@ -1,0 +1,237 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+
+const locale = Astro.currentLocale || 'en';
+
+const U = 'https://images.unsplash.com/photo-';
+const Q = '?w=900&q=70&auto=format&fit=crop';
+
+const img = {
+  recycled: '/about-2.jpeg',
+  concrete: `${U}1504307651254-35680f356dfd${Q}`,
+  asphalt: `${U}1517089152318-42ec560349c0${Q}`,
+  crushing: '/about-1.jpeg',
+  uses: `${U}1541888946425-d81bb19240f5${Q}`,
+  equipment: `${U}1558618666-fcd25c85cd64${Q}`,
+  safety: `${U}1581093588401-fbb62a02f120${Q}`,
+  materials: `${U}1416879595882-3373a0480b5b${Q}`,
+};
+---
+
+<PublicLayout
+  title="Information — Recycled Rock, Asphalt & Concrete | Global Recycling of Tampa Bay"
+  description="Learn about recycled concrete and asphalt: why to use them, how concrete is recycled, the benefits, our safety program, and our material specs."
+  lang={locale}
+>
+  <div class="gr-page">
+    <section class="gr-hero">
+      <div class="gr-hero-inner">
+        <span class="gr-eyebrow">Knowledge Base</span>
+        <h1>Information</h1>
+        <p>Recycled Rock, Asphalt &amp; Concrete — what it is, why it works, and how we produce it. Straight from the people who work with it every day.</p>
+        <div class="gr-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Information</div>
+      </div>
+    </section>
+
+    <div class="gr-wrap gr-wrap-wide">
+      <!-- In-page nav -->
+      <nav class="gr-toc" aria-label="On this page">
+        <a href="#recycled">Recycled Materials</a>
+        <a href="#why-concrete">Why Recycled Concrete</a>
+        <a href="#why-asphalt">Why Recycled Asphalt</a>
+        <a href="#recycling">Concrete Recycling</a>
+        <a href="#uses">Uses &amp; Benefits</a>
+        <a href="#how">How It's Recycled</a>
+        <a href="#safety">Safety</a>
+        <a href="#materials">Our Materials</a>
+      </nav>
+
+      <!-- 1. Recycled materials -->
+      <div class="gr-row">
+        <figure class="gr-media">
+          <img src={img.recycled} alt="Piles of recycled concrete rubble and machinery at the Global Recycling yard" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>
+          <figcaption class="gr-media-cap">Recycled rock &amp; rubble — our Tampa yard</figcaption>
+        </figure>
+        <div class="gr-panel" id="recycled">
+          <div class="gr-panel-head">Recycled Rock, Asphalt &amp; Concrete</div>
+          <div class="gr-panel-body gr-prose">
+            <p>Recycled rock is made from the demolition of roads, driveways, civil projects, and buildings — material that used to be sent to a landfill. Now concrete and asphalt debris are recycled for reuse, providing several benefits, many easily recognized and a few that might surprise you.</p>
+            <p>Steel, metal, and other debris is removed during a screening process and also recycled. Then the pieces are crushed to size.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Why recycled concrete -->
+      <div class="gr-row media-right">
+        <figure class="gr-media">
+          <img src={img.concrete} alt="Construction crew working with rebar and concrete" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          <figcaption class="gr-media-cap">A durable, lower-cost base</figcaption>
+        </figure>
+        <div class="gr-panel" id="why-concrete">
+          <div class="gr-panel-head">Why Use Recycled Concrete in Your Project?</div>
+          <div class="gr-panel-body gr-prose">
+            <p>Recycled concrete provides several key benefits:</p>
+            <h3>Saving you money</h3>
+            <p>Recycled concrete aggregate is less expensive to produce than pouring a new concrete base. You'll have extra dollars to invest in the rest of your project.</p>
+            <h3>Helping the environment</h3>
+            <p>Recycling concrete doesn't require much processing and, importantly, means natural stone doesn't have to be harvested and crushed — leaving the environment intact. Reusing concrete also means less of this non-biodegradable material is sent to landfills.</p>
+            <h3>A durable, versatile material</h3>
+            <p>You might think recycled concrete is less durable than a fresh pour, but testing by the Federal Highway Administration shows it is reliable and safe. This versatility makes recycled concrete a good choice for construction, landscaping, or home improvement.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Why recycled asphalt -->
+      <div class="gr-row">
+        <figure class="gr-media">
+          <img src={img.asphalt} alt="Aerial view of an aggregate site with haul trucks" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M4 21 8 3"/><path d="M20 21 16 3"/><line x1="12" y1="5" x2="12" y2="8"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="20"/></svg></span>
+          <figcaption class="gr-media-cap">Crushed asphalt &amp; aggregate</figcaption>
+        </figure>
+        <div class="gr-panel" id="why-asphalt">
+          <div class="gr-panel-head">Why Use Recycled Asphalt in Your Project?</div>
+          <div class="gr-panel-body gr-prose">
+            <p>The recycling process for asphalt involves crushing, screening, and reprocessing the material — usually at a facility, but sometimes on site. Testing by the Federal Highway Administration showed roads built with recycled asphalt were safer, stronger, and longer-lasting than new asphalt. Mixing some recycled asphalt with new mix actually strengthens the final product and requires less new material. Recycled asphalt has been shown to be:</p>
+            <ul>
+              <li>Less expensive to produce than creating new aggregate mixes.</li>
+              <li>Eco-friendly, since the non-biodegradable material is repurposed instead of taking up space in landfills.</li>
+              <li>Protective of the environment, since asphalt mining, refining, and shipping can be avoided.</li>
+            </ul>
+            <div class="gr-callout">Before you schedule a new pour of concrete or asphalt, price out the cost of using recycled material. You'll be pleasantly surprised at the savings — for your budget and the environment.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Concrete recycling -->
+      <div class="gr-row media-right">
+        <figure class="gr-media">
+          <img src={img.crushing} alt="Mobile crusher processing concrete rubble at the yard" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <figcaption class="gr-media-cap">On-site crushing &amp; screening</figcaption>
+        </figure>
+        <div class="gr-panel" id="recycling">
+          <div class="gr-panel-head">Concrete Recycling</div>
+          <div class="gr-panel-body gr-prose">
+            <p>When structures made of concrete are demolished or renovated, concrete recycling is an increasingly common method of utilizing the rubble. Concrete was once routinely trucked to landfills, but recycling has benefits that have made it more attractive in this age of greater environmental awareness, more environmental laws, and the desire to keep construction costs down. Using recycled concrete also takes less energy than mining new aggregate, leaving a smaller carbon footprint and allowing your project to be deemed sustainable and LEED-friendly.</p>
+            <p>Concrete aggregate collected from demolition sites is put through a crushing machine. Crushing facilities accept only uncontaminated concrete, free of trash, wood, and paper. Metals such as rebar are accepted, since they can be removed with magnets and sold to recycling facilities. Remaining aggregate is sorted by size — larger chunks may go through the crusher again, and other particulates are filtered out by hand-picking and additional screening.</p>
+            <p>Crushing on-site with portable crushers reduces construction costs and pollution compared to transporting material to and from a quarry. Large road-portable plants can crush concrete and asphalt rubble at 600 tons per hour or more, while compact mini-crushers handle up to 150 tons per hour and fit into tighter areas.</p>
+            <p>The demolition and renovation of our nation's buildings, bridges, and roads is key to economic growth. The waste created — bricks, broken concrete, rocks, asphalt, tile, marble, granite, and cinder blocks — can be recycled and used in different applications. <strong>Talk to Global Recycling of Tampa Bay about your needs.</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Uses & benefits -->
+      <div class="gr-row">
+        <figure class="gr-media">
+          <img src={img.uses} alt="Construction crew on a large concrete pad" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <figcaption class="gr-media-cap">Paving, base &amp; aggregate uses</figcaption>
+        </figure>
+        <div class="gr-panel" id="uses">
+          <div class="gr-panel-head">Uses for Old Concrete &amp; Benefits</div>
+          <div class="gr-panel-body gr-prose">
+            <h3>Uses for old concrete</h3>
+            <ul>
+              <li><strong>Paving</strong> for walkways, driveways, and outdoor hard surfaces — permeable so rainwater filters through, reducing runoff and replenishing groundwater.</li>
+              <li><strong>Base for new asphalt paving</strong> — through "rubblization," old pavement is broken in place and used as a base layer.</li>
+              <li><strong>Bed foundation</strong> for trenches containing underground utility lines.</li>
+              <li><strong>Aggregate</strong> for mixing new concrete (replacing some virgin aggregate in ready-mix).</li>
+              <li>Material for new oceanic reef habitats.</li>
+              <li>Paving blocks, pots, and benches for community use.</li>
+            </ul>
+            <h3>Benefits of concrete recycling</h3>
+            <p>Recycling concrete reduces construction waste, extends the life of landfills, and saves builders disposal or tipping fees. It reduces transportation costs because concrete can often be recycled near the demolition or construction site. Builders seeking LEED Green Building certification can earn points for using recycled concrete, and the recycling industry creates employment opportunities that wouldn't otherwise exist.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. How concrete is recycled -->
+      <div class="gr-row media-right">
+        <figure class="gr-media">
+          <img src={img.equipment} alt="Operator working with processing equipment" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+          <figcaption class="gr-media-cap">Industrial crushing equipment</figcaption>
+        </figure>
+        <div class="gr-panel" id="how">
+          <div class="gr-panel-head">How Concrete Is Recycled</div>
+          <div class="gr-panel-body gr-prose">
+            <p>Concrete is recycled using industrial crushing equipment with jaws and large impactors. After the concrete is broken up, it is usually run through a secondary impactor and then screened to remove dirt and particles and to separate the large and small aggregate. Additional processes — water flotation, separators, and magnets — may be used to remove specific elements. Pulverizing is an alternative method, but it makes separation harder and may leave more contamination.</p>
+            <h3>Equipment used to recycle concrete</h3>
+            <p>The most practical solution is often a portable crusher that can be moved between locations or projects, set up at a centralized spot near the demolition but away from site traffic. Factors to consider:</p>
+            <ul>
+              <li>A powerful electromagnet, water flotation, or air-separator system to pull steel from the concrete.</li>
+              <li>Separate hydraulic stands for faster setup.</li>
+              <li>Control systems that may be automatic, manual, or remote.</li>
+              <li>Conveyors, jaws, and cones for complete processing — from demolition to usable material.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Safety -->
+      <div class="gr-row">
+        <figure class="gr-media">
+          <img src={img.safety} alt="Worker wearing safety glasses" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <figcaption class="gr-media-cap">Safety first — OSHA 10 trained</figcaption>
+        </figure>
+        <div class="gr-panel" id="safety">
+          <div class="gr-panel-head">Keeping Our Greatest Resource Safe</div>
+          <div class="gr-panel-body gr-prose">
+            <p>At Global Recycling of Tampa Bay, <strong>safety is the core of our values — not profit.</strong> We provide ongoing training as outlined in OSHA 10 regulations and the tools necessary to maintain a safe work environment. This includes fresh-air respirators, fire extinguishers in all equipment, and water-mist systems at every conveyor drop point. Regular safety audits and daily monitoring by our foreman keep our training effective and up to date.</p>
+            <h3>Recognizing our safest employees</h3>
+            <p>We don't just promote safety — we reward it. Recognition programs such as <em>Safety Pays</em> and <em>Pride and Professionalism</em> honor employees for their dedication to safe work practices, reminding everyone that safety is everyone's job.</p>
+            <h3>Certification &amp; training requirements</h3>
+            <ul>
+              <li>OSHA 10 for yard employees</li>
+              <li>MSHA</li>
+              <li>Fall Protection as required</li>
+              <li>First Aid / CPR</li>
+              <li>Qualified Person on Site</li>
+              <li>Signaling</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Our materials -->
+      <div class="gr-row media-right">
+        <figure class="gr-media">
+          <img src={img.materials} alt="Screened material being scooped" loading="lazy" />
+          <span class="gr-media-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>
+          <figcaption class="gr-media-cap">Our materials &amp; screened fill</figcaption>
+        </figure>
+        <div class="gr-panel" id="materials">
+          <div class="gr-panel-head">Our Materials</div>
+          <div class="gr-panel-body gr-prose">
+            <h3>Crushed Concrete Fines</h3>
+            <p>A recycled concrete product commonly used as a base for brick pavers, driveways, sidewalks, roadways, parking lots, and building pads. Spec is 3/8" and minus down to a powder, with the bulk being powder. It compacts very well, making it an ideal sub-base. A full truckload is 20 tons and is the best value.</p>
+            <h3>#57 Recycled Crushed Concrete</h3>
+            <p>Suitable for driveways, parking lots, construction-site entrances, drain fields, French drains, and pipe bedding. Specifications are 1" minus with very little powder. Usually the most economical option, as it is made from crushing demolished concrete structures, driveways, and pads.</p>
+            <h3>#4 Recycled Crushed Concrete / Ballast / Entry Rock</h3>
+            <p>A larger material ideal for construction-site entrances and stabilizing soft ground.</p>
+            <h3>Crushed Asphalt</h3>
+            <p>Used as a base material — ideal for dust-free unpaved parking lots and unpaved drives.</p>
+            <h3>Fill Dirt</h3>
+            <p>In Florida, fill dirt is generally a sandy material, tan or brown in color depending on the subsoil layer excavated. Our fill dirt is run through a Metso or McCloskey screener to provide fill free of contaminants. Common uses include structural fill for a house pad, filling holes or low areas, building berms, sod preparation, raising the grade for drainage, and filling in a swimming pool. <em>Beware of contractors offering cheap fill dirt — you generally get what you pay for.</em></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gr-cta-band">
+        <h3>Have a project in mind?</h3>
+        <p>Tell us what you're building and we'll point you to the right material.</p>
+        <a class="gr-cta-phone" href="tel:8133736467">(813) 373-6467</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .gr-toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;justify-content:center}
+    .gr-toc a{font-family:var(--cond);text-transform:uppercase;letter-spacing:1px;font-size:12.5px;font-weight:600;
+      color:var(--green-dark);background:#fff;border:1.5px solid var(--green-dark);border-radius:100px;padding:7px 15px;text-decoration:none;transition:all .15s}
+    .gr-toc a:hover{background:var(--green-dark);color:#fff}
+  </style>
+</PublicLayout>

@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getAuthorizationUrl } from '../../../services/quickbooks.service';
+
+// Generate random state for CSRF protection
+const state = crypto.randomUUID();
+
+// Get authorization URL
+const authUrl = getAuthorizationUrl(state);
+
+// Check if we have existing tokens
+import { db } from '../../../firebase/client';
+import { doc, getDoc } from 'firebase/firestore';
+
+let hasTokens = false;
+let tokenInfo = null;
+
+try {
+  const tokensDoc = await getDoc(doc(db, 'settings', 'quickbooks_tokens'));
+  if (tokensDoc.exists()) {
+    hasTokens = true;
+    tokenInfo = tokensDoc.data();
+  }
+} catch (error) {
+  console.error('Error checking tokens:', error);
+}
+---
+
+<BaseLayout 
+  title="QuickBooks Authorization - Admin"
+  description="Authorize QuickBooks Payments integration"
+>
+  <div style="min-height: 100vh; background: var(--gray-50); padding: 60px 20px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+      
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-size: 2rem; font-weight: 700; color: var(--gray-900); margin-bottom: 12px;">
+          QuickBooks Payments
+        </h1>
+        <p style="color: var(--gray-600);">
+          Connect your QuickBooks account to process payments
+        </p>
+      </div>
+
+      <!-- Status Card -->
+      <div style="background: white; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px;">
+        
+        {hasTokens ? (
+          <>
+            <div style="text-align: center; margin-bottom: 24px;">
+              <div style="width: 60px; height: 60px; background: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#065f46" stroke-width="2">
+                  <path d="M20 6L9 17l-5-5"/>
+                </svg>
+              </div>
+              <h2 style="font-size: 1.5rem; font-weight: 600; color: #065f46; margin-bottom: 8px;">
+                Connected
+              </h2>
+              <p style="color: var(--gray-600); font-size: 0.875rem;">
+                QuickBooks is authorized and ready to process payments
+              </p>
+            </div>
+
+            <div style="background: var(--gray-50); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+              <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 8px;">
+                <strong>Company ID:</strong> {tokenInfo?.realm_id || 'N/A'}
+              </div>
+              <div style="font-size: 0.875rem; color: var(--gray-600);">
+                <strong>Last Updated:</strong> {tokenInfo?.updatedAt ? new Date(tokenInfo.updatedAt.seconds * 1000).toLocaleString() : 'N/A'}
+              </div>
+            </div>
+
+            <button
+              onclick={`if(confirm('Are you sure you want to re-authorize? This will replace existing tokens.')) window.location.href='${authUrl}'`}
+              style="width: 100%; padding: 12px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;"
+              onmouseover="this.style.background='var(--gray-300)'"
+              onmouseout="this.style.background='var(--gray-200)'"
+            >
+              Re-authorize QuickBooks
+            </button>
+          </>
+        ) : (
+          <>
+            <div style="text-align: center; margin-bottom: 24px;">
+              <div style="width: 60px; height: 60px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+              <h2 style="font-size: 1.5rem; font-weight: 600; color: #991b1b; margin-bottom: 8px;">
+                Not Connected
+              </h2>
+              <p style="color: var(--gray-600); font-size: 0.875rem;">
+                You need to authorize QuickBooks to process payments
+              </p>
+            </div>
+
+            <a
+              href={authUrl}
+              style="display: block; width: 100%; padding: 14px; background: #2d8c4e; color: white; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; transition: background 0.2s;"
+              onmouseover="this.style.background='#236b3b'"
+              onmouseout="this.style.background='#2d8c4e'"
+            >
+              Authorize QuickBooks
+            </a>
+          </>
+        )}
+
+      </div>
+
+      <!-- Instructions -->
+      <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 16px;">
+          📋 Instructions
+        </h3>
+        <ol style="padding-left: 20px; color: var(--gray-600); font-size: 0.875rem; line-height: 1.6;">
+          <li style="margin-bottom: 8px;">Click "Authorize QuickBooks" button above</li>
+          <li style="margin-bottom: 8px;">Sign in with your QuickBooks account</li>
+          <li style="margin-bottom: 8px;">Grant permissions to the app</li>
+          <li style="margin-bottom: 8px;">You'll be redirected back automatically</li>
+          <li>Tokens will be stored securely in Firestore</li>
+        </ol>
+      </div>
+
+      <!-- Back Link -->
+      <div style="text-align: center; margin-top: 24px;">
+        <a 
+          href="/admin" 
+          style="color: var(--green); text-decoration: none; font-size: 0.875rem; font-weight: 500;"
+        >
+          ← Back to Admin
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  button:hover, a:hover {
+    transform: translateY(-1px);
+  }
+</style>

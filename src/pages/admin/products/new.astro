@@ -1,0 +1,135 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Nuevo Producto">
+  <div class="mb-6">
+    <a href="/admin/products" class="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2 mb-4">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Volver a productos
+    </a>
+    <h1 class="text-3xl font-bold text-gray-900">Nuevo Producto</h1>
+  </div>
+
+  <div class="bg-white rounded-lg shadow p-6 max-w-3xl">
+    <form id="product-form" class="space-y-6">
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Nombre del Producto *</span>
+        </label>
+        <input type="text" name="name" required class="input input-bordered w-full" placeholder="Ej: Crushed Concrete Road Base" />
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Descripción *</span>
+        </label>
+        <textarea name="description" required class="textarea textarea-bordered w-full h-24" placeholder="Descripción del producto..."></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Precio</span>
+            <span class="label-text-alt text-gray-500">Dejar vacío para "Call for Pricing"</span>
+          </label>
+          <input type="number" name="price" step="0.01" class="input input-bordered w-full" placeholder="18" />
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Unidad de Precio</span>
+          </label>
+          <input type="text" name="priceUnit" class="input input-bordered w-full" placeholder="/ ton" value="/ ton" />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">URL de Imagen *</span>
+        </label>
+        <input type="url" name="imageUrl" required class="input input-bordered w-full" placeholder="https://images.unsplash.com/..." />
+        <label class="label">
+          <span class="label-text-alt text-gray-500">URL de la imagen del producto (Unsplash, etc.)</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Badge (Opcional)</span>
+          </label>
+          <input type="text" name="badge" class="input input-bordered w-full" placeholder="Most Popular" />
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Orden *</span>
+          </label>
+          <input type="number" name="order" required class="input input-bordered w-full" value="1" min="0" />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <input type="checkbox" name="isActive" checked class="checkbox checkbox-primary" />
+          <span class="label-text font-semibold">Producto activo (visible en la página)</span>
+        </label>
+      </div>
+
+      <div class="flex gap-3 pt-4">
+        <button type="submit" class="btn btn-primary">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          Crear Producto
+        </button>
+        <a href="/admin/products" class="btn btn-ghost">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</AdminLayout>
+
+<script>
+  import { collection, addDoc, Timestamp } from 'firebase/firestore';
+  import { db } from '../../../firebase/client';
+
+  const form = document.getElementById('product-form') as HTMLFormElement;
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="loading loading-spinner"></span> Guardando...';
+    
+    try {
+      const price = formData.get('price') as string;
+      
+      await addDoc(collection(db, 'products'), {
+        name: formData.get('name'),
+        description: formData.get('description'),
+        price: price ? parseFloat(price) : null,
+        priceUnit: formData.get('priceUnit') || '/ ton',
+        imageUrl: formData.get('imageUrl'),
+        badge: formData.get('badge') || null,
+        order: parseInt(formData.get('order') as string),
+        isActive: formData.get('isActive') === 'on',
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      });
+      
+      alert('Producto creado exitosamente');
+      window.location.href = '/admin/products';
+    } catch (error) {
+      console.error('Error creating product:', error);
+      alert('Error al crear el producto: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Crear Producto';
+    }
+  });
+</script>

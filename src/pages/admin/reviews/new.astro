@@ -1,0 +1,123 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Nueva Reseña">
+  <div class="mb-6">
+    <a href="/admin/reviews" class="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2 mb-4">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Volver a reseñas
+    </a>
+    <h1 class="text-3xl font-bold text-gray-900">Nueva Reseña</h1>
+  </div>
+
+  <div class="bg-white rounded-lg shadow p-6 max-w-3xl">
+    <form id="review-form" class="space-y-6">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Nombre del Autor *</span>
+          </label>
+          <input type="text" name="author" required class="input input-bordered w-full" placeholder="John Doe" />
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Iniciales *</span>
+          </label>
+          <input type="text" name="authorInitials" required maxlength="3" class="input input-bordered w-full" placeholder="JD" />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Fuente</span>
+        </label>
+        <input type="text" name="source" class="input input-bordered w-full" placeholder="Google Review, Local Guide, etc." value="Google Review" />
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Calificación *</span>
+        </label>
+        <div class="rating rating-lg">
+          <input type="radio" name="rating" value="1" class="mask mask-star-2 bg-warning" />
+          <input type="radio" name="rating" value="2" class="mask mask-star-2 bg-warning" />
+          <input type="radio" name="rating" value="3" class="mask mask-star-2 bg-warning" />
+          <input type="radio" name="rating" value="4" class="mask mask-star-2 bg-warning" />
+          <input type="radio" name="rating" value="5" class="mask mask-star-2 bg-warning" checked />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Contenido de la Reseña *</span>
+        </label>
+        <textarea name="content" required class="textarea textarea-bordered w-full h-32" placeholder="Escribe la reseña aquí..."></textarea>
+        <label class="label">
+          <span class="label-text-alt text-gray-500">Máximo 300 caracteres recomendado</span>
+        </label>
+      </div>
+
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <input type="checkbox" name="isApproved" checked class="checkbox checkbox-primary" />
+          <span class="label-text font-semibold">Aprobar reseña (visible en la página)</span>
+        </label>
+      </div>
+
+      <div class="flex gap-3 pt-4">
+        <button type="submit" class="btn btn-primary">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          Crear Reseña
+        </button>
+        <a href="/admin/reviews" class="btn btn-ghost">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</AdminLayout>
+
+<script>
+  import { collection, addDoc, Timestamp } from 'firebase/firestore';
+  import { db } from '../../../firebase/client';
+
+  const form = document.getElementById('review-form');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="loading loading-spinner"></span> Guardando...';
+    }
+    
+    try {
+      await addDoc(collection(db, 'reviews'), {
+        author: formData.get('author'),
+        authorInitials: formData.get('authorInitials'),
+        source: formData.get('source') || 'Customer Review',
+        rating: parseInt(formData.get('rating') as string),
+        content: formData.get('content'),
+        isApproved: formData.get('isApproved') === 'on',
+        date: Timestamp.now()
+      });
+      
+      alert('Reseña creada exitosamente');
+      window.location.href = '/admin/reviews';
+    } catch (error) {
+      console.error('Error creating review:', error);
+      alert('Error al crear la reseña: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Crear Reseña';
+      }
+    }
+  });
+</script>

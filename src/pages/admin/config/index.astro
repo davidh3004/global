@@ -1,0 +1,256 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Site Configuration">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">Site Configuration</h1>
+    <p class="text-gray-600 mt-1">Manage contact information, social media, and general site data</p>
+  </div>
+
+  <div id="config-container" class="bg-white rounded-lg shadow p-6 max-w-4xl">
+    <div class="text-center py-8">
+      <span class="loading loading-spinner loading-lg"></span>
+      <p class="text-gray-600 mt-4">Loading configuration...</p>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
+  import { db } from '../../../firebase/client';
+
+  const CONFIG_DOC_ID = 'main';
+
+  async function loadConfig() {
+    const container = document.getElementById('config-container');
+    if (!container) return;
+
+    try {
+      const docRef = doc(db, 'siteConfig', CONFIG_DOC_ID);
+      const docSnap = await getDoc(docRef);
+
+      const config = docSnap.exists() ? docSnap.data() : {
+        companyName: 'Global Recycling of Tampa Bay',
+        phone: '(813) 373-6467',
+        email: 'info@globalrecyclingtb.com',
+        address: '5011 N. Clark St., Tampa, FL 33614',
+        hours: 'Mon–Sat 7:00am – 5:00pm',
+        hoursEs: 'Lun–Sáb 7:00am – 5:00pm',
+        googleMapsUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3522.9!2d-82.4801!3d27.9897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c768d1a8e999%3A0x1234!2s5011+N+Clark+Ave%2C+Tampa%2C+FL+33614!5e0!3m2!1sen!2sus!4v1684000000000',
+        socialMedia: {
+          instagram: '',
+          facebook: '',
+          twitter: ''
+        }
+      };
+
+      container.innerHTML = `
+        <form id="config-form" class="space-y-8">
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-900 border-b pb-2">Contact Information</h2>
+            
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Company Name *</span>
+              </label>
+              <input type="text" name="companyName" required class="input input-bordered w-full" value="${config.companyName}" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold">Phone *</span>
+                </label>
+                <input type="tel" name="phone" required class="input input-bordered w-full" value="${config.phone}" />
+              </div>
+
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold">Email *</span>
+                </label>
+                <input type="email" name="email" required class="input input-bordered w-full" value="${config.email}" />
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Address *</span>
+              </label>
+              <input type="text" name="address" required class="input input-bordered w-full" value="${config.address}" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold">Business Hours (English) *</span>
+                </label>
+                <input type="text" name="hours" required class="input input-bordered w-full" value="${config.hours}" placeholder="Mon–Sat 7:00am – 5:00pm" />
+              </div>
+
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold">Horario (Español) *</span>
+                </label>
+                <input type="text" name="hoursEs" required class="input input-bordered w-full" value="${config.hoursEs || config.hours}" placeholder="Lun–Sáb 7:00am – 5:00pm" />
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Google Maps Embed URL *</span>
+              </label>
+              <textarea name="googleMapsUrl" required class="textarea textarea-bordered w-full h-20">${config.googleMapsUrl}</textarea>
+              <label class="label">
+                <span class="label-text-alt text-gray-500">Google Maps iframe URL for the "Find Us" section</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-900 border-b pb-2">Social Media</h2>
+            
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Instagram</span>
+              </label>
+              <input type="url" name="instagram" class="input input-bordered w-full" value="${config.socialMedia?.instagram || ''}" placeholder="https://instagram.com/..." />
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Facebook</span>
+              </label>
+              <input type="url" name="facebook" class="input input-bordered w-full" value="${config.socialMedia?.facebook || ''}" placeholder="https://facebook.com/..." />
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Twitter</span>
+              </label>
+              <input type="url" name="twitter" class="input input-bordered w-full" value="${config.socialMedia?.twitter || ''}" placeholder="https://twitter.com/..." />
+            </div>
+          </div>
+
+          <div class="flex gap-3 pt-4 border-t">
+            <button type="submit" class="btn btn-primary">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              Save Configuration
+            </button>
+            <a href="/admin" class="btn btn-ghost">Back to Dashboard</a>
+          </div>
+        </form>
+      `;
+
+      const form = document.getElementById('config-form');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="loading loading-spinner"></span> Saving...';
+        }
+        
+        try {
+          await setDoc(doc(db, 'siteConfig', CONFIG_DOC_ID), {
+            companyName: formData.get('companyName'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            address: formData.get('address'),
+            hours: formData.get('hours'),
+            hoursEs: formData.get('hoursEs'),
+            googleMapsUrl: formData.get('googleMapsUrl'),
+            socialMedia: {
+              instagram: formData.get('instagram') || '',
+              facebook: formData.get('facebook') || '',
+              twitter: formData.get('twitter') || ''
+            },
+            updatedAt: Timestamp.now()
+          });
+          
+          alert('Configuration saved successfully');
+          window.location.reload();
+        } catch (error) {
+          console.error('Error saving config:', error);
+          alert('Error saving configuration');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Save Configuration';
+          }
+        }
+      });
+
+    } catch (error) {
+      console.error('Error loading config:', error);
+      container.innerHTML = `
+        <div class="text-center py-8">
+          <p class="text-error font-semibold">Error loading configuration</p>
+          <p class="text-sm text-gray-600 mt-2">${error instanceof Error ? error.message : 'Unknown error'}</p>
+        </div>
+      `;
+    }
+  }
+
+  loadConfig();
+
+  // QuickBooks status check
+  async function checkQBStatus() {
+    const statusEl = document.getElementById('qb-status');
+    const connectBtn = document.getElementById('qb-connect-btn') as HTMLAnchorElement;
+    if (!statusEl || !connectBtn) return;
+
+    // Check URL params for OAuth result
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('qb') === 'success') {
+      statusEl.innerHTML = '<div class="alert alert-success"><span>QuickBooks connected successfully!</span></div>';
+    } else if (params.get('qb') === 'error') {
+      const msg = params.get('msg') || 'Unknown error';
+      statusEl.innerHTML = `<div class="alert alert-error"><span>Connection failed: ${msg}</span></div>`;
+    }
+
+    try {
+      const tokenDoc = await getDoc(doc(db, 'siteConfig', 'quickbooks_tokens'));
+      if (tokenDoc.exists()) {
+        const data = tokenDoc.data();
+        const updatedAt = data.updatedAt?.toDate?.() || null;
+        statusEl.innerHTML = `
+          <div class="alert alert-success">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <div>
+              <p class="font-semibold">Connected</p>
+              <p class="text-sm">Realm ID: ${data.realm_id || 'N/A'}${updatedAt ? ' • Last updated: ' + updatedAt.toLocaleDateString('en-US') : ''}</p>
+            </div>
+          </div>
+        `;
+        connectBtn.textContent = 'Reconnect QuickBooks';
+      } else {
+        statusEl.innerHTML = '<div class="alert alert-warning"><span>Not connected. Click "Connect QuickBooks" to set up payments.</span></div>';
+      }
+    } catch (err) {
+      statusEl.innerHTML = '<div class="alert alert-warning"><span>Unable to check QuickBooks status.</span></div>';
+    }
+
+    // Set connect button URL
+    const clientId = import.meta.env.PUBLIC_QUICKBOOKS_CLIENT_ID || '';
+    if (clientId) {
+      const redirectUri = encodeURIComponent(window.location.origin + '/api/auth/quickbooks/callback');
+      const state = Math.random().toString(36).substring(2, 15);
+      connectBtn.href = `https://appcenter.intuit.com/connect/oauth2?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=com.intuit.quickbooks.payment&state=${state}`;
+    } else {
+      connectBtn.href = '#';
+      connectBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('QuickBooks Client ID not configured. Set QUICKBOOKS_CLIENT_ID in your .env file and PUBLIC_QUICKBOOKS_CLIENT_ID for client-side access.');
+      });
+    }
+  }
+
+  checkQBStatus();
+</script>

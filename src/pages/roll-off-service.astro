@@ -1,0 +1,182 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+
+const locale = Astro.currentLocale || 'en';
+
+const documents = [
+  { id: 'agreement', name: 'Service Agreement', file: '/forms/roll-off-service-agreement.pdf' },
+  { id: 'request', name: 'Roll-Off Request Form', file: '/forms/roll-off-request-form.pdf' },
+];
+
+// Example layout only — final sizes, pricing, weight allowance and rental
+// duration are pending from the client (truck/dumpster photos coming too).
+const sizes = [
+  { yards: '15', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Small cleanouts, bathroom remodels, roof repairs.' },
+  { yards: '20', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Flooring tear-outs, medium renovations, storm debris.' },
+  { yards: '30', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Full home remodels, estate cleanouts, house flips.' },
+  { yards: '40', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Commercial renovations and high-volume cleanouts.' },
+];
+
+const prohibited = [
+  'Hazardous or toxic waste', 'Asbestos', 'Septic tanks & waste', 'Paint & solvents',
+  'Cleaning solutions', 'Biomedical waste', 'Pesticides', 'Tires', 'Oil, filters & containers',
+  'Gas cans & propane tanks', 'Batteries of any kind', 'Appliances with Freon (fridges, A/C)',
+  'Fluorescent bulbs & mercury devices', 'Telephone poles & railroad ties', 'Food garbage',
+];
+---
+
+<PublicLayout
+  title="Roll-Off Dumpster Service — Global Recycling of Tampa Bay"
+  description="Roll-off dumpster rental in Tampa Bay. View the service agreement and request form, dumpster sizes, what we accept, and how to get started."
+  lang={locale}
+>
+  <div class="gr-page">
+    <section class="gr-hero">
+      <div class="gr-hero-inner">
+        <span class="gr-eyebrow">Dumpster Rental</span>
+        <h1>Roll-Off Service</h1>
+        <p>On-time, dependable roll-off dumpsters for contractors and homeowners across Tampa Bay. Pick a size, give us the details, and we'll make it happen.</p>
+        <div class="gr-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Roll-Off Service</div>
+      </div>
+    </section>
+
+    <div class="gr-wrap gr-wrap-wide">
+      <!-- How it works -->
+      <div class="gr-panel">
+        <div class="gr-panel-head">How To Get A Dumpster</div>
+        <div class="gr-panel-body">
+          <div class="gr-steps">
+            <div class="gr-step">
+              <div class="gr-step-num">1</div>
+              <div class="gr-step-body"><h3>Call &amp; get a quote</h3><p>Call <a href="tel:8133736467" style="color:var(--green);font-weight:700">(813) 373-6467</a> and tell us about your project — location, timing, access, and what's going in the can.</p></div>
+            </div>
+            <div class="gr-step">
+              <div class="gr-step-num">2</div>
+              <div class="gr-step-body"><h3>Lock in your size</h3><p>We'll recommend the right dumpster, confirm delivery, and set you up. Give us <strong>1–2 business days' notice</strong> for service.</p></div>
+            </div>
+            <div class="gr-step">
+              <div class="gr-step-num">3</div>
+              <div class="gr-step-body"><h3>On-time drop-off &amp; pickup</h3><p>We deliver where and when you need it. When it's full, just call — we'll pick it up or swap it fast.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div class="gr-panel">
+        <div class="gr-panel-head">Dumpster Sizes &amp; Pricing</div>
+        <div class="gr-panel-body">
+          <div class="gr-pending" style="margin-bottom:22px">
+            <strong>Coming soon.</strong> Final dumpster sizes, pricing, included weight &amp; rental duration — plus photos of our trucks and dumpsters — are on the way. The layout below is ready to drop them in.
+          </div>
+          <div class="gr-spec-grid">
+            {sizes.map((s) => (
+              <div class="gr-spec-card">
+                <div class="spec-top">
+                  <div class="spec-size">{s.yards} YD</div>
+                  <div class="spec-label">Roll-Off Dumpster</div>
+                </div>
+                <div class="spec-rows">
+                  <div class="spec-row"><span>Dimensions</span><span>{s.dims}</span></div>
+                  <div class="spec-row"><span>Tonnage Incl.</span><span>{s.tons}</span></div>
+                  <div class="spec-row"><span>Rental Duration</span><span>{s.days}</span></div>
+                  <div class="spec-row"><span>Price</span><span>Call for quote</span></div>
+                </div>
+                <div class="spec-best"><strong>Best for:</strong> {s.best}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="gr-panel">
+        <div class="gr-panel-head">Service Documents</div>
+        <div class="gr-panel-body">
+          <label class="gr-select-label" for="roDoc">Select a document</label>
+          <div class="gr-tabs" role="tablist" aria-label="Select a document">
+            {documents.map((d, i) => (
+              <button class={`gr-tab ${i === 0 ? 'active' : ''}`} role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-target={d.id}>{d.name}</button>
+            ))}
+          </div>
+          <select id="roDoc" class="gr-mobile-select">
+            {documents.map((d, i) => (<option value={d.id} selected={i === 0}>{d.name}</option>))}
+          </select>
+
+          {documents.map((d, i) => (
+            <div class="gr-tabpanel" data-panel={d.id} hidden={i !== 0}>
+              <div class="gr-pdf">
+                <div class="gr-pdf-actions">
+                  <span class="pdf-title">{d.name}</span>
+                  <span class="pdf-btns">
+                    <a class="gr-btn gr-btn-outline" href={d.file} target="_blank" rel="noopener">Open / Print</a>
+                    <a class="gr-btn gr-btn-light" href={d.file} download>Download PDF</a>
+                  </span>
+                </div>
+                <iframe src={`${d.file}#view=FitH`} title={d.name} loading="lazy"></iframe>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Accepted / prohibited -->
+      <div class="gr-two-col">
+        <div class="gr-panel" style="margin-bottom:0">
+          <div class="gr-panel-head">Good To Know</div>
+          <div class="gr-panel-body gr-prose">
+            <ul>
+              <li>Give us <strong>1–2 business days' notice</strong>. Requests after 12&nbsp;PM (noon) can't be guaranteed for the next business day.</li>
+              <li>Don't overfill above the top rail, and keep loads under <strong>20,000&nbsp;lbs (10 tons)</strong>.</li>
+              <li>A <strong>$150–$175 no-service fee</strong> applies if the dumpster is blocked, overfilled, or overweight at pickup.</li>
+              <li>Each dumpster includes a set number of rental days; <strong>$5.00/day</strong> applies after that.</li>
+              <li>Provide unobstructed access on scheduled pickup day.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="gr-panel" style="margin-bottom:0">
+          <div class="gr-panel-head">Prohibited Items</div>
+          <div class="gr-panel-body">
+            <p style="margin:0 0 14px;color:var(--gray-600);font-size:14px">It is against the law to place these in the dumpster:</p>
+            <div class="gr-chip-grid">
+              {prohibited.map((p) => (<span class="gr-chip">{p}</span>))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gr-cta-band" style="margin-top:34px">
+        <h3>Ready to get started?</h3>
+        <p>Call now and we'll point you to the right dumpster for your job.</p>
+        <a class="gr-cta-phone" href="tel:8133736467">(813) 373-6467</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .gr-select-label{display:block;font-family:var(--cond);text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--gray-600);margin-bottom:8px}
+    .gr-mobile-select{display:none;width:100%;padding:12px 14px;border:2px solid var(--green-dark);border-radius:5px;font-size:16px;font-family:var(--font);color:var(--ink);background:#fff;margin-bottom:18px}
+    .gr-chip-grid{display:flex;flex-wrap:wrap;gap:8px}
+    .gr-chip{font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--paper-line);border-radius:4px;padding:7px 12px}
+    @media(max-width:560px){.gr-tabs{display:none}.gr-mobile-select{display:block}}
+  </style>
+
+  <script is:inline>
+    (function () {
+      var tabs = document.querySelectorAll('.gr-tabs .gr-tab');
+      var panels = document.querySelectorAll('.gr-tabpanel');
+      var select = document.getElementById('roDoc');
+      function activate(id) {
+        panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== id; });
+        tabs.forEach(function (t) {
+          var on = t.getAttribute('data-target') === id;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        if (select && select.value !== id) select.value = id;
+      }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { activate(t.getAttribute('data-target')); }); });
+      if (select) select.addEventListener('change', function () { activate(select.value); });
+    })();
+  </script>
+</PublicLayout>

@@ -1,0 +1,38 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import ContactSection from '../components/contact/ContactSection';
+import ContactForm from '../components/contact/ContactForm';
+import RecaptchaProvider from '../components/security/RecaptchaProvider';
+
+const lang = 'en';
+const isEnglish = lang === 'en';
+
+const title = isEnglish ? 'Contact Us' : 'Contáctanos';
+const description = isEnglish 
+  ? 'Get in touch with Global Recycling of Tampa Bay. Visit our facility or send us a message.' 
+  : 'Ponte en contacto con Global Recycling of Tampa Bay. Visita nuestras instalaciones o envíanos un mensaje.';
+
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+---
+
+<PublicLayout title={title} description={description} lang={lang}>
+  <RecaptchaProvider client:load siteKey={recaptchaSiteKey}>
+    <!-- Contact Information Section -->
+    <ContactSection client:load lang={lang} />
+
+    <!-- Contact Form Section -->
+    <section style="padding: 80px 0; background: var(--gray-50);">
+      <div class="container" style="max-width: 800px;">
+        <ContactForm client:load />
+      </div>
+    </section>
+  </RecaptchaProvider>
+</PublicLayout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+</style>

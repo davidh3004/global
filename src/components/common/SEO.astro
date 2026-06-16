@@ -1,0 +1,94 @@
+---
+/**
+ * SEO Component
+ * Comprehensive meta tags for search engines and social media
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: string;
+  noindex?: boolean;
+}
+
+const { 
+  title, 
+  description, 
+  image = '/og-image.jpg',
+  type = 'website',
+  noindex = false 
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://globalrecyclingtampabay.com');
+const siteName = 'Global Recycling of Tampa Bay';
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.site || 'https://globalrecyclingtampabay.com')} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={Astro.currentLocale === 'es' ? 'es_ES' : 'en_US'} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, Astro.site || 'https://globalrecyclingtampabay.com')} />
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Global Recycling of Tampa Bay",
+  "description": "Recycled concrete, asphalt, and aggregate materials supplier serving Tampa Bay since 1990",
+  "url": "https://globalrecyclingtampabay.com",
+  "logo": "https://globalrecyclingtampabay.com/logo.png",
+  "image": "https://globalrecyclingtampabay.com/og-image.jpg",
+  "telephone": "(813) 373-6467",
+  "email": "info@globalrecyclingtampabay.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "5011 N Clark Ave",
+    "addressLocality": "Tampa",
+    "addressRegion": "FL",
+    "postalCode": "33614",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "28.0136",
+    "longitude": "-82.4572"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "07:00",
+      "closes": "17:00"
+    }
+  ],
+  "priceRange": "$$",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.3",
+    "reviewCount": "50"
+  },
+  "sameAs": [
+    "https://www.facebook.com/globalrecyclingtampabay",
+    "https://www.instagram.com/globalrecyclingtampabay"
+  ]
+})} />
