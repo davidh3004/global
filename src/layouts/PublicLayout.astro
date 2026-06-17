@@ -11,19 +11,20 @@ interface Props {
   lang?: string;
   image?: string;
   type?: string;
+  heroNav?: boolean;
 }
 
-const { title, description, lang = 'en', image, type } = Astro.props;
+const { title, description, lang = 'en', image, type, heroNav = false } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} lang={lang}>
-  <SEO 
-    title={title} 
-    description={description} 
+  <SEO
+    title={title}
+    description={description}
     image={image}
     type={type}
   />
-  <Header lang={lang} />
+  <Header lang={lang} transparent={heroNav} />
   <main>
     <slot />
   </main>

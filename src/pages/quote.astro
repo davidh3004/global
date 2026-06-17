@@ -1,0 +1,278 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import { t } from '../utils/i18n';
+
+const locale = Astro.currentLocale || 'en';
+const isEnglish = locale === 'en';
+---
+
+<PublicLayout
+  title={isEnglish ? 'Request a Quote — Global Recycling of Tampa Bay' : 'Solicitar Cotización — Global Recycling of Tampa Bay'}
+  description={isEnglish
+    ? 'Request a quote for recycled concrete, asphalt, and aggregate materials. We respond the same day.'
+    : 'Solicite una cotización de materiales reciclados. Respondemos el mismo día.'}
+  lang={locale}
+>
+  <div class="gr-page quote-page">
+    <section class="gr-hero">
+      <div class="gr-hero-inner">
+        <span class="gr-eyebrow" data-i18n="hero.btnQuote">{t('hero.btnQuote', locale)}</span>
+        <h1 data-i18n="quote.title">{t('quote.title', locale)}</h1>
+        <p data-i18n="quote.subtitle">{t('quote.subtitle', locale)}</p>
+        <div class="gr-breadcrumb">
+          <a href={isEnglish ? '/' : '/es'}>{isEnglish ? 'Home' : 'Inicio'}</a> &nbsp;/&nbsp;
+          <span data-i18n="hero.btnQuote">{t('hero.btnQuote', locale)}</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="gr-wrap">
+      <div class="quote-page-layout">
+        <div class="quote-card quote-page-card">
+          <div class="qc-title" data-i18n="quote.title">{t('quote.title', locale)}</div>
+          <div class="qc-sub" data-i18n="quote.subtitle">{t('quote.subtitle', locale)}</div>
+
+          <form id="quotePageForm">
+            <div class="field">
+              <label data-i18n="quote.name">{t('quote.name', locale)}</label>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder={t('quote.namePlaceholder', locale)}
+                data-i18n-placeholder="quote.namePlaceholder"
+              />
+            </div>
+
+            <div class="quote-page-row">
+              <div class="field">
+                <label data-i18n="quote.material">{t('quote.material', locale)}</label>
+                <select name="material">
+                  <option value={t('quote.materials.concrete', locale)} data-i18n="quote.materials.concrete">
+                    {t('quote.materials.concrete', locale)}
+                  </option>
+                  <option value={t('quote.materials.asphalt', locale)} data-i18n="quote.materials.asphalt">
+                    {t('quote.materials.asphalt', locale)}
+                  </option>
+                  <option value={t('quote.materials.roadBase', locale)} data-i18n="quote.materials.roadBase">
+                    {t('quote.materials.roadBase', locale)}
+                  </option>
+                  <option value={t('quote.materials.paverBase', locale)} data-i18n="quote.materials.paverBase">
+                    {t('quote.materials.paverBase', locale)}
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label data-i18n="quote.quantity">{t('quote.quantity', locale)}</label>
+                <input
+                  type="text"
+                  name="quantity"
+                  required
+                  placeholder={t('quote.quantityPlaceholder', locale)}
+                  data-i18n-placeholder="quote.quantityPlaceholder"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label data-i18n="quote.contact">{t('quote.contact', locale)}</label>
+              <input
+                type="text"
+                name="contact"
+                required
+                placeholder={t('quote.contactPlaceholder', locale)}
+                data-i18n-placeholder="quote.contactPlaceholder"
+              />
+            </div>
+
+            <div id="quotePageMsg" class="quote-page-msg" hidden></div>
+
+            <button type="submit" id="quotePageBtn" class="btn-submit">
+              <span data-i18n="quote.submit">{t('quote.submit', locale)}</span> →
+            </button>
+
+            <div class="qc-divider" data-i18n="quote.divider">{t('quote.divider', locale)}</div>
+
+            <a href="tel:8133736467" class="qc-phone-link">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              (813) 373-6467
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</PublicLayout>
+
+<style is:global>
+  .quote-page-layout {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .quote-page-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 2px solid var(--green-dark);
+    box-shadow: 0 20px 48px rgba(7, 26, 16, 0.12);
+    padding: 32px 32px 28px;
+  }
+  .quote-page-card .qc-title {
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+  }
+  .quote-page-card .qc-sub {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin-bottom: 24px;
+  }
+  .quote-page-card .field {
+    margin-bottom: 16px;
+  }
+  .quote-page-card .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+  }
+  .quote-page-card .field input,
+  .quote-page-card .field select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1.5px solid var(--gray-200);
+    font-size: 15px;
+    color: var(--gray-800);
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .quote-page-card .field input:focus,
+  .quote-page-card .field select:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  .quote-page-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .quote-page-card .btn-submit {
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px;
+    border-radius: 8px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background 0.18s ease;
+  }
+  .quote-page-card .btn-submit:hover {
+    background: var(--green-hover);
+  }
+  .quote-page-card .btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  .quote-page-msg {
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .quote-page-msg.is-success {
+    background: #d1fae5;
+    color: #065f46;
+  }
+  .quote-page-msg.is-error {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+  .quote-page-card .qc-divider {
+    text-align: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    margin: 18px 0 14px;
+  }
+  .quote-page-card .qc-phone-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif;
+    font-weight: 600;
+    color: var(--green-dark);
+    text-decoration: none;
+  }
+  @media (max-width: 600px) {
+    .quote-page-row {
+      grid-template-columns: 1fr;
+    }
+    .quote-page-card {
+      padding: 24px 20px;
+    }
+  }
+</style>
+
+<script>
+  import { createLead } from '../services/lead.service';
+
+  const form = document.getElementById('quotePageForm') as HTMLFormElement | null;
+  const btn = document.getElementById('quotePageBtn') as HTMLButtonElement | null;
+  const msg = document.getElementById('quotePageMsg') as HTMLDivElement | null;
+  const isEnglish = document.documentElement.lang !== 'es';
+
+  if (form && btn && msg) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const submitLabel = btn.textContent || '';
+
+      btn.disabled = true;
+      const originalBtnHtml = btn.innerHTML;
+      btn.textContent = isEnglish ? 'Sending...' : 'Enviando...';
+      msg.hidden = true;
+      msg.className = 'quote-page-msg';
+
+      try {
+        await createLead({
+          name: fd.get('name') as string,
+          material: fd.get('material') as string,
+          quantity: fd.get('quantity') as string,
+          contact: fd.get('contact') as string,
+        });
+        msg.hidden = false;
+        msg.className = 'quote-page-msg is-success';
+        msg.textContent = isEnglish
+          ? 'Request sent! We will contact you shortly.'
+          : '¡Solicitud enviada! Nos pondremos en contacto pronto.';
+        form.reset();
+      } catch {
+        msg.hidden = false;
+        msg.className = 'quote-page-msg is-error';
+        msg.textContent = isEnglish
+          ? 'Error sending request. Please try again.'
+          : 'Error al enviar la solicitud. Inténtelo de nuevo.';
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnHtml;
+      }
+    });
+  }
+</script>

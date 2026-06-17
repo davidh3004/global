@@ -9,16 +9,47 @@ interface Props {
   lang?: string;
 }
 
+function formatPrice(value: number) {
+  return Number.isInteger(value) ? String(value) : value.toFixed(2);
+}
+
+function formatPriceUnit(unit?: string, isEnglish = true) {
+  if (!unit) return isEnglish ? 'per ton' : 'por tonelada';
+  return unit.replace(/^\//, '').trim() || (isEnglish ? 'per ton' : 'por tonelada');
+}
+
 export default function ProductsSection({ lang = 'en' }: Props) {
   const { isEnglish } = useI18n();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ name: string; leaving: boolean } | null>(null);
+
+  const copy = isEnglish
+    ? {
+        tag: 'MATERIALS WE SELL',
+        title: 'HIGH-QUALITY MATERIALS FOR YOUR PROJECTS',
+        lead: 'We supply a wide range of recycled materials for construction and landscaping needs.',
+        loading: 'Loading materials…',
+        addToCart: 'Add to Cart',
+        callForPricing: 'Call for Pricing',
+        addedTitle: 'Added to cart',
+        addedBody: 'was added to your cart.',
+      }
+    : {
+        tag: 'MATERIALES QUE VENDEMOS',
+        title: 'MATERIALES DE ALTA CALIDAD PARA SUS PROYECTOS',
+        lead: 'Suministramos una amplia gama de materiales reciclados para necesidades de construcción y paisajismo.',
+        loading: 'Cargando materiales…',
+        addToCart: 'Agregar al Carrito',
+        callForPricing: 'Consulte Precio',
+        addedTitle: 'Agregado al carrito',
+        addedBody: 'fue agregado a su carrito.',
+      };
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Try with orderBy first, if fails (no index), fetch without ordering
         let q;
         try {
           q = query(
@@ -27,30 +58,27 @@ export default function ProductsSection({ lang = 'en' }: Props) {
             orderBy('order', 'asc'),
             limit(6)
           );
-        } catch (indexError) {
-          // Fallback: fetch without orderBy if index doesn't exist
+        } catch {
           q = query(
             collection(db, 'products'),
             where('isActive', '==', true),
             limit(6)
           );
         }
-        
+
         const querySnapshot = await getDocs(q);
         const productsData: Product[] = [];
-        
+
         querySnapshot.forEach((doc) => {
           productsData.push({ id: doc.id, ...doc.data() } as Product);
         });
-        
-        // Sort manually if no orderBy was used
+
         productsData.sort((a, b) => (a.order || 0) - (b.order || 0));
-        
         setProducts(productsData);
         setLoading(false);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error fetching products:', err);
-        setError(err.message || 'Error loading products');
+        setError(err instanceof Error ? err.message : 'Error loading products');
         setLoading(false);
       }
     };
@@ -58,36 +86,49 @@ export default function ProductsSection({ lang = 'en' }: Props) {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (product: Product) => {
-    try {
-      console.log('[ProductsSection] Adding product to cart:', product);
-      
-      const cartItem: CartItem = {
-        id: product.id!,
-        name: product.name,
-        price: product.price || 0,
-        quantity: 1,
-        image: product.imageUrl,
-        description: product.description,
-      };
-      
-      // Dispatch custom event for CartContext to listen
-      window.dispatchEvent(new CustomEvent('addToCart', {
-        detail: cartItem
-      }));
-      
-      alert(isEnglish ? 'Added to cart!' : '¡Agregado al carrito!');
-    } catch (error) {
-      console.error('[ProductsSection] Error adding to cart:', error);
-      alert(isEnglish ? 'Error adding to cart' : 'Error al agregar al carrito');
-    }
+  useEffect(() => {
+    if (!toast || toast.leaving) return;
+    const hideTimer = window.setTimeout(() => {
+      setToast((current) => (current ? { ...current, leaving: true } : null));
+    }, 2800);
+    return () => window.clearTimeout(hideTimer);
+  }, [toast]);
+
+  useEffect(() => {
+    if (!toast?.leaving) return;
+    const removeTimer = window.setTimeout(() => setToast(null), 280);
+    return () => window.clearTimeout(removeTimer);
+  }, [toast]);
+
+  const handleAddToCart = (product: Product) => {
+    const cartItem: CartItem = {
+      id: product.id!,
+      name: product.name,
+      price: product.price || 0,
+      quantity: 1,
+      image: product.imageUrl,
+      description: product.description,
+    };
+
+    window.dispatchEvent(
+      new CustomEvent('addToCart', {
+        detail: cartItem,
+      })
+    );
+
+    setToast({ name: product.name, leaving: false });
   };
 
   if (loading) {
     return (
-      <section className="shop products" id="products" style={{ padding: '100px 0', background: '#fff' }}>
-        <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', textAlign: 'center', color: 'var(--gray-600)' }}>
-          {isEnglish ? 'Loading materials…' : 'Cargando materiales…'}
+      <section className="shop products home-products" id="products">
+        <div className="container">
+          <header className="home-products-head">
+            <div className="sec-eyebrow">{copy.tag}</div>
+            <h2 className="home-products-title">{copy.title}</h2>
+            <p className="home-products-lead">{copy.lead}</p>
+          </header>
+          <p className="home-products-loading">{copy.loading}</p>
         </div>
       </section>
     );
@@ -98,44 +139,60 @@ export default function ProductsSection({ lang = 'en' }: Props) {
   }
 
   return (
-    <section className="shop products" id="products" style={{ padding: '100px 0', background: '#fff' }}>
-      <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
-        <div style={{ display: 'flex', gap: '60px', flexWrap: 'wrap' }}>
-          
-          {/* Left Text Column */}
-          <div style={{ flex: '1 1 350px', maxWidth: '400px' }}>
-            <div style={{ color: 'var(--green)', fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontWeight: 600, letterSpacing: '2px', fontSize: '14px', marginBottom: '16px' }}>
-              {isEnglish ? 'MATERIALS WE SELL' : 'MATERIALES QUE VENDEMOS'}
-            </div>
-            <h2 style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: '42px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--green-dark)', lineHeight: 1.1, marginBottom: '24px' }}>
-              {isEnglish ? 'HIGH-QUALITY MATERIALS FOR YOUR PROJECTS' : 'MATERIALES DE ALTA CALIDAD PARA SUS PROYECTOS'}
-            </h2>
-            <p style={{ fontSize: '16px', color: 'var(--gray-600)', lineHeight: 1.6, marginBottom: '32px' }}>
-              {isEnglish ? 'We supply a wide range of recycled materials for construction and landscaping needs.' : 'Suministramos una amplia gama de materiales reciclados para necesidades de construcción y paisajismo.'}
-            </p>
-            <a href={isEnglish ? '/en/materials' : '/materiales'} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '15px 30px', background: 'var(--green)', color: '#fff', fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontWeight: 600, fontSize: '14px', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '7px', boxShadow: '0 10px 26px rgba(47,158,84,0.30)' }}>
-              {isEnglish ? 'VIEW ALL MATERIALS' : 'VER TODOS LOS MATERIALES'} →
-            </a>
-          </div>
+    <section className="shop products home-products" id="products">
+      <div className="container">
+        <header className="home-products-head">
+          <div className="sec-eyebrow">{copy.tag}</div>
+          <h2 className="home-products-title">{copy.title}</h2>
+          <p className="home-products-lead">{copy.lead}</p>
+        </header>
 
-          {/* Right Grid Column */}
-          <div style={{ flex: '2 1 600px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '20px' }}>
-              {products.map((product, index) => (
-                <div key={product.id} style={{ display: 'flex', flexDirection: 'column', background: '#fff', border: 'none', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 10px 28px rgba(7,26,16,0.09)' }}>
-                  <div style={{ height: '150px', overflow: 'hidden' }}>
-                    <img src={product.imageUrl} alt={product.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <div className="shop-grid home-products-grid">
+          {products.map((product) => (
+            <article key={product.id} className="prod-card home-prod-card">
+              <div className="prod-img">
+                {product.badge ? <span className="prod-badge">{product.badge}</span> : null}
+                <img src={product.imageUrl} alt={product.name} loading="lazy" />
+              </div>
+              <div className="prod-body">
+                <h3 className="prod-name">{product.name}</h3>
+                {product.description ? <p className="prod-desc">{product.description}</p> : null}
+                {product.price != null && product.price > 0 ? (
+                  <div className="prod-price">
+                    <span className="price-num">${formatPrice(product.price)}</span>
+                    <span className="price-unit">{formatPriceUnit(product.priceUnit, isEnglish)}</span>
                   </div>
-                  <div style={{ padding: '16px', textAlign: 'center' }}>
-                    <div style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: '16px', fontWeight: 600, color: 'var(--green-dark)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{product.name}</div>
-                  </div>
+                ) : (
+                  <div className="price-call">{copy.callForPricing}</div>
+                )}
+                <div className="prod-actions">
+                  <button
+                    type="button"
+                    className="btn-cart home-prod-cart"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    {copy.addToCart}
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-
+              </div>
+            </article>
+          ))}
         </div>
       </div>
+
+      {toast ? (
+        <div
+          className={`cart-toast${toast.leaving ? ' is-leaving' : ''}`}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="cart-toast-icon" aria-hidden="true">✓</span>
+          <div className="cart-toast-text">
+            <strong>{copy.addedTitle}</strong>
+            {toast.name} {copy.addedBody}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -53,13 +53,15 @@ export default function PhotoGallery() {
     return (
       <section className="gallery-section">
         <div className="container">
-          <div className="sec-tag fade">
-            <div className="sec-tag-line"></div>
-            <span>{isEnglish ? 'Gallery' : 'Galería'}</span>
-          </div>
-          <h2 className="sec-title fade fade-d1">
-            {isEnglish ? 'Our Work in Action' : 'Nuestro Trabajo en Acción'}
-          </h2>
+          <header className="gallery-head">
+            <div className="sec-tag">
+              <div className="sec-tag-line"></div>
+              <span>{isEnglish ? 'Gallery' : 'Galería'}</span>
+            </div>
+            <h2 className="sec-title">
+              {isEnglish ? 'Our Work in Action' : 'Nuestro Trabajo en Acción'}
+            </h2>
+          </header>
           <div className="gallery-loading">
             {isEnglish ? 'Loading photos...' : 'Cargando fotos...'}
           </div>
@@ -72,13 +74,15 @@ export default function PhotoGallery() {
     <>
       <section className="gallery-section">
         <div className="container">
-          <div className="sec-tag fade">
-            <div className="sec-tag-line"></div>
-            <span>{isEnglish ? 'Gallery' : 'Galería'}</span>
-          </div>
-          <h2 className="sec-title fade fade-d1">
-            {isEnglish ? 'Our Work in Action' : 'Nuestro Trabajo en Acción'}
-          </h2>
+          <header className="gallery-head">
+            <div className="sec-tag">
+              <div className="sec-tag-line"></div>
+              <span>{isEnglish ? 'Gallery' : 'Galería'}</span>
+            </div>
+            <h2 className="sec-title">
+              {isEnglish ? 'Our Work in Action' : 'Nuestro Trabajo en Acción'}
+            </h2>
+          </header>
           
           {photos.length === 0 ? (
             <div className="gallery-empty">
@@ -172,7 +176,6 @@ export default function PhotoGallery() {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
           gap: 20px;
-          margin-top: 40px;
         }
 
         .gallery-item {

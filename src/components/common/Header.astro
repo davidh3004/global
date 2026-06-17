@@ -5,34 +5,14 @@ import LanguageSelector from './LanguageSelector';
 
 interface Props {
   lang?: string;
+  transparent?: boolean;
 }
 
-const { lang = 'en' } = Astro.props;
+const { lang = 'en', transparent = false } = Astro.props;
 const isEnglish = lang === 'en';
 ---
 
-<nav class="header-nav" id="nav">
-  <!-- Heritage utility top-bar -->
-  <div class="header-topbar">
-    <div class="header-topbar-inner">
-      <span class="tb-tag">"The World Is Yours" — Family-Owned in Tampa Since 1990</span>
-      <div class="tb-info">
-        <a class="tb-item" href="https://maps.google.com/?q=5011+N+Clark+Ave+Tampa+FL+33614" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          5011 N. Clark Ave, Tampa, FL
-        </a>
-        <span class="tb-item">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
-          Mon–Sat 7AM–5PM
-        </span>
-        <a class="tb-item tb-phone" href="tel:8133736467">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          (813) 373-6467
-        </a>
-      </div>
-    </div>
-  </div>
-
+<nav class={`header-nav${transparent ? ' header-transparent' : ''}`} id="nav">
   <div class="header-container">
     <!-- Logo -->
     <a href="/#hero" class="header-logo">
@@ -44,7 +24,7 @@ const isEnglish = lang === 'en';
       <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
 
       <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle" data-i18n="nav.services">{t('nav.services', lang)}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <button type="button" class="header-dropdown-toggle"><span data-i18n="nav.services">{t('nav.services', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="header-submenu">
           <a href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
           <a href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
@@ -52,7 +32,7 @@ const isEnglish = lang === 'en';
       </div>
 
       <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle" data-i18n="nav.resources">{t('nav.resources', lang)}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <button type="button" class="header-dropdown-toggle"><span data-i18n="nav.resources">{t('nav.resources', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="header-submenu">
           <a href="/information" data-i18n="nav.information">{t('nav.information', lang)}</a>
           <a href="/calculating-your-project" data-i18n="nav.calculating">{t('nav.calculating', lang)}</a>
@@ -60,7 +40,7 @@ const isEnglish = lang === 'en';
       </div>
 
       <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle" data-i18n="nav.forms">{t('nav.forms', lang)}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <button type="button" class="header-dropdown-toggle"><span data-i18n="nav.forms">{t('nav.forms', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="header-submenu">
           <a href="/credit-card-authorization" data-i18n="nav.creditCard">{t('nav.creditCard', lang)}</a>
           <a href="/roll-off-service" data-i18n="nav.rollOffAgreement">{t('nav.rollOffAgreement', lang)}</a>
@@ -101,7 +81,7 @@ const isEnglish = lang === 'en';
       <LanguageSelector client:load />
 
       <!-- Get Quote Button -->
-      <a href="#hero" class="header-btn-quote">
+      <a href="/quote" class="header-btn-quote">
         <span data-i18n="nav.getQuote">{t('nav.getQuote', lang)}</span>
       </a>
     </div>
@@ -137,7 +117,7 @@ const isEnglish = lang === 'en';
 
       <!-- Mobile Actions -->
       <div class="mobile-actions">
-        <a href="#hero" class="mobile-btn-quote">
+        <a href="/quote" class="mobile-btn-quote">
           <span data-i18n="nav.getQuote">{t('nav.getQuote', lang)}</span>
         </a>
       </div>
@@ -168,78 +148,71 @@ const isEnglish = lang === 'en';
   }
 
   /* ========================================
-     HERITAGE UTILITY TOP-BAR
+     TRANSPARENT OVER-HERO MODE (homepage)
+     Nav floats over the hero image; turns solid white on scroll.
      ======================================== */
-  .header-topbar {
-    background: var(--green-dark);
-    border-bottom: 2px solid var(--green-light);
+  .header-nav.header-transparent {
+    background: transparent;
+    box-shadow: none;
+  }
+  .header-nav.header-transparent.scrolled {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .header-transparent:not(.scrolled) .header-links a,
+  .header-transparent:not(.scrolled) .header-dropdown-toggle {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  }
+  .header-transparent:not(.scrolled) .header-links a:hover,
+  .header-transparent:not(.scrolled) .header-dropdown-toggle:hover {
+    color: var(--green-light);
+  }
+  .header-transparent:not(.scrolled) .header-icon-btn svg {
     color: #fff;
   }
-
-  .header-topbar-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+  .header-transparent:not(.scrolled) .header-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
   }
-
-  .tb-tag {
-    font-family: 'Oswald', 'Arial Narrow', sans-serif;
-    font-size: 12.5px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #BCE6C8;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .header-transparent:not(.scrolled) .header-mobile-toggle span {
+    background: #fff;
   }
-
-  .tb-info {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    flex-shrink: 0;
-  }
-
-  .tb-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Oswald', 'Arial Narrow', sans-serif;
-    font-size: 12.5px;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .tb-item svg {
-    width: 14px;
-    height: 14px;
-    stroke: var(--green-light);
-    fill: none;
-    stroke-width: 2;
-  }
-
-  .tb-phone {
-    font-weight: 600;
+  .header-transparent:not(.scrolled) .header-mobile-toggle svg {
     color: #fff;
+    stroke: #fff;
+  }
+  .header-transparent:not(.scrolled) .lang-selector {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    padding: 4px 8px;
+    backdrop-filter: blur(4px);
+  }
+  .header-transparent:not(.scrolled) .header-logo img {
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55));
+  }
+  /* Dropdowns stay white — override hero white link styles inside submenus */
+  .header-transparent:not(.scrolled) .header-submenu a {
+    color: var(--gray-800);
+    text-shadow: none;
+  }
+  .header-transparent:not(.scrolled) .header-submenu a:hover {
+    color: var(--green-dark);
+    background: var(--green-pale);
+  }
+  .header-transparent:not(.scrolled) .lang-selector .lang-link {
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .header-transparent:not(.scrolled) .lang-selector .lang-link:hover,
+  .header-transparent:not(.scrolled) .lang-selector .lang-link.active {
+    color: var(--green-light);
+  }
+  .header-transparent:not(.scrolled) .lang-selector span {
+    color: rgba(255, 255, 255, 0.35) !important;
   }
 
-  .tb-item.tb-phone:hover {
-    color: #BCE6C8;
-  }
-
-  @media (max-width: 1100px) {
-    .header-topbar { display: none; }
-  }
-
+  /* ========================================
+     HEADER CONTAINER
+     ======================================== */
   .header-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -312,28 +285,36 @@ const isEnglish = lang === 'en';
     cursor: pointer;
   }
 
-  .header-dropdown-toggle .caret {
-    width: 13px;
-    height: 13px;
+  .header-dropdown-toggle .dropdown-caret {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 4px;
+    line-height: 0;
     transition: transform 0.2s ease;
   }
 
-  .header-dropdown:hover .caret {
+  .header-dropdown-toggle .dropdown-caret svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .header-dropdown:hover .dropdown-caret,
+  .header-dropdown:focus-within .dropdown-caret {
     transform: rotate(180deg);
   }
 
   .header-submenu {
     position: absolute;
-    top: calc(100% + 14px);
+    top: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%) translateY(8px);
-    min-width: 250px;
+    min-width: 220px;
     background: #fff;
     border: 2px solid var(--green-dark);
     border-top: 4px solid var(--green-light);
     border-radius: 4px;
     box-shadow: 6px 6px 0 rgba(31, 107, 58, 0.16);
-    padding: 6px;
+    padding: 4px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.18s ease;
@@ -358,7 +339,7 @@ const isEnglish = lang === 'en';
 
   .header-submenu a {
     display: block;
-    padding: 11px 16px;
+    padding: 8px 14px;
     border-radius: 3px;
     font-family: 'Oswald', 'Arial Narrow', sans-serif;
     font-size: 13.5px;
@@ -609,6 +590,17 @@ const isEnglish = lang === 'en';
     text-transform: uppercase;
     color: var(--green);
     border-top: 1px solid var(--gray-200);
+  }
+  .mobile-nav-group::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
   .mobile-nav-links a.mobile-nav-sub {

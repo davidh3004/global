@@ -250,13 +250,41 @@ Todas las secciones incluyen CRUD completo con subida de imágenes a Firebase St
 
 ## 🚀 Deployment
 
-El proyecto está configurado con `@astrojs/node` adapter para deployment en servidores Node.js o plataformas como Vercel, Netlify, etc.
+The project uses **Astro SSR** with the **Vercel** adapter (`@astrojs/vercel`).
+
+### Push to GitHub
+
+1. **Do not commit secrets** — `.env` is gitignored. Use `.env.example` as the template.
+2. Install and verify locally:
 
 ```bash
+pnpm install
+cp .env.example .env   # then fill in your values
 pnpm build
 ```
 
-El build generará archivos estáticos optimizados en `./dist/`
+3. Commit and push:
+
+```bash
+git add .
+git commit -m "Your message"
+git push origin main
+```
+
+4. **Change the remote** if this is your own repo (current remote: `origin` → GitHub):
+
+```bash
+git remote set-url origin https://github.com/YOUR_USER/YOUR_REPO.git
+```
+
+### Deploy on Vercel
+
+1. Import the GitHub repository in [Vercel](https://vercel.com).
+2. Framework preset: **Astro**.
+3. Add all variables from `.env.example` under **Settings → Environment Variables**.
+4. Deploy — Vercel will run `pnpm build` automatically.
+
+Node.js **≥ 22.12** is required (see `package.json` engines).
 
 ## 📞 Contacto
 
