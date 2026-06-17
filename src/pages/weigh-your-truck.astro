@@ -113,5 +113,10 @@ const locale = Astro.currentLocale || 'en';
     .weigh-cta:hover{background:var(--green)}
     .weigh-steps{grid-template-columns:1fr 1fr}
     @media(max-width:680px){.weigh-steps{grid-template-columns:1fr}}
+    @media(max-width:768px){
+      .weigh-card{position:static;top:auto}
+      .weigh-cta{min-height:48px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;margin:8px 16px 18px}
+      .weigh-facts strong{font-size:15px}
+    }
   </style>
 </PublicLayout>

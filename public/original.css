@@ -213,7 +213,7 @@ footer{background:var(--gray-900);padding:56px 24px 24px}
 .fade.in{opacity:1;transform:none}
 .fade-d1{transition-delay:0.1s}.fade-d2{transition-delay:0.2s}.fade-d3{transition-delay:0.3s}.fade-d4{transition-delay:0.4s}.fade-d5{transition-delay:0.5s}
 @media(max-width:900px){
-.hero-content{grid-template-columns:1fr;gap:32px}.quote-card{display:none}
+.hero-content{grid-template-columns:1fr;gap:32px}.hero .quote-card{display:none}
 .shop-grid{grid-template-columns:1fr 1fr}.about-grid{grid-template-columns:1fr}.about-img-wrap{display:none}
 .rev-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}
 .stats-inner{grid-template-columns:1fr 1fr}.contact-grid{grid-template-columns:1fr}
@@ -393,7 +393,7 @@ footer{background:var(--gray-900);padding:56px 24px 24px}
 .gr-page{padding-top:0}
 .hero{padding-top:118px}
 @media(max-width:1100px){.hero{padding-top:88px}}
-@media(max-width:480px){.gr-hero{padding-top:calc(60px + 44px)}}
+@media(max-width:480px){.gr-hero{padding-top:calc(60px + 22px)}}
 
 /* Section eyebrows / labels -> condensed "stamp" type */
 .sec-tag{font-family:var(--cond);font-size:13px;letter-spacing:3px}
@@ -485,4 +485,167 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
     transition-duration:.01ms!important; scroll-behavior:auto!important; }
   .ticker-track{ animation:none; transform:none; }
   .fade{ opacity:1; transform:none; }
+}
+
+/* =====================================================================
+   INNER PAGES — MOBILE EXPERIENCE
+   Heritage content pages: quote, information, roll-off, weigh, calc, forms
+   ===================================================================== */
+@media (max-width: 768px) {
+  .gr-hero {
+    padding: calc(60px + 28px) 16px 32px;
+  }
+  .gr-hero h1 {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  .gr-hero p {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .gr-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+  }
+  .gr-breadcrumb {
+    font-size: 11px;
+    margin-top: 14px;
+  }
+  .gr-wrap,
+  .gr-wrap-wide {
+    padding: 32px 16px 56px;
+  }
+  .gr-panel {
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  .gr-panel-head {
+    font-size: 17px;
+    padding: 14px 16px;
+  }
+  .gr-panel-body {
+    padding: 20px 16px;
+  }
+  .gr-prose h2 {
+    font-size: 22px;
+  }
+  .gr-prose h3 {
+    font-size: 18px;
+  }
+  .gr-prose p,
+  .gr-prose li {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .gr-step {
+    flex-direction: row;
+    gap: 14px;
+    padding: 16px;
+  }
+  .gr-step-num {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .gr-step-body h3 {
+    font-size: 16px;
+  }
+  .gr-step-body p {
+    font-size: 14px;
+  }
+  .gr-spec-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .gr-spec-card .spec-size {
+    font-size: 26px;
+  }
+  .gr-cta-band {
+    padding: 28px 20px;
+    text-align: center;
+    border-radius: 8px;
+  }
+  .gr-cta-band h3 {
+    font-size: 20px;
+  }
+  .gr-cta-band p {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  .gr-cta-phone {
+    font-size: clamp(24px, 7vw, 30px);
+    display: block;
+    min-height: 48px;
+    line-height: 48px;
+  }
+  .gr-pdf iframe,
+  .gr-pdf embed {
+    height: 65vh;
+    min-height: 380px;
+  }
+  .gr-pdf-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .gr-pdf-actions .pdf-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  .gr-pdf-actions .gr-btn {
+    justify-content: center;
+    min-height: 48px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .gr-btn {
+    min-height: 44px;
+  }
+  .gr-callout {
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .gr-row {
+    margin-bottom: 24px;
+  }
+  .gr-panel-media {
+    height: 180px;
+  }
+  .gr-media {
+    min-height: 200px !important;
+  }
+  .gr-toc {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    padding-bottom: 8px;
+    margin-bottom: 28px;
+    gap: 6px;
+  }
+  .gr-toc a {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    font-size: 11px;
+    padding: 8px 14px;
+  }
+}
+@media (max-width: 480px) {
+  .gr-hero {
+    padding: calc(60px + 22px) 16px 28px;
+  }
+  .gr-wrap,
+  .gr-wrap-wide {
+    padding: 24px 16px 48px;
+  }
+}
+@media (hover: none) {
+  .gr-spec-card:hover {
+    transform: none;
+    box-shadow: 6px 6px 0 rgba(31, 107, 58, 0.12);
+  }
 }

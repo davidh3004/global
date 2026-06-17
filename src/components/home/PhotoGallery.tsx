@@ -294,13 +294,41 @@ export default function PhotoGallery() {
         }
 
         @media (max-width: 768px) {
-          .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
+          .gallery-section {
+            padding: 56px 0;
           }
 
-          .gallery-section {
-            padding: 60px 0;
+          .gallery-section .container {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+
+          .gallery-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+          }
+
+          .gallery-item,
+          .gallery-item-loading {
+            border-radius: 10px;
+          }
+
+          .gallery-overlay svg {
+            width: 36px;
+            height: 36px;
+          }
+
+          .lightbox-close {
+            top: max(16px, env(safe-area-inset-top));
+            right: 16px;
+            width: 44px;
+            height: 44px;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .gallery-grid {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

@@ -28,7 +28,7 @@ const isEnglish = locale === 'en';
 
     <div class="gr-wrap">
       <div class="quote-page-layout">
-        <div class="quote-card quote-page-card">
+        <div class="quote-page-card">
           <div class="qc-title" data-i18n="quote.title">{t('quote.title', locale)}</div>
           <div class="qc-sub" data-i18n="quote.subtitle">{t('quote.subtitle', locale)}</div>
 
@@ -111,12 +111,18 @@ const isEnglish = locale === 'en';
     max-width: 520px;
     margin: 0 auto;
   }
+  .quote-page .gr-wrap {
+    padding: 32px 16px 56px;
+  }
   .quote-page-card {
     background: #fff;
     border-radius: 14px;
     border: 2px solid var(--green-dark);
     box-shadow: 0 20px 48px rgba(7, 26, 16, 0.12);
     padding: 32px 32px 28px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
   }
   .quote-page-card .qc-title {
     font-family: 'Oswald', 'Arial Narrow', sans-serif;
@@ -148,6 +154,7 @@ const isEnglish = locale === 'en';
   .quote-page-card .field select {
     width: 100%;
     padding: 12px 14px;
+    min-height: 48px;
     border-radius: 8px;
     border: 1.5px solid var(--gray-200);
     font-size: 15px;
@@ -169,6 +176,7 @@ const isEnglish = locale === 'en';
     width: 100%;
     margin-top: 4px;
     padding: 14px;
+    min-height: 48px;
     border-radius: 8px;
     background: var(--green);
     color: #fff;
@@ -220,12 +228,28 @@ const isEnglish = locale === 'en';
     color: var(--green-dark);
     text-decoration: none;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
+    .quote-page .gr-hero {
+      padding: calc(60px + 28px) 16px 32px;
+    }
+    .quote-page .gr-hero h1 {
+      font-size: clamp(28px, 8vw, 38px);
+    }
+    .quote-page .gr-hero p {
+      font-size: 15px;
+    }
+    .quote-page .gr-wrap {
+      padding: 24px 16px 48px;
+    }
     .quote-page-row {
       grid-template-columns: 1fr;
     }
     .quote-page-card {
-      padding: 24px 20px;
+      padding: 24px 18px 22px;
+      border-radius: 12px;
+    }
+    .quote-page-card .qc-title {
+      font-size: 20px;
     }
   }
 </style>

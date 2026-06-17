@@ -209,6 +209,15 @@ const img = {
     .calc-result-row.big{background:var(--green-pale);border-bottom:none}
     .calc-result-row.big strong{color:var(--green-dark);font-size:24px}
     .calc-note{font-size:13px;color:var(--gray-600);margin:14px 0 0}
+    @media(max-width:768px){
+      .calc-fields{grid-template-columns:1fr}
+      .calc-output{position:static;top:auto}
+      .calc-field input{min-height:48px;font-size:16px}
+      .calc-shape-toggle .gr-tab{min-height:44px;padding:10px 16px}
+      .calc-result-row.big strong{font-size:20px}
+      .load-row{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 16px}
+      .load-row strong{font-size:15px;white-space:normal}
+    }
 
     .load-table{border:2px solid var(--green-dark);border-radius:6px;overflow:hidden;margin:6px 0 20px}
     .load-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px dashed var(--paper-line)}

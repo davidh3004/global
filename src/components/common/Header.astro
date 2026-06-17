@@ -24,7 +24,7 @@ const isEnglish = lang === 'en';
       <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
 
       <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle"><span data-i18n="nav.services">{t('nav.services', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <button type="button" class="header-dropdown-toggle" aria-expanded="false"><span data-i18n="nav.services">{t('nav.services', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="header-submenu">
           <a href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
           <a href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
@@ -32,7 +32,7 @@ const isEnglish = lang === 'en';
       </div>
 
       <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle"><span data-i18n="nav.resources">{t('nav.resources', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <button type="button" class="header-dropdown-toggle" aria-expanded="false"><span data-i18n="nav.resources">{t('nav.resources', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="header-submenu">
           <a href="/information" data-i18n="nav.information">{t('nav.information', lang)}</a>
           <a href="/calculating-your-project" data-i18n="nav.calculating">{t('nav.calculating', lang)}</a>
@@ -40,7 +40,7 @@ const isEnglish = lang === 'en';
       </div>
 
       <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle"><span data-i18n="nav.forms">{t('nav.forms', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <button type="button" class="header-dropdown-toggle" aria-expanded="false"><span data-i18n="nav.forms">{t('nav.forms', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="header-submenu">
           <a href="/credit-card-authorization" data-i18n="nav.creditCard">{t('nav.creditCard', lang)}</a>
           <a href="/roll-off-service" data-i18n="nav.rollOffAgreement">{t('nav.rollOffAgreement', lang)}</a>
@@ -99,17 +99,44 @@ const isEnglish = lang === 'en';
       <div class="mobile-nav-links">
         <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
 
-        <span class="mobile-nav-group" data-i18n="nav.services">{t('nav.services', lang)}</span>
-        <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
-        <a class="mobile-nav-sub" href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
+        <div class="mobile-nav-dropdown">
+          <button type="button" class="mobile-nav-group" aria-expanded="false">
+            <span data-i18n="nav.services">{t('nav.services', lang)}</span>
+            <span class="mobile-nav-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="mobile-nav-submenu">
+            <div class="mobile-nav-submenu-inner">
+              <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
+              <a class="mobile-nav-sub" href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
+            </div>
+          </div>
+        </div>
 
-        <span class="mobile-nav-group" data-i18n="nav.resources">{t('nav.resources', lang)}</span>
-        <a class="mobile-nav-sub" href="/information" data-i18n="nav.information">{t('nav.information', lang)}</a>
-        <a class="mobile-nav-sub" href="/calculating-your-project" data-i18n="nav.calculating">{t('nav.calculating', lang)}</a>
+        <div class="mobile-nav-dropdown">
+          <button type="button" class="mobile-nav-group" aria-expanded="false">
+            <span data-i18n="nav.resources">{t('nav.resources', lang)}</span>
+            <span class="mobile-nav-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="mobile-nav-submenu">
+            <div class="mobile-nav-submenu-inner">
+              <a class="mobile-nav-sub" href="/information" data-i18n="nav.information">{t('nav.information', lang)}</a>
+              <a class="mobile-nav-sub" href="/calculating-your-project" data-i18n="nav.calculating">{t('nav.calculating', lang)}</a>
+            </div>
+          </div>
+        </div>
 
-        <span class="mobile-nav-group" data-i18n="nav.forms">{t('nav.forms', lang)}</span>
-        <a class="mobile-nav-sub" href="/credit-card-authorization" data-i18n="nav.creditCard">{t('nav.creditCard', lang)}</a>
-        <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOffAgreement">{t('nav.rollOffAgreement', lang)}</a>
+        <div class="mobile-nav-dropdown">
+          <button type="button" class="mobile-nav-group" aria-expanded="false">
+            <span data-i18n="nav.forms">{t('nav.forms', lang)}</span>
+            <span class="mobile-nav-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="mobile-nav-submenu">
+            <div class="mobile-nav-submenu-inner">
+              <a class="mobile-nav-sub" href="/credit-card-authorization" data-i18n="nav.creditCard">{t('nav.creditCard', lang)}</a>
+              <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOffAgreement">{t('nav.rollOffAgreement', lang)}</a>
+            </div>
+          </div>
+        </div>
 
         <a href="/#about" data-scroll-to="about" data-i18n="nav.about">{t('nav.about', lang)}</a>
         <a href="/#contact" data-scroll-to="contact" data-i18n="nav.contact">{t('nav.contact', lang)}</a>
@@ -290,7 +317,7 @@ const isEnglish = lang === 'en';
     align-items: center;
     margin-left: 4px;
     line-height: 0;
-    transition: transform 0.2s ease;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .header-dropdown-toggle .dropdown-caret svg {
@@ -299,7 +326,8 @@ const isEnglish = lang === 'en';
   }
 
   .header-dropdown:hover .dropdown-caret,
-  .header-dropdown:focus-within .dropdown-caret {
+  .header-dropdown:focus-within .dropdown-caret,
+  .header-dropdown.is-open .dropdown-caret {
     transform: rotate(180deg);
   }
 
@@ -307,7 +335,6 @@ const isEnglish = lang === 'en';
     position: absolute;
     top: calc(100% + 8px);
     left: 50%;
-    transform: translateX(-50%) translateY(8px);
     min-width: 220px;
     background: #fff;
     border: 2px solid var(--green-dark);
@@ -315,10 +342,16 @@ const isEnglish = lang === 'en';
     border-radius: 4px;
     box-shadow: 6px 6px 0 rgba(31, 107, 58, 0.16);
     padding: 4px;
+    z-index: 200;
+    transform: translateX(-50%) translateY(10px) scale(0.97);
+    transform-origin: top center;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.18s ease;
-    z-index: 200;
+    pointer-events: none;
+    transition:
+      opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0.28s;
   }
 
   .header-dropdown::after {
@@ -331,10 +364,12 @@ const isEnglish = lang === 'en';
   }
 
   .header-dropdown:hover .header-submenu,
-  .header-dropdown:focus-within .header-submenu {
+  .header-dropdown:focus-within .header-submenu,
+  .header-dropdown.is-open .header-submenu {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 
   .header-submenu a {
@@ -347,11 +382,54 @@ const isEnglish = lang === 'en';
     text-transform: uppercase;
     color: var(--gray-800);
     white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.15s ease,
+      color 0.15s ease;
   }
+
+  .header-dropdown:hover .header-submenu a,
+  .header-dropdown:focus-within .header-submenu a,
+  .header-dropdown.is-open .header-submenu a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .header-dropdown:hover .header-submenu a:nth-child(1),
+  .header-dropdown:focus-within .header-submenu a:nth-child(1),
+  .header-dropdown.is-open .header-submenu a:nth-child(1) { transition-delay: 0.04s; }
+  .header-dropdown:hover .header-submenu a:nth-child(2),
+  .header-dropdown:focus-within .header-submenu a:nth-child(2),
+  .header-dropdown.is-open .header-submenu a:nth-child(2) { transition-delay: 0.08s; }
+  .header-dropdown:hover .header-submenu a:nth-child(3),
+  .header-dropdown:focus-within .header-submenu a:nth-child(3),
+  .header-dropdown.is-open .header-submenu a:nth-child(3) { transition-delay: 0.12s; }
 
   .header-submenu a:hover {
     background: var(--green-pale);
     color: var(--green-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-submenu,
+    .header-submenu a,
+    .header-dropdown-toggle .dropdown-caret,
+    .mobile-nav-submenu,
+    .mobile-nav-caret {
+      transition: none !important;
+      transform: none !important;
+    }
+    .header-submenu a {
+      opacity: 1;
+    }
+    .header-dropdown:hover .header-submenu a,
+    .header-dropdown:focus-within .header-submenu a,
+    .header-dropdown.is-open .header-submenu a {
+      transition-delay: 0s !important;
+    }
   }
 
   /* ========================================
@@ -546,11 +624,14 @@ const isEnglish = lang === 'en';
   }
 
   .header-mobile-menu.active {
-    max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .mobile-menu-content {
     padding: 20px 24px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
   }
 
   .mobile-nav-links {
@@ -581,32 +662,82 @@ const isEnglish = lang === 'en';
   }
 
   .mobile-nav-group {
+    width: 100%;
     margin-top: 12px;
-    padding: 6px 16px 2px;
+    padding: 12px 16px;
     font-family: 'Oswald', 'Arial Narrow', sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--green);
-    border-top: 1px solid var(--gray-200);
+    color: var(--gray-800);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease;
   }
-  .mobile-nav-group::after {
-    content: '';
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-left: 6px;
-    vertical-align: middle;
-    background-color: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
+
+  .mobile-nav-group:hover {
+    background: var(--green-pale);
+    border-color: rgba(47, 158, 84, 0.25);
+  }
+
+  .mobile-nav-dropdown.is-open .mobile-nav-group {
+    background: var(--green-pale);
+    border-color: var(--green);
+    color: var(--green-dark);
+  }
+
+  .mobile-nav-caret {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    color: var(--green);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-nav-caret svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .mobile-nav-dropdown.is-open .mobile-nav-caret {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav-submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-nav-dropdown.is-open .mobile-nav-submenu {
+    grid-template-rows: 1fr;
+  }
+
+  .mobile-nav-submenu-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 4px;
+  }
+
+  .mobile-nav-dropdown.is-open .mobile-nav-submenu-inner {
+    padding-bottom: 4px;
   }
 
   .mobile-nav-links a.mobile-nav-sub {
-    padding-left: 28px;
+    padding: 12px 16px 12px 28px;
     font-size: 15px;
     color: var(--gray-600);
+    margin-left: 8px;
+    border-left: 2px solid var(--gray-200);
   }
 
   .mobile-actions {
@@ -684,6 +815,28 @@ const isEnglish = lang === 'en';
       top: 60px;
     }
 
+    .header-mobile-menu.active {
+      max-height: calc(100dvh - 60px);
+    }
+
+    .mobile-menu-content {
+      padding: 16px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .mobile-nav-links a {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+
+    .mobile-btn-quote {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .header-logo img {
       height: 35px;
     }
@@ -725,6 +878,55 @@ const isEnglish = lang === 'en';
   mobileMenuBtn?.addEventListener('click', () => {
     mobileMenuBtn.classList.toggle('active');
     mobileMenu?.classList.toggle('active');
+  });
+
+  // Mobile nav dropdown accordions
+  document.querySelectorAll('.mobile-nav-dropdown .mobile-nav-group').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const dropdown = btn.closest('.mobile-nav-dropdown');
+      if (!dropdown) return;
+      const willOpen = !dropdown.classList.contains('is-open');
+      document.querySelectorAll('.mobile-nav-dropdown.is-open').forEach((open) => {
+        if (open !== dropdown) {
+          open.classList.remove('is-open');
+          open.querySelector('.mobile-nav-group')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+      dropdown.classList.toggle('is-open', willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  });
+
+  // Desktop dropdown click/toggle (touch + keyboard)
+  document.querySelectorAll('.header-dropdown').forEach((dropdown) => {
+    const toggle = dropdown.querySelector('.header-dropdown-toggle');
+    toggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !dropdown.classList.contains('is-open');
+      document.querySelectorAll('.header-dropdown.is-open').forEach((open) => {
+        if (open !== dropdown) open.classList.remove('is-open');
+      });
+      dropdown.classList.toggle('is-open', willOpen);
+      toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('.header-dropdown')) {
+      document.querySelectorAll('.header-dropdown.is-open').forEach((dropdown) => {
+        dropdown.classList.remove('is-open');
+        dropdown.querySelector('.header-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.header-dropdown.is-open').forEach((dropdown) => {
+        dropdown.classList.remove('is-open');
+        dropdown.querySelector('.header-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+    }
   });
 
   // Close mobile menu when clicking on a link
