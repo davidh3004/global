@@ -8,14 +8,51 @@ const documents = [
   { id: 'request', name: 'Roll-Off Request Form', file: '/forms/roll-off-request-form.pdf' },
 ];
 
-// Example layout only — final sizes, pricing, weight allowance and rental
-// duration are pending from the client (truck/dumpster photos coming too).
-const sizes = [
-  { yards: '15', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Small cleanouts, bathroom remodels, roof repairs.' },
-  { yards: '20', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Flooring tear-outs, medium renovations, storm debris.' },
-  { yards: '30', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Full home remodels, estate cleanouts, house flips.' },
-  { yards: '40', dims: 'Coming soon', tons: 'Coming soon', days: 'Coming soon', best: 'Commercial renovations and high-volume cleanouts.' },
+const deliveryCharge = 95;
+const fuelSurchargePercent = 9.31;
+const inactivityFeePerDay = 10;
+const inactivityFreeDays = 14;
+
+const dumpsterPricing = [
+  {
+    yards: '10',
+    image: '/images/roll-off/roll-off-10yd.png',
+    cd: { base: 450, tonsIncluded: 1 },
+    aggregate: { base: 250, flat: true },
+    best: 'Small cleanouts, tight driveways, and light demolition debris.',
+  },
+  {
+    yards: '15',
+    image: '/images/roll-off/roll-off-15yd.png',
+    cd: { base: 485, tonsIncluded: 2 },
+    aggregate: { base: 250, flat: true },
+    best: 'Bathroom remodels, roof repairs, and medium cleanouts.',
+  },
+  {
+    yards: '20',
+    image: '/images/roll-off/roll-off-20yd.png',
+    cd: { base: 545, tonsIncluded: 2 },
+    aggregate: { base: 250, flat: true },
+    best: 'Flooring tear-outs, renovations, and storm debris.',
+  },
+  {
+    yards: '30',
+    image: '/images/roll-off/roll-off-30yd.png',
+    cd: { base: 595, tonsIncluded: 3 },
+    aggregate: null,
+    best: 'Full home remodels, estate cleanouts, and house flips.',
+  },
+  {
+    yards: '40',
+    image: '/images/roll-off/roll-off-40yd.png',
+    cd: { reserved: true },
+    aggregate: null,
+    best: 'Commercial renovations and high-volume C&D — reservation required.',
+  },
 ];
+
+const formatMoney = (amount: number) =>
+  amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
 const prohibited = [
   'Hazardous or toxic waste', 'Asbestos', 'Septic tanks & waste', 'Paint & solvents',
@@ -62,25 +99,72 @@ const prohibited = [
         </div>
       </div>
 
-      <!-- Sizes -->
+      <!-- Sizes & pricing -->
       <div class="gr-panel">
         <div class="gr-panel-head">Dumpster Sizes &amp; Pricing</div>
         <div class="gr-panel-body">
-          <div class="gr-pending" style="margin-bottom:22px">
-            <strong>Coming soon.</strong> Final dumpster sizes, pricing, included weight &amp; rental duration — plus photos of our trucks and dumpsters — are on the way. The layout below is ready to drop them in.
+          <p class="ro-includes-heading">All roll-off rentals include:</p>
+          <div class="ro-includes-grid">
+            <div class="ro-include-box">
+              <div class="ro-include-value">{formatMoney(deliveryCharge)}</div>
+              <div class="ro-include-label">Delivery charge per drop</div>
+            </div>
+            <div class="ro-include-box">
+              <div class="ro-include-value">{fuelSurchargePercent}%</div>
+              <div class="ro-include-label">Fuel surcharge on the total</div>
+            </div>
+            <div class="ro-include-box">
+              <div class="ro-include-value">{formatMoney(inactivityFeePerDay)}/day</div>
+              <div class="ro-include-label">Inactivity fee after {inactivityFreeDays} days</div>
+            </div>
           </div>
+          <p class="ro-pricing-foot">Concrete, dirt, and asphalt loads must be <strong>no trash</strong>. Call <a href="tel:8133736467">(813) 373-6467</a> to confirm the right size and material type for your job.</p>
+
           <div class="gr-spec-grid">
-            {sizes.map((s) => (
+            {dumpsterPricing.map((s) => (
               <div class="gr-spec-card">
                 <div class="spec-top">
                   <div class="spec-size">{s.yards} YD</div>
                   <div class="spec-label">Roll-Off Dumpster</div>
                 </div>
+                <div class="spec-photo">
+                  <img src={s.image} alt={`${s.yards} yard roll-off dumpster`} width="400" height="260" loading="lazy" decoding="async" />
+                </div>
                 <div class="spec-rows">
-                  <div class="spec-row"><span>Dimensions</span><span>{s.dims}</span></div>
-                  <div class="spec-row"><span>Tonnage Incl.</span><span>{s.tons}</span></div>
-                  <div class="spec-row"><span>Rental Duration</span><span>{s.days}</span></div>
-                  <div class="spec-row"><span>Price</span><span>Call for quote</span></div>
+                  {s.cd?.reserved ? (
+                    <div class="spec-row spec-row-stack">
+                      <span>C&amp;D</span>
+                      <span><strong>Must be reserved</strong> — call for pricing</span>
+                    </div>
+                  ) : s.cd ? (
+                    <div class="spec-row spec-row-stack">
+                      <span>C&amp;D</span>
+                      <span>
+                        <strong>{formatMoney(s.cd.base)}</strong> + {formatMoney(deliveryCharge)} delivery
+                        <em>includes {s.cd.tonsIncluded} ton{s.cd.tonsIncluded === 1 ? '' : 's'}</em>
+                      </span>
+                    </div>
+                  ) : null}
+                  {s.aggregate ? (
+                    <div class="spec-row spec-row-stack">
+                      <span>Concrete / Dirt / Asphalt</span>
+                      <span>
+                        <strong>{formatMoney(s.aggregate.base)}</strong> + {formatMoney(deliveryCharge)} delivery
+                        <em>flat rate · no trash</em>
+                      </span>
+                    </div>
+                  ) : s.yards === '30' || s.yards === '40' ? (
+                    <div class="spec-row spec-row-stack">
+                      <span>Concrete / Dirt / Asphalt</span>
+                      <span>Call for availability</span>
+                    </div>
+                  ) : null}
+                  {!s.cd?.reserved && (
+                    <div class="spec-row spec-row-stack">
+                      <span>Fuel surcharge</span>
+                      <span>+ {fuelSurchargePercent}%</span>
+                    </div>
+                  )}
                 </div>
                 <div class="spec-best"><strong>Best for:</strong> {s.best}</div>
               </div>
@@ -129,7 +213,7 @@ const prohibited = [
               <li>Give us <strong>1–2 business days' notice</strong>. Requests after 12&nbsp;PM (noon) can't be guaranteed for the next business day.</li>
               <li>Don't overfill above the top rail, and keep loads under <strong>20,000&nbsp;lbs (10 tons)</strong>.</li>
               <li>A <strong>$150–$175 no-service fee</strong> applies if the dumpster is blocked, overfilled, or overweight at pickup.</li>
-              <li>Each dumpster includes a set number of rental days; <strong>$5.00/day</strong> applies after that.</li>
+              <li>Each rental includes <strong>{inactivityFreeDays} days</strong> on site; <strong>{formatMoney(inactivityFeePerDay)}/day</strong> applies after that.</li>
               <li>Provide unobstructed access on scheduled pickup day.</li>
             </ul>
           </div>
@@ -154,12 +238,90 @@ const prohibited = [
   </div>
 
   <style>
+    .ro-includes-heading {
+      margin: 0 0 14px;
+      font-family: var(--cond);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .ro-includes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .ro-include-box {
+      background: var(--green-pale);
+      border: 1px solid var(--paper-line);
+      border-left: 5px solid var(--green);
+      border-radius: 4px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .ro-include-value {
+      font-family: var(--cond);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .ro-include-label {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--gray-600);
+    }
+    .ro-pricing-foot { margin: 0 0 24px; font-size: 14px; }
+    .ro-pricing-foot a { color: var(--green-dark); font-weight: 700; }
+    .spec-photo {
+      background: #f4f6f4;
+      border-bottom: 1px solid var(--paper-line);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+    }
+    .spec-photo img {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      max-height: 160px;
+      object-fit: contain;
+      display: block;
+    }
+    .spec-row-stack {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 4px;
+      padding: 14px 0;
+    }
+    .spec-row-stack span:last-child {
+      text-align: left;
+      line-height: 1.45;
+    }
+    .spec-row-stack em {
+      display: block;
+      font-style: normal;
+      font-size: 12px;
+      color: var(--gray-600);
+      font-weight: 500;
+      margin-top: 2px;
+    }
     .gr-select-label{display:block;font-family:var(--cond);text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--gray-600);margin-bottom:8px}
     .gr-mobile-select{display:none;width:100%;padding:12px 14px;border:2px solid var(--green-dark);border-radius:5px;font-size:16px;font-family:var(--font);color:var(--ink);background:#fff;margin-bottom:18px}
     .gr-chip-grid{display:flex;flex-wrap:wrap;gap:8px}
     .gr-chip{font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--paper-line);border-radius:4px;padding:7px 12px}
     @media(max-width:560px){.gr-tabs{display:none}.gr-mobile-select{display:block}}
     @media(max-width:768px){
+      .ro-includes-grid { grid-template-columns: 1fr; gap: 12px; }
+      .ro-include-box { padding: 16px 14px; }
+      .ro-include-value { font-size: 24px; }
+      .spec-photo { min-height: 130px; padding: 12px; }
+      .spec-photo img { max-height: 130px; }
       .gr-chip-grid{gap:6px}
       .gr-chip{font-size:12px;padding:8px 10px}
     }
