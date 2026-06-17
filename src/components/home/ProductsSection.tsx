@@ -85,116 +85,55 @@ export default function ProductsSection({ lang = 'en' }: Props) {
 
   if (loading) {
     return (
-      <section className="shop">
-        <div className="container">
-          <div className="shop-header">
-            <div>
-              <div className="sec-tag"><div className="sec-tag-line"></div>{isEnglish ? 'Our Products' : 'Nuestros Productos'}</div>
-              <h2 className="sec-title">{isEnglish ? 'Shop' : 'Compra'} <span>{isEnglish ? 'Recycled' : 'Materiales Reciclados'}</span> {isEnglish ? 'Materials' : ''}</h2>
-              <p className="sec-lead">{isEnglish ? 'Premium quality. Pickup or delivery. Buy online or request a custom quote for large orders.' : 'Calidad premium. Recogida o entrega. Compra en línea o solicita una cotización personalizada para pedidos grandes.'}</p>
-            </div>
-            <a href={isEnglish ? '/en/materials' : '/materiales'} className="btn-secondary">{isEnglish ? 'View All Materials' : 'Ver Todos los Materiales'} →</a>
-          </div>
-          <div className="shop-grid">
-            <div className="prod-card" style={{ padding: '40px', textAlign: 'center', color: 'var(--gray-400)' }}>
-              {isEnglish ? 'Loading products...' : 'Cargando productos...'}
-            </div>
-          </div>
+      <section className="shop products" id="products" style={{ padding: '100px 0', background: '#fff' }}>
+        <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', textAlign: 'center', color: 'var(--gray-600)' }}>
+          {isEnglish ? 'Loading materials…' : 'Cargando materiales…'}
         </div>
       </section>
     );
   }
 
   if (error) {
-    return (
-      <section className="shop">
-        <div className="container">
-          <div className="shop-header">
-            <div>
-              <div className="sec-tag"><div className="sec-tag-line"></div>{isEnglish ? 'Our Products' : 'Nuestros Productos'}</div>
-              <h2 className="sec-title">{isEnglish ? 'Shop' : 'Compra'} <span>{isEnglish ? 'Recycled' : 'Materiales Reciclados'}</span> {isEnglish ? 'Materials' : ''}</h2>
-              <p className="sec-lead fade fade-d2">{isEnglish ? 'Premium quality. Pickup or delivery. Buy online or request a custom quote for large orders.' : 'Calidad premium. Recogida o entrega. Compra en línea o solicita una cotización personalizada para pedidos grandes.'}</p>
-            </div>
-            <a href={isEnglish ? '/en/materials' : '/materiales'} className="btn-secondary">{isEnglish ? 'View All Materials' : 'Ver Todos los Materiales'} →</a>
-          </div>
-          <div style={{ padding: '40px', textAlign: 'center', color: 'var(--red)' }}>
-            {error}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (products.length === 0) {
-    return (
-      <section className="shop">
-        <div className="container">
-          <div className="shop-header">
-            <div>
-              <div className="sec-tag fade"><div className="sec-tag-line"></div>{isEnglish ? 'Our Products' : 'Nuestros Productos'}</div>
-              <h2 className="sec-title fade fade-d1">{isEnglish ? 'Shop' : 'Compra'} <span>{isEnglish ? 'Recycled' : 'Materiales Reciclados'}</span> {isEnglish ? 'Materials' : ''}</h2>
-              <p className="sec-lead fade fade-d2">{isEnglish ? 'Premium quality. Pickup or delivery. Buy online or request a custom quote for large orders.' : 'Calidad premium. Recogida o entrega. Compra en línea o solicita una cotización personalizada para pedidos grandes.'}</p>
-            </div>
-            <a href={isEnglish ? '/en/materials' : '/materiales'} className="btn-secondary">{isEnglish ? 'View All Materials' : 'Ver Todos los Materiales'} →</a>
-          </div>
-          <div style={{ padding: '60px 20px', textAlign: 'center', background: 'var(--gray-50)', borderRadius: '10px', border: '1px solid var(--gray-200)' }}>
-            <div style={{ fontSize: '48px', marginBottom: '16px' }}>📦</div>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '700', color: 'var(--gray-900)', marginBottom: '8px' }}>
-              {isEnglish ? 'No products available' : 'No hay productos disponibles'}
-            </h3>
-            <p style={{ fontSize: '14px', color: 'var(--gray-400)' }}>
-              {isEnglish ? 'Products will be displayed here once they are added from the admin panel.' : 'Los productos se mostrarán aquí una vez que sean agregados desde el panel de administración.'}
-            </p>
-          </div>
-        </div>
-      </section>
-    );
+    return null;
   }
 
   return (
-    <section className="shop products" id="products">
-      <div className="container">
-        <div className="shop-header">
-          <div>
-            <div className="sec-tag"><div className="sec-tag-line"></div>{isEnglish ? 'Our Products' : 'Nuestros Productos'}</div>
-            <h2 className="sec-title">{isEnglish ? 'Shop' : 'Compra'} <span>{isEnglish ? 'Recycled' : 'Materiales Reciclados'}</span> {isEnglish ? 'Materials' : ''}</h2>
-            <p className="sec-lead">{isEnglish ? 'Premium quality. Pickup or delivery. Buy online or request a custom quote for large orders.' : 'Calidad premium. Recogida o entrega. Compra en línea o solicita una cotización personalizada para pedidos grandes.'}</p>
-          </div>
-          {/* <a href={isEnglish ? '/en/materials' : '/materiales'} className="btn-secondary">{isEnglish ? 'View All Materials' : 'Ver Todos los Materiales'} →</a> */}
-        </div>
-        <div className="shop-grid">
-          {products.map((product, index) => (
-            <div key={product.id} className="prod-card">
-              <div className="prod-img">
-                <img src={product.imageUrl} alt={product.name} loading="lazy" />
-                {product.badge && <div className="prod-badge">{product.badge}</div>}
-              </div>
-              <div className="prod-body">
-                <div className="prod-name">{product.name}</div>
-                <div className="prod-desc">{product.description}</div>
-                <div className="prod-price">
-                  {product.price ? (
-                    <>
-                      <div className="price-num">${product.price}</div>
-                      <div className="price-unit">{product.priceUnit || '/ ton'}</div>
-                    </>
-                  ) : (
-                    <div className="price-call">{isEnglish ? 'Call for Pricing' : 'Llamar para Precio'}</div>
-                  )}
-                </div>
-                <div className="prod-actions">
-                  <button 
-                    className="btn-cart" 
-                    disabled={!product.price}
-                    style={!product.price ? { background: 'var(--gray-300)', cursor: 'not-allowed' } : {}}
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    {isEnglish ? 'Add to Cart' : 'Agregar al Carrito'}
-                  </button>
-                </div>
-              </div>
+    <section className="shop products" id="products" style={{ padding: '100px 0', background: '#fff' }}>
+      <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+        <div style={{ display: 'flex', gap: '60px', flexWrap: 'wrap' }}>
+          
+          {/* Left Text Column */}
+          <div style={{ flex: '1 1 350px', maxWidth: '400px' }}>
+            <div style={{ color: 'var(--green)', fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontWeight: 600, letterSpacing: '2px', fontSize: '14px', marginBottom: '16px' }}>
+              {isEnglish ? 'MATERIALS WE SELL' : 'MATERIALES QUE VENDEMOS'}
             </div>
-          ))}
+            <h2 style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: '42px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--green-dark)', lineHeight: 1.1, marginBottom: '24px' }}>
+              {isEnglish ? 'HIGH-QUALITY MATERIALS FOR YOUR PROJECTS' : 'MATERIALES DE ALTA CALIDAD PARA SUS PROYECTOS'}
+            </h2>
+            <p style={{ fontSize: '16px', color: 'var(--gray-600)', lineHeight: 1.6, marginBottom: '32px' }}>
+              {isEnglish ? 'We supply a wide range of recycled materials for construction and landscaping needs.' : 'Suministramos una amplia gama de materiales reciclados para necesidades de construcción y paisajismo.'}
+            </p>
+            <a href={isEnglish ? '/en/materials' : '/materiales'} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '15px 30px', background: 'var(--green)', color: '#fff', fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontWeight: 600, fontSize: '14px', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '7px', boxShadow: '0 10px 26px rgba(47,158,84,0.30)' }}>
+              {isEnglish ? 'VIEW ALL MATERIALS' : 'VER TODOS LOS MATERIALES'} →
+            </a>
+          </div>
+
+          {/* Right Grid Column */}
+          <div style={{ flex: '2 1 600px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '20px' }}>
+              {products.map((product, index) => (
+                <div key={product.id} style={{ display: 'flex', flexDirection: 'column', background: '#fff', border: 'none', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 10px 28px rgba(7,26,16,0.09)' }}>
+                  <div style={{ height: '150px', overflow: 'hidden' }}>
+                    <img src={product.imageUrl} alt={product.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ padding: '16px', textAlign: 'center' }}>
+                    <div style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: '16px', fontWeight: 600, color: 'var(--green-dark)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{product.name}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
