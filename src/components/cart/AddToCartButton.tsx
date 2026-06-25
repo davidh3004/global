@@ -14,6 +14,7 @@ interface AddToCartButtonProps {
     price: number;
     image?: string;
     description?: string;
+    priceUnit?: string;
   };
   quantity?: number;
   lang?: string;
@@ -56,6 +57,7 @@ export default function AddToCartButton({
         quantity,
         image: product.image,
         description: product.description,
+        priceUnit: product.priceUnit || '',
       };
 
       await addItem(cartItem);

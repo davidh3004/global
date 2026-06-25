@@ -25,10 +25,10 @@ const FALLBACK_CONFIG: SiteConfig = {
   email: 'max@starqualityinc.com',
   phone: '(813) 373-6467',
   address: '5011 N. Clark St., Tampa, FL 33614',
-  hours: 'Mon–Sat 7:00am – 5:00pm',
-  hoursEs: 'Lun–Sáb 7:00am – 5:00pm',
+  hours: 'Mon–Fri 7:00am – 5:00pm',
+  hoursEs: 'Lun–Vie 7:00am – 5:00pm',
   googleMapsUrl:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3522.9!2d-82.4801!3d27.9897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c768d1a8e999%3A0x1234!2s5011+N+Clark+Ave%2C+Tampa%2C+FL+33614!5e0!3m2!1sen!2sus!4v1684000000000',
+    'https://maps.google.com/maps?q=Global%20Recycling%20of%20Tampa%20Bay%2C%205011%20N%20Clark%20Ave%2C%20Tampa%2C%20FL%2033614&t=&z=15&ie=UTF8&iwloc=&output=embed',
   socialMedia: {
     instagram: '',
     facebook: 'https://www.facebook.com/globalrecyclingtampabay',

@@ -8,6 +8,26 @@ const documents = [
   { id: 'request', name: 'Roll-Off Request Form', file: '/forms/roll-off-request-form.pdf' },
 ];
 
+// Roll-Off Truck slideshow photos. Add file paths here (placed in
+// /public/images/roll-off/truck/). The slideshow only renders when this
+// array has at least one image.
+const truckPhotos: { src: string; alt: string }[] = [
+  { src: '/images/roll-off/truck/truck-1.jpg', alt: 'Global Recycling roll-off trucks and dumpster at the Tampa yard' },
+  { src: '/images/roll-off/truck/truck-2.jpg', alt: 'Fleet of Global Recycling roll-off trucks lined up' },
+  { src: '/images/roll-off/truck/truck-3.jpg', alt: 'Global Recycling roll-off truck fleet' },
+  { src: '/images/roll-off/truck/truck-4.jpg', alt: 'Roll-off trucks ready for dumpster delivery in Tampa Bay' },
+  { src: '/images/roll-off/truck/truck-5.jpg', alt: 'Global Recycling roll-off truck fleet at the yard' },
+  { src: '/images/roll-off/truck/truck-6.jpg', alt: 'Global Recycling roll-off truck up close' },
+  { src: '/images/roll-off/truck/truck-7.jpg', alt: 'Global Recycling roll-off truck and dumpster' },
+];
+
+// Group the truck photos into slides of 3 images each.
+const truckPhotosPerSlide = 3;
+const truckSlides: { src: string; alt: string }[][] = [];
+for (let i = 0; i < truckPhotos.length; i += truckPhotosPerSlide) {
+  truckSlides.push(truckPhotos.slice(i, i + truckPhotosPerSlide));
+}
+
 const deliveryCharge = 95;
 const fuelSurchargePercent = 9.31;
 const inactivityFeePerDay = 10;
@@ -16,28 +36,28 @@ const inactivityFreeDays = 14;
 const dumpsterPricing = [
   {
     yards: '10',
-    image: '/images/roll-off/roll-off-10yd.png',
+    image: '/images/roll-off/roll-off-10yd.jpg',
     cd: { base: 450, tonsIncluded: 1 },
     aggregate: { base: 250, flat: true },
     best: 'Small cleanouts, tight driveways, and light demolition debris.',
   },
   {
     yards: '15',
-    image: '/images/roll-off/roll-off-15yd.png',
+    image: '/images/roll-off/roll-off-15yd.jpg',
     cd: { base: 485, tonsIncluded: 2 },
     aggregate: { base: 250, flat: true },
     best: 'Bathroom remodels, roof repairs, and medium cleanouts.',
   },
   {
     yards: '20',
-    image: '/images/roll-off/roll-off-20yd.png',
+    image: '/images/roll-off/roll-off-20yd.jpg',
     cd: { base: 545, tonsIncluded: 2 },
     aggregate: { base: 250, flat: true },
     best: 'Flooring tear-outs, renovations, and storm debris.',
   },
   {
     yards: '30',
-    image: '/images/roll-off/roll-off-30yd.png',
+    image: '/images/roll-off/roll-off-30yd.jpg',
     cd: { base: 595, tonsIncluded: 3 },
     aggregate: null,
     best: 'Full home remodels, estate cleanouts, and house flips.',
@@ -78,6 +98,37 @@ const prohibited = [
     </section>
 
     <div class="gr-wrap gr-wrap-wide">
+      {truckSlides.length > 0 && (
+        <div class="ro-slideshow" data-autoplay="3000" aria-roledescription="carousel" aria-label="Roll-off truck photos">
+          <div class="ro-slides">
+            {truckSlides.map((group, i) => (
+              <div class={`ro-slide ${i === 0 ? 'active' : ''}`} data-index={i} aria-hidden={i === 0 ? 'false' : 'true'}>
+                {group.map((photo, j) => (
+                  <figure class="ro-photo">
+                    <img src={photo.src} alt={photo.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+                  </figure>
+                ))}
+              </div>
+            ))}
+          </div>
+          {truckSlides.length > 1 && (
+            <>
+              <button class="ro-slide-btn ro-prev" type="button" aria-label="Previous photos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="ro-slide-btn ro-next" type="button" aria-label="Next photos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="ro-dots" role="tablist" aria-label="Choose slide">
+                {truckSlides.map((_, i) => (
+                  <button class={`ro-dot ${i === 0 ? 'active' : ''}`} type="button" data-index={i} role="tab" aria-label={`Slide ${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
       <!-- How it works -->
       <div class="gr-panel">
         <div class="gr-panel-head">How To Get A Dumpster</div>
@@ -238,6 +289,107 @@ const prohibited = [
   </div>
 
   <style>
+    /* Roll-off truck slideshow */
+    .ro-slideshow {
+      position: relative;
+      margin: 0 0 34px;
+      border: 2px solid var(--green-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 6px 6px 0 rgba(31, 107, 58, 0.14);
+      background: #0d1f14;
+      padding: 12px;
+    }
+    .ro-slides {
+      display: grid;
+      grid-template-areas: 'stack';
+      width: 100%;
+    }
+    .ro-slide {
+      grid-area: stack;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    .ro-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ro-photo {
+      flex: 0 0 calc((100% - 24px) / 3);
+      margin: 0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .ro-photo img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+    }
+    .ro-slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      color: var(--green-dark);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.15s ease, transform 0.15s ease;
+      z-index: 2;
+    }
+    .ro-slide-btn:hover { background: #fff; }
+    .ro-slide-btn:active { transform: translateY(-50%) scale(0.94); }
+    .ro-slide-btn svg { width: 22px; height: 22px; }
+    .ro-prev { left: 14px; }
+    .ro-next { right: 14px; }
+    .ro-dots {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 2;
+    }
+    .ro-dot {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .ro-dot.active { background: #fff; transform: scale(1.15); }
+    @media (max-width: 768px) {
+      .ro-slideshow { padding: 8px; }
+      .ro-slide { gap: 6px; }
+      .ro-photo { flex-basis: calc((100% - 12px) / 3); border-radius: 4px; }
+      .ro-slide-btn { width: 32px; height: 32px; }
+      .ro-slide-btn svg { width: 16px; height: 16px; }
+      .ro-prev { left: 6px; }
+      .ro-next { right: 6px; }
+      .ro-dots { bottom: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ro-slide { transition: none; }
+    }
+
     .ro-includes-heading {
       margin: 0 0 14px;
       font-family: var(--cond);
@@ -279,18 +431,13 @@ const prohibited = [
     .spec-photo {
       background: #f4f6f4;
       border-bottom: 1px solid var(--paper-line);
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 150px;
+      height: 190px;
+      overflow: hidden;
     }
     .spec-photo img {
       width: 100%;
-      max-width: 280px;
-      height: auto;
-      max-height: 160px;
-      object-fit: contain;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
     .spec-row-stack {
@@ -320,8 +467,7 @@ const prohibited = [
       .ro-includes-grid { grid-template-columns: 1fr; gap: 12px; }
       .ro-include-box { padding: 16px 14px; }
       .ro-include-value { font-size: 24px; }
-      .spec-photo { min-height: 130px; padding: 12px; }
-      .spec-photo img { max-height: 130px; }
+      .spec-photo { height: 200px; }
       .gr-chip-grid{gap:6px}
       .gr-chip{font-size:12px;padding:8px 10px}
     }
@@ -343,6 +489,45 @@ const prohibited = [
       }
       tabs.forEach(function (t) { t.addEventListener('click', function () { activate(t.getAttribute('data-target')); }); });
       if (select) select.addEventListener('change', function () { activate(select.value); });
+    })();
+
+    // Roll-off truck slideshow
+    (function () {
+      var root = document.querySelector('.ro-slideshow');
+      if (!root) return;
+      var slides = Array.prototype.slice.call(root.querySelectorAll('.ro-slide'));
+      if (slides.length < 2) return;
+      var dots = Array.prototype.slice.call(root.querySelectorAll('.ro-dot'));
+      var current = 0;
+      var timer = null;
+      var delay = parseInt(root.getAttribute('data-autoplay') || '5000', 10);
+
+      function go(index) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach(function (s, i) {
+          var on = i === current;
+          s.classList.toggle('active', on);
+          s.setAttribute('aria-hidden', on ? 'false' : 'true');
+        });
+        dots.forEach(function (d, i) {
+          var on = i === current;
+          d.classList.toggle('active', on);
+          d.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      }
+      function next() { go(current + 1); }
+      function prev() { go(current - 1); }
+      function start() { stop(); if (delay > 0) timer = setInterval(next, delay); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+      root.querySelector('.ro-next') && root.querySelector('.ro-next').addEventListener('click', function () { next(); start(); });
+      root.querySelector('.ro-prev') && root.querySelector('.ro-prev').addEventListener('click', function () { prev(); start(); });
+      dots.forEach(function (d) {
+        d.addEventListener('click', function () { go(parseInt(d.getAttribute('data-index'), 10)); start(); });
+      });
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      start();
     })();
   </script>
 </PublicLayout>

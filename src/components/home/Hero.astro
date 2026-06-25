@@ -8,7 +8,7 @@ interface Props {
 
 const { 
   heroTitle = "The World Is Yours. Recycle It.",
-  heroSubtitle = "Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 34+ years.",
+  heroSubtitle = "Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 42+ years.",
   backgroundImage = "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80"
 } = Astro.props;
 ---
@@ -38,7 +38,7 @@ const {
       </p>
       
       <!-- Botones -->
-      <div class="flex gap-3 mb-10 flex-wrap">
+      <div class="flex flex-wrap gap-3 mb-10">
         <a href="/materials" class="px-6 py-3 rounded-lg bg-green text-white text-sm font-bold no-underline transition-all duration-200 inline-flex items-center gap-2 hover:bg-green-dark hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(45,140,78,0.4)]">
           Shop Materials →
         </a>
@@ -50,7 +50,7 @@ const {
       <!-- Stats -->
       <div class="flex gap-8">
         <div>
-          <div class="font-display text-[28px] font-extrabold text-white leading-none">34+</div>
+          <div class="font-display text-[28px] font-extrabold text-white leading-none">42+</div>
           <div class="text-[11px] text-white/50 mt-1 tracking-[0.5px] uppercase">Years Experience</div>
         </div>
         <div>
@@ -66,8 +66,8 @@ const {
     
     <!-- Quote Card -->
     <div class="bg-white rounded-xl p-7 shadow-[0_16px_48px_rgba(0,0,0,0.2)] hidden lg:block">
-      <div class="font-display text-lg font-extrabold text-gray-900 mb-1">Quick Quote</div>
-      <div class="text-xs text-gray-400 mb-5">We respond same day</div>
+      <div class="mb-1 text-lg font-extrabold text-gray-900 font-display">Quick Quote</div>
+      <div class="mb-5 text-xs text-gray-400">We respond same day</div>
       
       <form id="heroQuoteForm">
         <div class="mb-3">
@@ -108,7 +108,7 @@ const {
           <div class="flex-1 h-px bg-gray-200"></div>
         </div>
         
-        <a href="tel:8133736467" class="flex items-center justify-center gap-2 text-sm font-bold text-green no-underline font-display">
+        <a href="tel:8133736467" class="flex items-center justify-center gap-2 text-sm font-bold no-underline text-green font-display">
           <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
           </svg>

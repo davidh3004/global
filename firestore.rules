@@ -1,0 +1,128 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.role == 'admin';
+    }
+
+    // The signed-in user owns the existing document (matches userId field).
+    function ownsResource() {
+      return isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // The document being created belongs to the signed-in user.
+    function creatingOwn() {
+      return isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+
+    // ----------------------------------------------------------------
+    // Site configuration — public may read everything EXCEPT secrets
+    // such as the stored QuickBooks OAuth tokens. Only admins write.
+    // ----------------------------------------------------------------
+    match /siteConfig/{docId} {
+      allow read: if docId != 'quickbooks_tokens';
+      allow write: if isAdmin();
+    }
+
+    // ----------------------------------------------------------------
+    // Public site content — anyone may read, only admins may change.
+    // ----------------------------------------------------------------
+    match /products/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /reviews/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /learningArticles/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /crew/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /team/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /serviceAreas/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /fourTrades/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /faqs/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ----------------------------------------------------------------
+    // Leads — the public quote/contact forms create these.
+    // Only admins can read or manage them.
+    // ----------------------------------------------------------------
+    match /leads/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ----------------------------------------------------------------
+    // Contact messages & app settings — admin only. (Server API routes
+    // use the Admin SDK, which bypasses these rules.)
+    // ----------------------------------------------------------------
+    match /contactMessages/{docId} {
+      allow read, write: if isAdmin();
+    }
+    match /settings/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ----------------------------------------------------------------
+    // User accounts — a user manages only their own document.
+    // ----------------------------------------------------------------
+    match /users/{userId} {
+      allow read: if isAdmin()
+        || (isSignedIn() && request.auth.uid == userId)
+        || (isSignedIn() && resource.data.uid == request.auth.uid);
+      allow create: if isSignedIn()
+        && (request.auth.uid == userId || request.resource.data.uid == request.auth.uid);
+      allow update, delete: if isAdmin()
+        || (isSignedIn() && request.auth.uid == userId);
+    }
+
+    // ----------------------------------------------------------------
+    // Shopping cart — one document per user, keyed by the user's UID.
+    // ----------------------------------------------------------------
+    match /carts/{userId} {
+      allow read, write: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+    }
+
+    // ----------------------------------------------------------------
+    // Wishlist & orders — per-user documents carrying a userId field.
+    // ----------------------------------------------------------------
+    match /wishlist/{docId} {
+      allow read, update, delete: if isAdmin() || ownsResource();
+      allow create: if isAdmin() || creatingOwn();
+    }
+    match /orders/{docId} {
+      allow read, update, delete: if isAdmin() || ownsResource();
+      allow create: if isAdmin() || creatingOwn();
+    }
+
+    // ----------------------------------------------------------------
+    // Anything not matched above is denied by default.
+    // ----------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

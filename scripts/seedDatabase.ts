@@ -197,8 +197,8 @@ async function seedDatabase() {
         en: 'The World Is Yours. Recycle It.',
       },
       heroSubtitle: {
-        es: 'Materiales reciclados de concreto, asfalto y agregados para carreteras, entradas y proyectos de construcción. Sirviendo a Tampa Bay por más de 34 años.',
-        en: 'Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 34+ years.',
+        es: 'Materiales reciclados de concreto, asfalto y agregados para carreteras, entradas y proyectos de construcción. Sirviendo a Tampa Bay por más de 42 años.',
+        en: 'Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 42+ years.',
       },
     };
 

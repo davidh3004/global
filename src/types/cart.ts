@@ -10,6 +10,7 @@ export interface CartItem {
   quantity: number;
   image?: string;
   description?: string;
+  priceUnit?: string;
 }
 
 export interface CartState {

@@ -291,7 +291,7 @@ Node.js **≥ 22.12** is required (see `package.json` engines).
 **Global Recycling of Tampa Bay**
 - Dirección: 5011 N. Clark St., Tampa, FL 33614
 - Teléfono: (813) 373-6467
-- Horario: Lun–Sáb 7:00am – 5:00pm
+- Horario: Lun–Vie 7:00am – 5:00pm
 
 ---
 

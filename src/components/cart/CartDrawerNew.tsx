@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../../context/CartContext';
+import { useI18n } from '../../hooks/useI18n';
 
 interface CartDrawerProps {
   lang?: string;
@@ -24,6 +25,7 @@ const translations = {
     loading: 'Loading...',
     syncing: 'Syncing cart...',
     quantity: 'Qty',
+    defaultUnit: 'ton',
   },
   es: {
     title: 'Carrito de Compras',
@@ -37,45 +39,29 @@ const translations = {
     loading: 'Cargando...',
     syncing: 'Sincronizando carrito...',
     quantity: 'Cant',
+    defaultUnit: 'tonelada',
   },
 };
+
+/**
+ * Normalizes a product's price unit into a "/ unit" suffix shown next to the
+ * price (e.g. "/ ton"). Falls back to the localized per-ton wording when the
+ * product has no explicit unit.
+ */
+function formatUnitSuffix(unit: string | undefined, fallback: string): string {
+  const cleaned = (unit || '').replace(/^\//, '').trim();
+  return `/ ${cleaned || fallback}`;
+}
 
 export default function CartDrawerNew({ lang = 'en' }: CartDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [overlayActive, setOverlayActive] = useState(false);
-  const [currentLang, setCurrentLang] = useState(lang);
   const { state, removeItem, updateQuantity } = useCart();
-  
-  // Detect language from URL and listen for changes
-  useEffect(() => {
-    const updateLanguage = (event?: CustomEvent) => {
-      let newLang: string;
-      
-      // If event has language detail, use it
-      if (event?.detail?.language) {
-        newLang = event.detail.language;
-      } else {
-        // Otherwise detect from URL
-        const isEnglish = window.location.pathname.includes('/en');
-        newLang = isEnglish ? 'en' : 'es';
-      }
-      
-      console.log('CartDrawer: Updating language to', newLang, 'from event:', event?.type);
-      setCurrentLang(newLang);
-    };
-    
-    // Initial detection
-    updateLanguage();
-    
-    // Listen for language changes
-    window.addEventListener('languageChanged', updateLanguage as EventListener);
-    
-    return () => {
-      window.removeEventListener('languageChanged', updateLanguage as EventListener);
-    };
-  }, []);
-  
-  const t = translations[currentLang as keyof typeof translations] || translations.es;
+
+  // Use the same language source as the rest of the site so the cart never
+  // ends up half-translated (e.g. Spanish title with English contents).
+  const { isEnglish } = useI18n();
+  const t = isEnglish ? translations.en : translations.es;
 
   // Listen for cart toggle events
   useEffect(() => {
@@ -183,7 +169,13 @@ export default function CartDrawerNew({ lang = 'en' }: CartDrawerProps) {
                       {item.description && (
                         <p className="cart-item-description">{item.description}</p>
                       )}
-                      <p className="cart-item-price">${item.price.toFixed(2)}</p>
+                      <p className="cart-item-price">
+                        ${item.price.toFixed(2)}
+                        <span className="cart-item-unit">
+                          {' '}
+                          {formatUnitSuffix(item.priceUnit, t.defaultUnit)}
+                        </span>
+                      </p>
                       <div className="cart-item-quantity">
                         <button
                           onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
@@ -409,6 +401,12 @@ export default function CartDrawerNew({ lang = 'en' }: CartDrawerProps) {
           font-weight: 700;
           color: #059669;
           margin: 0.25rem 0;
+        }
+
+        .cart-item-unit {
+          font-size: 0.8125rem;
+          font-weight: 500;
+          color: #6b7280;
         }
 
         .cart-item-quantity {

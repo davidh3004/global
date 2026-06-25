@@ -38,8 +38,8 @@ export default function FooterDynamic({ lang }: FooterDynamicProps) {
           setConfig({
             phone: '(813) 373-6467',
             address: '5011 N. Clark St., Tampa, FL 33614',
-            hours: 'Mon–Sat 7:00am – 5:00pm',
-            hoursEs: 'Lun–Sáb 7:00am – 5:00pm',
+            hours: 'Mon–Fri 7:00am – 5:00pm',
+            hoursEs: 'Lun–Vie 7:00am – 5:00pm',
             socialMedia: {
               instagram: '',
               facebook: '',
@@ -52,8 +52,8 @@ export default function FooterDynamic({ lang }: FooterDynamicProps) {
         setConfig({
           phone: '(813) 373-6467',
           address: '5011 N. Clark St., Tampa, FL 33614',
-          hours: 'Mon–Sat 7:00am – 5:00pm',
-          hoursEs: 'Lun–Sáb 7:00am – 5:00pm',
+          hours: 'Mon–Fri 7:00am – 5:00pm',
+          hoursEs: 'Lun–Vie 7:00am – 5:00pm',
           socialMedia: {
             instagram: '',
             facebook: '',
@@ -75,7 +75,7 @@ export default function FooterDynamic({ lang }: FooterDynamicProps) {
         <div className="footer-grid">
           <div>
             <a href="/#hero">
-              <img src="/logo.png" style={{ height: '52px', width: 'auto' }} alt="Global Recycling of Tampa Bay"/>
+              <img src="/logo.png" style={{ height: '72px', width: 'auto' }} alt="Global Recycling of Tampa Bay"/>
             </a>
             <p className="footer-desc">{t('footer.description', lang)}</p>
             <div className="footer-social"></div>
@@ -131,7 +131,7 @@ export default function FooterDynamic({ lang }: FooterDynamicProps) {
       <div className="footer-grid">
         <div>
           <a href="/#hero">
-            <img src="/logo.png" style={{ height: '52px', width: 'auto' }} alt="Global Recycling of Tampa Bay"/>
+            <img src="/logo.png" style={{ height: '72px', width: 'auto' }} alt="Global Recycling of Tampa Bay"/>
           </a>
           <p className="footer-desc">{isEnglish ? '"The World Is Yours" — Tampa Bay\'s trusted recycled concrete, asphalt, and aggregate supplier since 1990. Owned by Max & Denise Sanchez.' : '"El Mundo Es Tuyo" — Proveedor confiable de concreto reciclado, asfalto y agregados de Tampa Bay desde 1990. Propiedad de Max y Denise Sánchez.'}</p>
           <div className="footer-social">

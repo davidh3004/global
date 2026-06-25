@@ -108,6 +108,7 @@ export default function ProductsSection({ lang = 'en' }: Props) {
       quantity: 1,
       image: product.imageUrl,
       description: product.description,
+      priceUnit: product.priceUnit || '',
     };
 
     window.dispatchEvent(

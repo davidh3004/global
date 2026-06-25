@@ -22,7 +22,7 @@
     "title": "El Mundo",
     "titleHighlight": "Es Tuyo.",
     "titleEnd": "Recíclalo.",
-    "subtitle": "Concreto reciclado, asfalto y materiales agregados para carreteras, entradas y proyectos de construcción. Sirviendo a Tampa Bay por más de 34 años.",
+    "subtitle": "Concreto reciclado, asfalto y materiales agregados para carreteras, entradas y proyectos de construcción. Sirviendo a Tampa Bay por más de 42 años.",
     "btnMaterials": "Ver Materiales",
     "btnQuote": "Solicitar Cotización",
     "statsExperience": "Años de Experiencia",
@@ -56,7 +56,7 @@
     "fill": "Relleno Agregado",
     "paverBase": "Base para Pavimento",
     "address": "5011 N Clark Ave, Tampa FL",
-    "hours": "Lun–Sáb 7am–5pm",
+    "hours": "Lun–Vie 7am–5pm",
     "phone": "(813) 373-6467"
   },
   "stats": {
@@ -69,7 +69,7 @@
     "tag": "Quiénes Somos",
     "title": "Construido sobre Décadas de",
     "titleHighlight": "Experiencia",
-    "text1": "Global Recycling of Tampa Bay es propiedad de Max y Denise Sánchez. Max Sánchez ha sido dueño de Star Quality Inc., la empresa matriz, durante más de 34 años: una corporación privada con experiencia en proyectos comerciales junto a Skanska, Kimmins Contracting, Beck Group y más.",
+    "text1": "Global Recycling of Tampa Bay es propiedad de Max y Denise Sánchez. Max Sánchez ha sido dueño de Star Quality Inc., la empresa matriz, durante más de 42 años: una corporación privada con experiencia en proyectos comerciales junto a Skanska, Kimmins Contracting, Beck Group y más.",
     "text2": "Desempeñamos un papel clave en el D&M Business Park en Drew Park, excavando 14,400 yardas cúbicas de suelo contaminado y reemplazándolo con materiales cribados y 12\" de base de concreto triturado debajo de cada plataforma de construcción.",
     "list1": "Concreto reciclado, asfalto y agregados",
     "list2": "Propiedad y operación local — Tampa Bay",
@@ -109,7 +109,7 @@
     "location": "Ubicación",
     "phone": "Teléfono",
     "hours": "Horario",
-    "hoursValue": "Lun–Sáb<br/>7:00am – 5:00pm",
+    "hoursValue": "Lun–Vie<br/>7:00am – 5:00pm",
     "follow": "Síguenos"
   },
   "cta": {

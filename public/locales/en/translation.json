@@ -22,7 +22,7 @@
     "title": "The World",
     "titleHighlight": "Is Yours.",
     "titleEnd": "Recycle It.",
-    "subtitle": "Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 34+ years.",
+    "subtitle": "Recycled concrete, asphalt, and aggregate materials for roads, driveways, and construction projects. Serving Tampa Bay for 42+ years.",
     "btnMaterials": "Shop Materials",
     "btnQuote": "Request a Quote",
     "statsExperience": "Years Experience",
@@ -56,7 +56,7 @@
     "fill": "Aggregate Fill",
     "paverBase": "Paver Base",
     "address": "5011 N Clark Ave, Tampa FL",
-    "hours": "Mon–Sat 7am–5pm",
+    "hours": "Mon–Fri 7am–5pm",
     "phone": "(813) 373-6467"
   },
   "stats": {
@@ -69,7 +69,7 @@
     "tag": "Who We Are",
     "title": "Built on Decades of",
     "titleHighlight": "Experience",
-    "text1": "Global Recycling of Tampa Bay is owned by Max & Denise Sanchez. Max Sanchez has owned Star Quality Inc., the parent company, for over 34 years — a privately owned corporation with experience on Commercial projects alongside Skanska, Kimmins Contracting, Beck Group, and more.",
+    "text1": "Global Recycling of Tampa Bay is owned by Max & Denise Sanchez. Max Sanchez has owned Star Quality Inc., the parent company, for over 42 years — a privately owned corporation with experience on Commercial projects alongside Skanska, Kimmins Contracting, Beck Group, and more.",
     "text2": "We played a key role in the D&M Business Park in Drew Park, excavating 14,400 cubic yards of contaminated soil and replacing it with screened materials and 12\" of crushed concrete base below each building pad.",
     "list1": "Recycled concrete, asphalt, and aggregate",
     "list2": "Locally owned & operated — Tampa Bay",
@@ -109,7 +109,7 @@
     "location": "Location",
     "phone": "Phone",
     "hours": "Hours",
-    "hoursValue": "Mon–Sat<br/>7:00am – 5:00pm",
+    "hoursValue": "Mon–Fri<br/>7:00am – 5:00pm",
     "follow": "Follow Us"
   },
   "cta": {

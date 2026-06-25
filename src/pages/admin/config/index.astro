@@ -35,9 +35,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         phone: '(813) 373-6467',
         email: 'info@globalrecyclingtb.com',
         address: '5011 N. Clark St., Tampa, FL 33614',
-        hours: 'Mon–Sat 7:00am – 5:00pm',
-        hoursEs: 'Lun–Sáb 7:00am – 5:00pm',
-        googleMapsUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3522.9!2d-82.4801!3d27.9897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c768d1a8e999%3A0x1234!2s5011+N+Clark+Ave%2C+Tampa%2C+FL+33614!5e0!3m2!1sen!2sus!4v1684000000000',
+        hours: 'Mon–Fri 7:00am – 5:00pm',
+        hoursEs: 'Lun–Vie 7:00am – 5:00pm',
+        googleMapsUrl: 'https://maps.google.com/maps?q=Global%20Recycling%20of%20Tampa%20Bay%2C%205011%20N%20Clark%20Ave%2C%20Tampa%2C%20FL%2033614&t=&z=15&ie=UTF8&iwloc=&output=embed',
         socialMedia: {
           instagram: '',
           facebook: '',
@@ -85,14 +85,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
                 <label class="label">
                   <span class="label-text font-semibold">Business Hours (English) *</span>
                 </label>
-                <input type="text" name="hours" required class="input input-bordered w-full" value="${config.hours}" placeholder="Mon–Sat 7:00am – 5:00pm" />
+                <input type="text" name="hours" required class="input input-bordered w-full" value="${config.hours}" placeholder="Mon–Fri 7:00am – 5:00pm" />
               </div>
 
               <div class="form-control">
                 <label class="label">
                   <span class="label-text font-semibold">Horario (Español) *</span>
                 </label>
-                <input type="text" name="hoursEs" required class="input input-bordered w-full" value="${config.hoursEs || config.hours}" placeholder="Lun–Sáb 7:00am – 5:00pm" />
+                <input type="text" name="hoursEs" required class="input input-bordered w-full" value="${config.hoursEs || config.hours}" placeholder="Lun–Vie 7:00am – 5:00pm" />
               </div>
             </div>
 
