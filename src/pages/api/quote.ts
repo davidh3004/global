@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
     const isEnglish = language === 'en';
 
     try {
-      await resend.emails.send({
+      const { data: emailData, error: resendError } = await resend.emails.send({
         from: emailFrom,
         to: emailTo,
         subject: isEnglish 
@@ -95,6 +95,15 @@ export const POST: APIRoute = async ({ request }) => {
           </html>
         `,
       });
+
+      // The Resend SDK does NOT throw on API errors (invalid key, unverified
+      // domain, test-mode recipient restrictions, etc.) — it returns them in
+      // `error`. We must check it explicitly or failures go unnoticed.
+      if (resendError) {
+        console.error('Resend API error (quote):', resendError);
+      } else {
+        console.log('Quote email sent via Resend:', emailData?.id);
+      }
     } catch (emailError) {
       console.error('Error sending email:', emailError);
       // Don't fail the request if email fails, data is already saved

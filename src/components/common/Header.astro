@@ -23,13 +23,8 @@ const isEnglish = lang === 'en';
     <div class="header-links">
       <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
 
-      <div class="header-dropdown">
-        <button type="button" class="header-dropdown-toggle" aria-expanded="false"><span data-i18n="nav.services">{t('nav.services', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
-        <div class="header-submenu">
-          <a href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
-          <a href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
-        </div>
-      </div>
+      <a href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
+      <a href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
 
       <div class="header-dropdown">
         <button type="button" class="header-dropdown-toggle" aria-expanded="false"><span data-i18n="nav.resources">{t('nav.resources', lang)}</span><span class="dropdown-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
@@ -48,7 +43,6 @@ const isEnglish = lang === 'en';
         </div>
       </div>
 
-      <a href="/#about" data-scroll-to="about" data-i18n="nav.about">{t('nav.about', lang)}</a>
       <a href="/#contact" data-scroll-to="contact" data-i18n="nav.contact">{t('nav.contact', lang)}</a>
     </div>
 
@@ -99,18 +93,8 @@ const isEnglish = lang === 'en';
       <div class="mobile-nav-links">
         <a href="/#products" data-scroll-to="products" data-i18n="nav.materials">{t('nav.materials', lang)}</a>
 
-        <div class="mobile-nav-dropdown">
-          <button type="button" class="mobile-nav-group" aria-expanded="false">
-            <span data-i18n="nav.services">{t('nav.services', lang)}</span>
-            <span class="mobile-nav-caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-          </button>
-          <div class="mobile-nav-submenu">
-            <div class="mobile-nav-submenu-inner">
-              <a class="mobile-nav-sub" href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
-              <a class="mobile-nav-sub" href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
-            </div>
-          </div>
-        </div>
+        <a href="/roll-off-service" data-i18n="nav.rollOff">{t('nav.rollOff', lang)}</a>
+        <a href="/weigh-your-truck" data-i18n="nav.weighTruck">{t('nav.weighTruck', lang)}</a>
 
         <div class="mobile-nav-dropdown">
           <button type="button" class="mobile-nav-group" aria-expanded="false">
@@ -138,7 +122,6 @@ const isEnglish = lang === 'en';
           </div>
         </div>
 
-        <a href="/#about" data-scroll-to="about" data-i18n="nav.about">{t('nav.about', lang)}</a>
         <a href="/#contact" data-scroll-to="contact" data-i18n="nav.contact">{t('nav.contact', lang)}</a>
       </div>
 
@@ -244,7 +227,7 @@ const isEnglish = lang === 'en';
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 24px;
-    height: 70px;
+    height: 84px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -261,7 +244,7 @@ const isEnglish = lang === 'en';
   }
 
   .header-logo img {
-    height: 60px;
+    height: 74px;
     width: auto;
   }
 
@@ -613,7 +596,7 @@ const isEnglish = lang === 'en';
      ======================================== */
   .header-mobile-menu {
     position: fixed;
-    top: 70px;
+    top: 84px;
     left: 0;
     right: 0;
     background: white;
@@ -624,7 +607,7 @@ const isEnglish = lang === 'en';
   }
 
   .header-mobile-menu.active {
-    max-height: calc(100dvh - 70px);
+    max-height: calc(100dvh - 84px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -801,22 +784,22 @@ const isEnglish = lang === 'en';
     }
 
     .header-logo img {
-      height: 50px;
+      height: 62px;
     }
   }
 
   @media (max-width: 480px) {
     .header-container {
       padding: 0 16px;
-      height: 60px;
+      height: 70px;
     }
 
     .header-mobile-menu {
-      top: 60px;
+      top: 70px;
     }
 
     .header-mobile-menu.active {
-      max-height: calc(100dvh - 60px);
+      max-height: calc(100dvh - 70px);
     }
 
     .mobile-menu-content {
@@ -838,7 +821,7 @@ const isEnglish = lang === 'en';
     }
 
     .header-logo img {
-      height: 44px;
+      height: 56px;
     }
 
     .header-icon-btn {
