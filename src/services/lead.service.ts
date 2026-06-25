@@ -5,23 +5,35 @@
 
 import { leadsService } from './firestore.service';
 import type { Lead } from '../firebase/types';
-import { Timestamp } from 'firebase/firestore';
 
 /**
- * Create a new lead from the Hero quote form
+ * Create a new lead from the Hero / quote forms.
+ *
+ * This posts to the /api/quote endpoint (Admin SDK) which BOTH saves the lead
+ * to the `leads` collection AND sends an email notification via Resend.
+ * (Writing straight to Firestore from the client would skip the email.)
  */
 export async function createLead(data: {
   name: string;
   material: string;
   quantity: string;
   contact: string;
-}): Promise<string> {
-  const leadData: Omit<Lead, 'id'> = {
-    ...data,
-    status: 'new',
-    createdAt: Timestamp.now(),
-  };
-  return leadsService.create(leadData);
+}): Promise<void> {
+  const language =
+    typeof document !== 'undefined' && document.documentElement.lang === 'es'
+      ? 'es'
+      : 'en';
+
+  const response = await fetch('/api/quote', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...data, language }),
+  });
+
+  if (!response.ok) {
+    const result = await response.json().catch(() => ({}));
+    throw new Error(result.error || 'Failed to submit quote request');
+  }
 }
 
 /**
