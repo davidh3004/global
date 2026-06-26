@@ -231,7 +231,7 @@ const isEnglish = lang === 'en';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
+    gap: 28px;
   }
 
   /* ========================================
@@ -254,7 +254,7 @@ const isEnglish = lang === 'en';
   .header-links {
     display: flex;
     align-items: center;
-    gap: 26px;
+    gap: 18px;
     flex: 1;
     justify-content: center;
   }
@@ -264,8 +264,8 @@ const isEnglish = lang === 'en';
     color: var(--gray-800);
     font-family: 'Oswald', 'Arial Narrow', sans-serif;
     font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 1px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     text-decoration: none;
     transition: color 0.2s ease;
@@ -421,7 +421,8 @@ const isEnglish = lang === 'en';
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+    flex-shrink: 0;
   }
 
   .header-icon-btn {
@@ -470,15 +471,16 @@ const isEnglish = lang === 'en';
   }
 
   .header-btn-quote {
-    padding: 10px 20px;
+    padding: 9px 16px;
     background: var(--green);
     color: white;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     text-decoration: none;
     transition: all 0.2s ease;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .header-btn-quote:hover {
@@ -764,7 +766,7 @@ const isEnglish = lang === 'en';
     }
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1300px) {
     /* Hide desktop navigation */
     .header-links {
       display: none;
